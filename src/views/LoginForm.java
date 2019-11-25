@@ -22,6 +22,8 @@ public class LoginForm extends JFrame {
 
     public LoginForm(Data data){
 
+        // This is a test
+
         setSize(1366, 768);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
