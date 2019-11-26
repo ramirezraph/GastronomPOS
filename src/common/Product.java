@@ -3,22 +3,41 @@ package common;
 import javax.swing.*;
 
 public class Product {
+    private String code;
     private String name;
     private String category;
     private double price;
     private String availability;
     private ImageIcon image;
 
-    public Product(String name, String category, double price, String availability) {
-        this(name,category,price,availability,new ImageIcon(".\\src\\resources\\placeholder_100.jpg"));
+    public Product(String code, String name, String category, double price, String availability) {
+        this(code,name,category,price,availability,new ImageIcon(".\\src\\resources\\placeholder_100.jpg"));
+
     }
 
-    public Product(String name, String category, double price, String availability, ImageIcon image) {
+    public Product(String code, String name, String category, double price, String availability, ImageIcon image) {
+        this.code = code;
         this.name = name;
         this.category = category;
         this.price = price;
         this.availability = availability;
         this.image = image;
+    }
+
+    public void editInformation(String name, String category, double price, String availability, ImageIcon image){
+        this.name = name;
+        this.category = category;
+        this.price = price;
+        this.availability = availability;
+        this.image = image;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {

@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MenuSettingsForm extends JDialog {
 
@@ -31,7 +32,11 @@ public class MenuSettingsForm extends JDialog {
     private final JButton btnSelectImage;
     private final JButton btnCancelCreate;
     private final JButton btnCreate;
+    private final JButton btnUpdate;
+    private final JButton btnCancelUpdate;
     private final JLabel imgHolder;
+    private final JLabel lblProductCode;
+
 
     private String category[] = {"- select category -", "Main", "Dessert", "Drinks", "Others"};
     private final JComboBox cmbFilterProductCategory;
@@ -132,6 +137,7 @@ public class MenuSettingsForm extends JDialog {
                     public void actionPerformed(ActionEvent e) {
 
                         clearTableSelection();
+
                         txtProductName.setText("");
                         txtProductName.setEditable(true);
 
@@ -152,6 +158,8 @@ public class MenuSettingsForm extends JDialog {
 
                         btnCancelCreate.setEnabled(true);
                         btnCancelCreate.setVisible(true);
+
+                        lblProductCode.setText("");
                     }
                 }
         );
@@ -178,6 +186,33 @@ public class MenuSettingsForm extends JDialog {
                     @Override
                     public void mouseExited(MouseEvent e) {
                         btnEditProduct.setBackground(new Color(225,176,20));
+                    }
+                }
+        );
+        btnEditProduct.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        int selectedRowIndex = tblProducts.getSelectedRow();
+
+                        if (selectedRowIndex < 0){
+                            DialogOk dialogOk = new DialogOk("Edit Error", "Please select a product.");
+                            dialogOk.setVisible(true);
+                            return;
+                        }
+
+                        txtProductName.setEditable(true);
+                        cmbProductCategory.setEnabled(true);
+                        txtProductPrice.setEditable(true);
+                        cmbProductAvailability.setEnabled(true);
+                        btnSelectImage.setEnabled(true);
+
+                        btnUpdate.setEnabled(true);
+                        btnUpdate.setVisible(true);
+
+                        btnCancelUpdate.setEnabled(true);
+                        btnCancelUpdate.setVisible(true);
+
                     }
                 }
         );
@@ -219,7 +254,7 @@ public class MenuSettingsForm extends JDialog {
                             return;
                         }
 
-                        data.deleteProduct(txtProductName.getText());
+                        data.deleteProduct(lblProductCode.getText());
                         createProductTable(data, 1);
 
                         txtProductName.setText("");
@@ -250,6 +285,13 @@ public class MenuSettingsForm extends JDialog {
         lblProductEditor.setForeground(color_whitesmoke);
         pnlTopProductEditor.add(lblProductEditor);
         lblProductEditor.setBounds(30,11,127,27);
+
+        lblProductCode = new JLabel("asddf");
+        lblProductCode.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+        lblProductCode.setForeground(color_whitesmoke);
+        lblProductCode.setVisible(false);
+        pnlTopProductEditor.add(lblProductCode);
+        lblProductCode.setBounds(450,11,127,27);
 
         imgHolder = new JLabel();
         imgHolder.setBackground(Color.WHITE);
@@ -406,12 +448,26 @@ public class MenuSettingsForm extends JDialog {
                             return;
                         }
 
+                        // GENERATE RANDOM STRING CODE
+                        int leftLimit = 97; // letter 'a'
+                        int rightLimit = 122; // letter 'z'
+                        int targetStringLength = 5;
+                        Random random = new Random();
+                        StringBuilder buffer = new StringBuilder(targetStringLength);
+                        for (int i = 0; i < targetStringLength; i++) {
+                            int randomLimitedInt = leftLimit + (int)
+                                    (random.nextFloat() * (rightLimit - leftLimit + 1));
+                            buffer.append((char) randomLimitedInt);
+                        }
+                        String generatedString = buffer.toString().toUpperCase();
+                        // END GENERATE
+
                         String name = txtProductName.getText();
                         String category = cmbProductCategory.getSelectedItem().toString();
                         double price = Double.parseDouble(txtProductPrice.getText());
                         String status = cmbProductAvailability.getSelectedItem().toString();
 
-                        Product newProduct = new Product(name,category,price,status, image);
+                        Product newProduct = new Product(generatedString,name,category,price,status, image);
                         data.addProduct(newProduct);
                         createProductTable(data, 1);
 
@@ -420,6 +476,12 @@ public class MenuSettingsForm extends JDialog {
                         txtProductPrice.setText("");
                         cmbProductAvailability.setSelectedIndex(0);
                         imgHolder.setIcon(null);
+
+                        txtProductName.setEditable(false);
+                        txtProductPrice.setEditable(false);
+                        btnSelectImage.setEnabled(false);
+                        cmbProductCategory.setEnabled(false);
+                        cmbProductAvailability.setEnabled(false);
 
                         btnCreate.setEnabled(false);
                         btnCreate.setVisible(false);
@@ -463,6 +525,135 @@ public class MenuSettingsForm extends JDialog {
                         btnCreate.setVisible(false);
                         btnCancelCreate.setEnabled(false);
                         btnCancelCreate.setVisible(false);
+                    }
+                }
+        );
+
+        btnUpdate = new JButton("Update");
+        btnUpdate.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        btnUpdate.setForeground(Color.WHITE);
+        btnUpdate.setBackground(new Color(58,181,66));
+        btnUpdate.setBorder(BorderFactory.createEmptyBorder());
+        btnUpdate.setFocusable(false);
+        btnUpdate.setEnabled(false);
+        btnUpdate.setVisible(false);
+        pnlProductEditor.add(btnUpdate);
+        btnUpdate.setBounds(151,421,200,39);
+        btnUpdate.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                        ImageIcon image;
+
+                        if (txtProductName.getText().isEmpty() || txtProductPrice.getText().isEmpty() || cmbProductCategory.getSelectedIndex() == 0
+                                || cmbProductAvailability.getSelectedIndex() == 0){
+                            DialogOk dialogOk = new DialogOk("Create Error", "Please complete the form.");
+                            dialogOk.setVisible(true);
+                            return;
+                        }
+
+                        if (imgHolder.getIcon() == null){
+                            DialogYesNo dialogYesNo = new DialogYesNo("Create Warning", "There is no product image, still " +
+                                    "want to continue?");
+                            dialogYesNo.setVisible(true);
+                            if (!dialogYesNo.getYesNo()){
+                                return;
+                            } // otherwise continue.
+                            image = new ImageIcon(".\\src\\resources\\products\\placeholder_100.jpg");
+                        } else {
+                            image = new ImageIcon(imgHolder.getIcon().toString());
+                        }
+
+                        try { // check if price is number
+                            double price = Double.parseDouble(txtProductPrice.getText());
+
+                            if (price <= 0){
+                                throw new NumberFormatException(); // also invalid.
+                            }
+
+                        } catch (NumberFormatException ex){
+                            DialogOk dialogOk = new DialogOk("Create Error", "Please put a valid price.");
+                            dialogOk.setVisible(true);
+                            return;
+                        }
+
+                        // GENERATE RANDOM STRING CODE
+                        int leftLimit = 97; // letter 'a'
+                        int rightLimit = 122; // letter 'z'
+                        int targetStringLength = 5;
+                        Random random = new Random();
+                        StringBuilder buffer = new StringBuilder(targetStringLength);
+                        for (int i = 0; i < targetStringLength; i++) {
+                            int randomLimitedInt = leftLimit + (int)
+                                    (random.nextFloat() * (rightLimit - leftLimit + 1));
+                            buffer.append((char) randomLimitedInt);
+                        }
+                        String generatedString = buffer.toString().toUpperCase();
+                        // END GENERATE
+
+                        String name = txtProductName.getText();
+                        String category = cmbProductCategory.getSelectedItem().toString();
+                        double price = Double.parseDouble(txtProductPrice.getText());
+                        String status = cmbProductAvailability.getSelectedItem().toString();
+
+                        data.editProduct(lblProductCode.getText(), name, category, price, status, image);
+
+                        createProductTable(data, 1);
+
+                        lblProductCode.setText("");
+                        txtProductName.setText("");
+                        cmbProductCategory.setSelectedIndex(0);
+                        txtProductPrice.setText("");
+                        cmbProductAvailability.setSelectedIndex(0);
+                        imgHolder.setIcon(null);
+
+                        btnUpdate.setEnabled(false);
+                        btnUpdate.setVisible(false);
+
+                        btnCancelUpdate.setEnabled(false);
+                        btnCancelUpdate.setVisible(false);
+                    }
+                }
+        );
+
+        btnCancelUpdate = new JButton("Cancel");
+        btnCancelUpdate.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        btnCancelUpdate.setForeground(Color.WHITE);
+        btnCancelUpdate.setBackground(new Color(228,52,52));
+        btnCancelUpdate.setBorder(BorderFactory.createEmptyBorder());
+        btnCancelUpdate.setFocusable(false);
+        btnCancelUpdate.setEnabled(false);
+        btnCancelUpdate.setVisible(false);
+        pnlProductEditor.add(btnCancelUpdate);
+        btnCancelUpdate.setBounds(358,421,135,39);
+        btnCancelUpdate.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        txtProductName.setText("");
+                        txtProductName.setEditable(false);
+
+                        cmbProductCategory.setSelectedIndex(0);
+                        cmbProductCategory.setEnabled(false);
+
+                        txtProductPrice.setText("");
+                        txtProductPrice.setEditable(false);
+
+                        cmbProductAvailability.setSelectedIndex(0);
+                        cmbProductAvailability.setEnabled(false);
+
+                        btnSelectImage.setEnabled(false);
+                        imgHolder.setIcon(null);
+
+                        lblProductCode.setText("");
+
+                        btnUpdate.setEnabled(false);
+                        btnUpdate.setVisible(false);
+                        btnCancelUpdate.setEnabled(false);
+                        btnCancelUpdate.setVisible(false);
+
+                        clearTableSelection();
                     }
                 }
         );
@@ -519,19 +710,15 @@ public class MenuSettingsForm extends JDialog {
                     public void actionPerformed(ActionEvent e) {
                         if (txtFilterProductName.getText().isEmpty() && cmbFilterProductCategory.getSelectedIndex() == 0){
                             // Filter Mode: 1
-                            System.out.println(1);
                             createProductTable(data, 1);
                         } else if (!txtFilterProductName.getText().isEmpty() && cmbFilterProductCategory.getSelectedIndex() == 0){
                             // Filter Mode: 2
-                            System.out.println(2);
                             createProductTable(data, 2, txtFilterProductName.getText().toLowerCase());
                         } else if (txtFilterProductName.getText().isEmpty() && cmbFilterProductCategory.getSelectedIndex() > 0){
                             // Filter Mode: 3
-                            System.out.println(3);
                             createProductTable(data, 3, "", cmbFilterProductCategory.getSelectedItem().toString());
                         } else if (!txtFilterProductName.getText().isEmpty() && cmbFilterProductCategory.getSelectedIndex() > 0){
                             // Filter Mode: 4
-                            System.out.println(4);
                             createProductTable(data, 4, txtFilterProductName.getText().toLowerCase(),
                                     cmbFilterProductCategory.getSelectedItem().toString());
                         }
@@ -612,6 +799,8 @@ public class MenuSettingsForm extends JDialog {
                         txtProductPrice.setText(tableModel.getValueAt(selectedRowIndex, 2).toString());
                         cmbProductAvailability.setSelectedItem((tableModel.getValueAt(selectedRowIndex, 3).toString()));
                         imgHolder.setIcon(new ImageIcon(tableModel.getValueAt(selectedRowIndex, 4).toString()));
+                        lblProductCode.setText(tableModel.getValueAt(selectedRowIndex, 5).toString());
+
                     }
                 }
         );
@@ -627,21 +816,21 @@ public class MenuSettingsForm extends JDialog {
     }
 
     public void createProductTable(Data data, int filterMode, String name, String category){
-        String[] colsProducts = {"Name", "Category", "Price", "Status", "Image"};
+        String[] colsProducts = {"Name", "Category", "Price", "Status", "Image", "Code"};
         tblProductModel = new DefaultTableModel(colsProducts, 0);
         ArrayList<Product> products = data.getProductList();
         for (Product prod: products){
             switch (filterMode){
                 case 1: { // No Filter
                     Object[] newRow = {prod.getName(), prod.getCategory(), twoDecimalFormat.format(prod.getPrice()),
-                            prod.getAvailability(), prod.getImage()};
+                            prod.getAvailability(), prod.getImage(), prod.getCode()};
                     tblProductModel.addRow(newRow);
                     break;
                 }
                 case 2: { // Filter Name Only
                     if (prod.getName().toLowerCase().contains(name)){
                         Object[] newRow = {prod.getName(), prod.getCategory(), twoDecimalFormat.format(prod.getPrice()),
-                                prod.getAvailability(), prod.getImage()};
+                                prod.getAvailability(), prod.getImage(), prod.getCode()};
                         tblProductModel.addRow(newRow);
                     }
                     break;
@@ -649,7 +838,7 @@ public class MenuSettingsForm extends JDialog {
                 case 3:{ // Filter Category Only
                     if (prod.getCategory().equals(category)){
                         Object[] newRow = {prod.getName(), prod.getCategory(), twoDecimalFormat.format(prod.getPrice()),
-                                prod.getAvailability(), prod.getImage()};
+                                prod.getAvailability(), prod.getImage(), prod.getCode()};
                         tblProductModel.addRow(newRow);
                     }
                     break;
@@ -657,7 +846,7 @@ public class MenuSettingsForm extends JDialog {
                 case 4: { // Filter Both
                     if (prod.getName().toLowerCase().contains(name) && prod.getCategory().equals(category)){
                         Object[] newRow = {prod.getName(), prod.getCategory(), twoDecimalFormat.format(prod.getPrice()),
-                                prod.getAvailability(), prod.getImage()};
+                                prod.getAvailability(), prod.getImage(), prod.getCode()};
                         tblProductModel.addRow(newRow);
                     }
                 }
@@ -680,7 +869,8 @@ public class MenuSettingsForm extends JDialog {
 
         // Hides Column Image
         TableColumnModel tableColumnModel = tblProducts.getColumnModel();
-        tableColumnModel.removeColumn(tableColumnModel.getColumn(4));
+        tableColumnModel.removeColumn(tableColumnModel.getColumn(4)); // hides image
+        tableColumnModel.removeColumn(tableColumnModel.getColumn(4)); // hides code
     }
 
     public void clearTableSelection(){

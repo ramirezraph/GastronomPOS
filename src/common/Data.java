@@ -3,6 +3,7 @@ package common;
 import views.DialogOk;
 import views.DialogYesNo;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class Data {
@@ -21,13 +22,12 @@ public class Data {
 
         // Products
         products = new ArrayList<>();
-        products.add(new Product("Pork Schnitzel", "Main", 150, "Available"));
-        products.add(new Product("Trout Amandine", "Main", 120, "Available"));
-        products.add(new Product("Seared Diver Scallop", "Main", 139, "Available"));
-        products.add(new Product("Steak Frites", "Main", 130, "Available"));
-        products.add(new Product("Roasted Duck Breast", "Main", 150, "Available"));
-        products.add(new Product("Roasted Beef Breast", "Others", 150, "Available"));
-
+        products.add(new Product("ASGDF","Pork Schnitzel", "Main", 150, "Available"));
+        products.add(new Product("KSDWS","Trout Amandine", "Main", 120, "Available"));
+        products.add(new Product("UFGDF","Seared Diver Scallop", "Main", 139, "Available"));
+        products.add(new Product("KDGDF","Steak Frites", "Main", 130, "Available"));
+        products.add(new Product("PYUGH","Roasted Duck Breast", "Main", 150, "Available"));
+        products.add(new Product("QWEGD","Roasted Beef Breast", "Others", 150, "Available"));
 
     }
 
@@ -154,7 +154,11 @@ public class Data {
         try {
             for (Product o: products){
                 if (product.getName().equals(o.getName())){
-                    DialogOk dialogOk = new DialogOk("Register Failed", "Username already exists.");
+                    DialogOk dialogOk = new DialogOk("Add Product Failed", "Product already exists.");
+                    dialogOk.setVisible(true);
+                    return;
+                } else if (product.getCode().equals(o.getCode())){
+                    DialogOk dialogOk = new DialogOk("Error", "An error occured. Please try again.");
                     dialogOk.setVisible(true);
                     return;
                 }
@@ -167,10 +171,10 @@ public class Data {
         }
     }
 
-    public void deleteProduct(String productToDelete){
+    public void deleteProduct(String codedToDelete){
         try {
             for (Product o: products){
-                if (productToDelete.equals(o.getName())){
+                if (codedToDelete.equals(o.getCode())){
 
                     DialogYesNo dialogYesNo = new DialogYesNo("Confirm", "Are you sure you want to delete this " +
                             "product?");
@@ -183,6 +187,23 @@ public class Data {
                 }
             }
             DialogOk dialogOk = new DialogOk("Delete Failed", "Product does not exist.");
+            dialogOk.setVisible(true);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public void editProduct(String codeToEdit, String name, String category, double price, String availability, ImageIcon image){
+        try {
+            for (Product o: products){
+                if (codeToEdit.equals(o.getCode())){
+                    o.editInformation(name,category,price,availability,image);
+                    DialogOk dialogOk = new DialogOk("Success", "Product has been updated successfully.");
+                    dialogOk.setVisible(true);
+                    return;
+                }
+            }
+            DialogOk dialogOk = new DialogOk("Edit Failed", "Product does not exist.");
             dialogOk.setVisible(true);
         } catch (Exception e){
             System.out.println(e);
