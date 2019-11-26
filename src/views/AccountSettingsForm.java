@@ -664,6 +664,12 @@ public class AccountSettingsForm extends JDialog {
 
                         data.deleteAccount(txtUsername.getText());
                         createAccountTable(data);
+
+                        txtName.setText("");
+                        txtContactNo.setText("");
+                        txtUsername.setText("");
+                        txtLastLogin.setText("");
+
                     }
                 }
         );

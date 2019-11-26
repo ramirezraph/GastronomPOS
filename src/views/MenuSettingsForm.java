@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -181,28 +182,52 @@ public class MenuSettingsForm extends JDialog {
                 }
         );
 
-        JButton btnRemoveProdduct = new JButton("Remove");
-        btnRemoveProdduct.setBackground(new Color(228,52,52));
-        btnRemoveProdduct.setFocusable(false);
-        btnRemoveProdduct.setFont(new Font("Segoe UI", Font.PLAIN, 17));
-        btnRemoveProdduct.setForeground(Color.WHITE);
-        btnRemoveProdduct.setIconTextGap(10);
-        btnRemoveProdduct.setBorder(BorderFactory.createEmptyBorder(10,43,10,10));
-        btnRemoveProdduct.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\bin_128.png").getImage()
+        JButton btnDelete = new JButton("Remove");
+        btnDelete.setBackground(new Color(228,52,52));
+        btnDelete.setFocusable(false);
+        btnDelete.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+        btnDelete.setForeground(Color.WHITE);
+        btnDelete.setIconTextGap(10);
+        btnDelete.setBorder(BorderFactory.createEmptyBorder(10,43,10,10));
+        btnDelete.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\bin_128.png").getImage()
                 .getScaledInstance(32, 32,Image.SCALE_DEFAULT)));
-        btnRemoveProdduct.setHorizontalAlignment(SwingConstants.LEFT);
-        pnlMain.add(btnRemoveProdduct);
-        btnRemoveProdduct.setBounds(360,113,218,58);
-        btnRemoveProdduct.addMouseListener(
+        btnDelete.setHorizontalAlignment(SwingConstants.LEFT);
+        pnlMain.add(btnDelete);
+        btnDelete.setBounds(360,113,218,58);
+        btnDelete.addMouseListener(
                 new MouseAdapter() {
                     @Override
                     public void mouseEntered(MouseEvent e) {
-                        btnRemoveProdduct.setBackground(new Color(255,58,58));
+                        btnDelete.setBackground(new Color(255,58,58));
                     }
 
                     @Override
                     public void mouseExited(MouseEvent e) {
-                        btnRemoveProdduct.setBackground(new Color(228,52,52));
+                        btnDelete.setBackground(new Color(228,52,52));
+                    }
+                }
+        );
+        btnDelete.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        int selectedRowIndex = tblProducts.getSelectedRow();
+
+                        if (selectedRowIndex < 0){
+                            DialogOk dialogOk = new DialogOk("Delete Error", "Please select a product.");
+                            dialogOk.setVisible(true);
+                            return;
+                        }
+
+                        data.deleteProduct(txtProductName.getText());
+                        createProductTable(data, 1);
+
+                        txtProductName.setText("");
+                        txtProductPrice.setText("");
+                        cmbProductCategory.setSelectedIndex(0);
+                        cmbProductAvailability.setSelectedIndex(0);
+                        imgHolder.setIcon(null);
+
                     }
                 }
         );
@@ -239,6 +264,25 @@ public class MenuSettingsForm extends JDialog {
         btnSelectImage.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         pnlProductEditor.add(btnSelectImage);
         btnSelectImage.setBounds(32,189,100,30);
+        btnSelectImage.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JFileChooser fileChooser = new JFileChooser(".\\src\\resources\\products");
+                        int res = fileChooser.showOpenDialog(null);
+                        try {
+                            if (res == JFileChooser.APPROVE_OPTION){
+                                File file = fileChooser.getSelectedFile();
+                                imgHolder.setIcon(new ImageIcon(file.getPath()));
+                            } else {
+                                System.out.println("You must select one image to be the reference.");
+                            }
+                        } catch (Exception ex){
+                            System.out.println(ex);
+                        }
+                    }
+                }
+        );
 
         JLabel lblPictureSize = new JLabel("(100x100)");
         lblPictureSize.setFont(new Font("Segoe UI", Font.PLAIN, 17));
@@ -328,10 +372,38 @@ public class MenuSettingsForm extends JDialog {
                     @Override
                     public void actionPerformed(ActionEvent e) {
 
+                        ImageIcon image;
+
                         if (txtProductName.getText().isEmpty() || txtProductPrice.getText().isEmpty() || cmbProductCategory.getSelectedIndex() == 0
                                 || cmbProductAvailability.getSelectedIndex() == 0){
                             DialogOk dialogOk = new DialogOk("Create Error", "Please complete the form.");
                             dialogOk.setVisible(true);
+                            return;
+                        }
+
+                        if (imgHolder.getIcon() == null){
+                            DialogYesNo dialogYesNo = new DialogYesNo("Create Warning", "There is no product image, still " +
+                                    "want to continue?");
+                            dialogYesNo.setVisible(true);
+                            if (!dialogYesNo.getYesNo()){
+                                return;
+                            } // otherwise continue.
+                            image = new ImageIcon(".\\src\\resources\\products\\placeholder_100.jpg");
+                        } else {
+                            image = new ImageIcon(imgHolder.getIcon().toString());
+                        }
+
+                        try { // check if price is number
+                            double price = Double.parseDouble(txtProductPrice.getText());
+
+                            if (price <= 0){
+                                throw new NumberFormatException(); // also invalid.
+                            }
+
+                        } catch (NumberFormatException ex){
+                            DialogOk dialogOk = new DialogOk("Create Error", "Please put a valid price.");
+                            dialogOk.setVisible(true);
+                            return;
                         }
 
                         String name = txtProductName.getText();
@@ -339,9 +411,21 @@ public class MenuSettingsForm extends JDialog {
                         double price = Double.parseDouble(txtProductPrice.getText());
                         String status = cmbProductAvailability.getSelectedItem().toString();
 
-                        Product newProduct = new Product(name,category,price,status);
+                        Product newProduct = new Product(name,category,price,status, image);
                         data.addProduct(newProduct);
+                        createProductTable(data, 1);
 
+                        txtProductName.setText("");
+                        cmbProductCategory.setSelectedIndex(0);
+                        txtProductPrice.setText("");
+                        cmbProductAvailability.setSelectedIndex(0);
+                        imgHolder.setIcon(null);
+
+                        btnCreate.setEnabled(false);
+                        btnCreate.setVisible(false);
+
+                        btnCancelCreate.setEnabled(false);
+                        btnCancelCreate.setVisible(false);
                     }
                 }
         );
