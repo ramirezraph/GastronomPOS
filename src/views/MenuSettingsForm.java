@@ -49,11 +49,20 @@ public class MenuSettingsForm extends JDialog {
 
     private final DecimalFormat twoDecimalFormat = new DecimalFormat(".00");
 
+    private Data DATA;
+
     public MenuSettingsForm(){
-        this(new Data());
+        this("",new Data());
     }
 
-    public MenuSettingsForm(Data data){
+    public Data getData(){
+        return DATA;
+    }
+
+    public MenuSettingsForm(String USER_NAME, Data data){
+
+        DATA = data;
+
         setSize(1500, 800);
         setLayout(null);
         setLocationRelativeTo(null);
@@ -97,6 +106,8 @@ public class MenuSettingsForm extends JDialog {
             @Override
             public void mouseClicked(MouseEvent e) {
                 dispose();
+                MainForm mainForm = new MainForm(USER_NAME,data);
+                mainForm.setVisible(true);
             }
         });
 
@@ -315,8 +326,9 @@ public class MenuSettingsForm extends JDialog {
                         try {
                             if (res == JFileChooser.APPROVE_OPTION){
                                 File file = fileChooser.getSelectedFile();
-                                imgHolder.setIcon(new ImageIcon(new ImageIcon(file.getPath()).getImage()
-                                        .getScaledInstance(100, 100,Image.SCALE_DEFAULT)));
+//                                imgHolder.setIcon(new ImageIcon(new ImageIcon(file.getPath()).getImage()
+//                                        .getScaledInstance(100, 100,Image.SCALE_DEFAULT)));
+                                imgHolder.setIcon(new ImageIcon(file.getPath()));
                             } else {
                                 System.out.println("You must select one image to be the reference.");
                             }
@@ -431,7 +443,7 @@ public class MenuSettingsForm extends JDialog {
                             if (!dialogYesNo.getYesNo()){
                                 return;
                             } // otherwise continue.
-                            image = new ImageIcon(".\\src\\resources\\products\\placeholder_100.jpg");
+                            image = new ImageIcon(".\\src\\resources\\placeholder_100.jpg");
                         } else {
                             image = new ImageIcon(imgHolder.getIcon().toString());
                         }
@@ -489,6 +501,9 @@ public class MenuSettingsForm extends JDialog {
 
                         btnCancelCreate.setEnabled(false);
                         btnCancelCreate.setVisible(false);
+
+                        MainForm main = new MainForm(data.getAccountName("admin"),data);
+                        main.generateMenu(data, "Main");
                     }
                 }
         );
@@ -791,7 +806,6 @@ public class MenuSettingsForm extends JDialog {
                         btnCreate.setVisible(false);
                         btnCancelCreate.setEnabled(false);
                         btnCancelCreate.setVisible(false);
-
 
                         DefaultTableModel tableModel = (DefaultTableModel) tblProducts.getModel();
                         int selectedRowIndex = tblProducts.getSelectedRow();

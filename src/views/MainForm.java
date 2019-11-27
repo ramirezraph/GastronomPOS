@@ -1,11 +1,16 @@
 package views;
 
+import common.ButtonColumn;
 import common.Data;
+import common.Product;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class MainForm extends JFrame {
 
@@ -29,6 +34,8 @@ public class MainForm extends JFrame {
     private JPanel pnlSystemSettings;
 
     private Data DATA;
+    private String USER_NAME;
+    private final JLabel lblUserName;
 
     private String CALCULATOR_TEXT;
 
@@ -37,8 +44,10 @@ public class MainForm extends JFrame {
 
     private JPanel pnlMainMenu;
     private JPanel pnlDessertMenu;
-    private JComponent pnlDrinksMenu;
+    private JPanel pnlDrinksMenu;
     private JPanel pnlOthersMenu;
+    private JTable tblMenu;
+    private DefaultTableModel tblMenuModel;
 
     public MainForm(){
         this("No Name", new Data());
@@ -54,6 +63,7 @@ public class MainForm extends JFrame {
         setUndecorated(true);
         setResizable(false);
 
+        this.USER_NAME = USER_NAME;
         DATA = data;
 
         JPanel pnlNavbar = new JPanel();
@@ -87,12 +97,14 @@ public class MainForm extends JFrame {
         pnlNavbar.add(lblDivider);
         lblDivider.setBounds(1527,35,6,33);
 
-        JLabel lblUserName = new JLabel(USER_NAME);
+        lblUserName = new JLabel();
         lblUserName.setForeground(color_white);
         lblUserName.setFont(new Font("Segoe UI", Font.PLAIN, 19));
         lblUserName.setIcon(new ImageIcon(".\\src\\resources\\man-user_32.png"));
         pnlNavbar.add(lblUserName);
         lblUserName.setBounds(1568,35,200,33);
+
+        lblUserName.setText(USER_NAME);
 
         JLabel btnLogout = new JLabel(" Logout");
         btnLogout.setForeground(color_white);
@@ -430,6 +442,8 @@ public class MainForm extends JFrame {
 
                         pnlOthersMenu.setEnabled(false);
                         pnlOthersMenu.setVisible(false);
+
+                        generateMenu(DATA, "Main");
                     }
                 }
         );
@@ -442,6 +456,26 @@ public class MainForm extends JFrame {
         btnDessertMenu.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         pnlCenter.add(btnDessertMenu);
         btnDessertMenu.setBounds(320, 104, 206,57);
+        btnDessertMenu.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        pnlMainMenu.setEnabled(false);
+                        pnlMainMenu.setVisible(false);
+
+                        pnlDessertMenu.setEnabled(true);
+                        pnlDessertMenu.setVisible(true);
+
+                        pnlDrinksMenu.setEnabled(false);
+                        pnlDrinksMenu.setVisible(false);
+
+                        pnlOthersMenu.setEnabled(false);
+                        pnlOthersMenu.setVisible(false);
+
+                        generateMenu(DATA, "Dessert");
+                    }
+                }
+        );
 
         JButton btnDrinksMenu = new JButton("Drinks");
         btnDrinksMenu.setForeground(color_white);
@@ -451,6 +485,26 @@ public class MainForm extends JFrame {
         btnDrinksMenu.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         pnlCenter.add(btnDrinksMenu);
         btnDrinksMenu.setBounds(529, 104, 206,57);
+        btnDrinksMenu.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        pnlMainMenu.setEnabled(false);
+                        pnlMainMenu.setVisible(false);
+
+                        pnlDessertMenu.setEnabled(false);
+                        pnlDessertMenu.setVisible(false);
+
+                        pnlDrinksMenu.setEnabled(true);
+                        pnlDrinksMenu.setVisible(true);
+
+                        pnlOthersMenu.setEnabled(false);
+                        pnlOthersMenu.setVisible(false);
+
+                        generateMenu(DATA, "Drinks");
+                    }
+                }
+        );
 
         JButton btnOthersMenu = new JButton("Others");
         btnOthersMenu.setForeground(color_white);
@@ -460,6 +514,26 @@ public class MainForm extends JFrame {
         btnOthersMenu.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         pnlCenter.add(btnOthersMenu);
         btnOthersMenu.setBounds(738, 104, 206,57);
+        btnOthersMenu.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        pnlMainMenu.setEnabled(false);
+                        pnlMainMenu.setVisible(false);
+
+                        pnlDessertMenu.setEnabled(false);
+                        pnlDessertMenu.setVisible(false);
+
+                        pnlDrinksMenu.setEnabled(false);
+                        pnlDrinksMenu.setVisible(false);
+
+                        pnlOthersMenu.setEnabled(true);
+                        pnlOthersMenu.setVisible(true);
+
+                        generateMenu(DATA, "Others");
+                    }
+                }
+        );
 
         // Menu Panels
 
@@ -468,34 +542,40 @@ public class MainForm extends JFrame {
         pnlMainMenu.setForeground(color_darkgray);
         pnlMainMenu.setEnabled(true);
         pnlMainMenu.setVisible(true);
+        pnlMainMenu.setLayout(null);
         pnlCenter.add(pnlMainMenu);
         pnlMainMenu.setBounds(112, 187, 833, 725);
 
         pnlDessertMenu = new JPanel();
         pnlDessertMenu.setBackground(color_jungle);
         pnlDessertMenu.setForeground(color_darkgray);
-        pnlDessertMenu.setEnabled(true);
-        pnlDessertMenu.setVisible(true);
+        pnlDessertMenu.setEnabled(false);
+        pnlDessertMenu.setVisible(false);
+        pnlDessertMenu.setLayout(null);
         pnlCenter.add(pnlDessertMenu);
         pnlDessertMenu.setBounds(112, 187, 833, 725);
 
         pnlDrinksMenu = new JPanel();
         pnlDrinksMenu.setBackground(Color.RED);
         pnlDrinksMenu.setForeground(color_darkgray);
-        pnlDrinksMenu.setEnabled(true);
-        pnlDrinksMenu.setVisible(true);
+        pnlDrinksMenu.setEnabled(false);
+        pnlDrinksMenu.setVisible(false);
+        pnlDrinksMenu.setLayout(null);
         pnlCenter.add(pnlDrinksMenu);
         pnlDrinksMenu.setBounds(112, 187, 833, 725);
 
         pnlOthersMenu = new JPanel();
         pnlOthersMenu.setBackground(Color.ORANGE);
         pnlOthersMenu.setForeground(color_darkgray);
-        pnlOthersMenu.setEnabled(true);
-        pnlOthersMenu.setVisible(true);
+        pnlOthersMenu.setEnabled(false);
+        pnlOthersMenu.setVisible(false);
+        pnlOthersMenu.setLayout(null);
         pnlCenter.add(pnlOthersMenu);
         pnlOthersMenu.setBounds(112, 187, 833, 725);
 
         // End Menu Panels
+
+        generateMenu(DATA, "Main");
 
         // Right Side
 
@@ -920,6 +1000,72 @@ public class MainForm extends JFrame {
         // End Right Side
     }
 
+    public void generateMenu(Data data, String category){
+
+        tblMenu = new JTable();
+
+        JScrollPane spMenu = new JScrollPane(tblMenu);
+        spMenu.setBorder(BorderFactory.createEmptyBorder());
+        if (category.equals("Main")){
+            pnlMainMenu.remove(spMenu);
+            pnlMainMenu.add(spMenu);
+        } else if (category.equals("Dessert")){
+            pnlDessertMenu.remove(spMenu);
+            pnlDessertMenu.add(spMenu);
+        } else if (category.equals("Drinks")){
+            pnlDrinksMenu.remove(spMenu);
+            pnlDrinksMenu.add(spMenu);
+        } else if (category.equals("Others")){
+            pnlOthersMenu.remove(spMenu);
+            pnlOthersMenu.add(spMenu);
+        }
+        spMenu.setBounds(0,0,833,725);
+
+        String[] colsMenu = {"", "Item", "Price", ""};
+        tblMenuModel = new DefaultTableModel(colsMenu, 0);
+        ArrayList<Product> products = data.getProductList();
+
+        for (Product o: products){
+            if (o.getCategory().equals(category)){
+                if (o.getAvailability().equals("Available")){
+                    Object[] newRow = {new ImageIcon(o.getImage().toString()), o.getName(), o.getPrice(),
+                            "Order"};
+                    tblMenuModel.addRow(newRow);
+                }
+            }
+        }
+
+        tblMenu.setModel(tblMenuModel);
+        tblMenu.setGridColor(color_border_lightgray);
+        tblMenu.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+        tblMenu.setRowHeight(70);
+        tblMenu.setGridColor(Color.WHITE);
+        tblMenu.setBorder(BorderFactory.createEmptyBorder());
+        tblMenu.setRowMargin(20);
+        tblMenu.setDefaultEditor(Object.class, null); // editable = false
+        tblMenu.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblMenu.setFocusable(false);
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        tblMenu.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tblMenu.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+
+        Action OrderEvent = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                JTable table = (JTable)e.getSource();
+                int rowIndex = Integer.valueOf(e.getActionCommand());
+                System.out.println(rowIndex);
+                //((DefaultTableModel)table.getModel()).removeRow(modelRow);
+            }
+        };
+
+        ButtonColumn buttonColumn = new ButtonColumn(tblMenu, OrderEvent, 3);
+
+
+    }
+
     private void createTransactionLogGUI(){
         pnlTransactionLog = new JPanel();
         pnlTransactionLog.setBackground(Color.WHITE);
@@ -1013,7 +1159,8 @@ public class MainForm extends JFrame {
                                 BorderFactory.createEmptyBorder(5, 100, 5, 5)));
                         btnAccountSettings.setBackground(Color.WHITE);
 
-                        AccountSettingsForm accountSettingsForm = new AccountSettingsForm(DATA);
+                        dispose();
+                        AccountSettingsForm accountSettingsForm = new AccountSettingsForm(USER_NAME,DATA);
                         accountSettingsForm.setVisible(true);
                     }
                 }
@@ -1061,7 +1208,8 @@ public class MainForm extends JFrame {
                                 BorderFactory.createEmptyBorder(5, 100, 5, 5)));
                         btnMenuSettings.setBackground(Color.WHITE);
 
-                        MenuSettingsForm menuSettingsForm = new MenuSettingsForm(DATA);
+                        dispose();
+                        MenuSettingsForm menuSettingsForm = new MenuSettingsForm(USER_NAME, DATA);
                         menuSettingsForm.setVisible(true);
                     }
                 }

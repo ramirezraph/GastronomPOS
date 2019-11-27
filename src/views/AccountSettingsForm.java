@@ -33,10 +33,10 @@ public class AccountSettingsForm extends JDialog {
     private DefaultTableModel tblAccountsModel;
 
     public AccountSettingsForm(){
-        this(new Data());
+        this("",new Data());
     }
 
-    public AccountSettingsForm(Data data){
+    public AccountSettingsForm(String USER_NAME,Data data){
         setSize(1500, 800);
         setLayout(null);
         setLocationRelativeTo(null);
@@ -80,6 +80,8 @@ public class AccountSettingsForm extends JDialog {
             @Override
             public void mouseClicked(MouseEvent e) {
                 dispose();
+                MainForm mainForm = new MainForm(USER_NAME,data);
+                mainForm.setVisible(true);
             }
         });
 
@@ -541,6 +543,7 @@ public class AccountSettingsForm extends JDialog {
                             DialogOk dialogOk = new DialogOk("Create Account Error", "Please complete the form.");
                             dialogOk.setVisible(true);
                         } else {
+
                             data.editAccountInfo(username, name, contact);
 
                             txtName.setText("");
