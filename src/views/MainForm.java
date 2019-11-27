@@ -4,10 +4,8 @@ import common.Data;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
+import java.text.DecimalFormat;
 
 public class MainForm extends JFrame {
 
@@ -31,6 +29,14 @@ public class MainForm extends JFrame {
     private JPanel pnlSystemSettings;
 
     private Data DATA;
+
+    private String CALCULATOR_TEXT;
+
+    private DecimalFormat twoDecimalFormat = new DecimalFormat(".00");
+    private JPanel pnlMainMenu;
+    private JPanel pnlDessertMenu;
+    private JComponent pnlDrinksMenu;
+    private JPanel pnlOthersMenu;
 
     public MainForm(){
         this("No Name", new Data());
@@ -385,6 +391,8 @@ public class MainForm extends JFrame {
         add(pnlPointOfSale);
         pnlPointOfSale.setBounds(354,103, 1566, 977);
 
+        CALCULATOR_TEXT = "";
+
         JPanel pnlCenter = new JPanel();
         pnlCenter.setBackground(Color.WHITE);
         pnlCenter.setForeground(color_darkgray);
@@ -405,6 +413,24 @@ public class MainForm extends JFrame {
         btnMainMenu.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         pnlCenter.add(btnMainMenu);
         btnMainMenu.setBounds(112, 104, 206,57);
+        btnMainMenu.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        pnlMainMenu.setEnabled(true);
+                        pnlMainMenu.setVisible(true);
+
+                        pnlDessertMenu.setEnabled(false);
+                        pnlDessertMenu.setVisible(false);
+
+                        pnlDrinksMenu.setEnabled(false);
+                        pnlDrinksMenu.setVisible(false);
+
+                        pnlOthersMenu.setEnabled(false);
+                        pnlOthersMenu.setVisible(false);
+                    }
+                }
+        );
 
         JButton btnDessertMenu = new JButton("Dessert");
         btnDessertMenu.setForeground(color_white);
@@ -435,27 +461,35 @@ public class MainForm extends JFrame {
 
         // Menu Panels
 
-        JPanel pnlMainMenu = new JPanel();
-        pnlMainMenu.setBackground(Color.WHITE);
+        pnlMainMenu = new JPanel();
+        pnlMainMenu.setBackground(Color.BLACK);
         pnlMainMenu.setForeground(color_darkgray);
+        pnlMainMenu.setEnabled(true);
+        pnlMainMenu.setVisible(true);
         pnlCenter.add(pnlMainMenu);
         pnlMainMenu.setBounds(112, 187, 833, 725);
 
-        JPanel pnlDessertMenu = new JPanel();
+        pnlDessertMenu = new JPanel();
         pnlDessertMenu.setBackground(color_jungle);
         pnlDessertMenu.setForeground(color_darkgray);
+        pnlDessertMenu.setEnabled(true);
+        pnlDessertMenu.setVisible(true);
         pnlCenter.add(pnlDessertMenu);
         pnlDessertMenu.setBounds(112, 187, 833, 725);
 
-        JPanel pnlDrinksMenu = new JPanel();
-        pnlDrinksMenu.setBackground(color_jungle);
+        pnlDrinksMenu = new JPanel();
+        pnlDrinksMenu.setBackground(Color.RED);
         pnlDrinksMenu.setForeground(color_darkgray);
+        pnlDrinksMenu.setEnabled(true);
+        pnlDrinksMenu.setVisible(true);
         pnlCenter.add(pnlDrinksMenu);
         pnlDrinksMenu.setBounds(112, 187, 833, 725);
 
-        JPanel pnlOthersMenu = new JPanel();
-        pnlOthersMenu.setBackground(color_jungle);
+        pnlOthersMenu = new JPanel();
+        pnlOthersMenu.setBackground(Color.ORANGE);
         pnlOthersMenu.setForeground(color_darkgray);
+        pnlOthersMenu.setEnabled(true);
+        pnlOthersMenu.setVisible(true);
         pnlCenter.add(pnlOthersMenu);
         pnlOthersMenu.setBounds(112, 187, 833, 725);
 
@@ -545,7 +579,6 @@ public class MainForm extends JFrame {
         lblPayment.setBounds(20, 719, 100, 27);
 
         JTextField txtPayment = new JTextField();
-        txtPayment.setText("₱200.20");
         txtPayment.setEditable(false);
         txtPayment.setFont(new Font("Segoe UI", Font.BOLD, 30));
         txtPayment.setForeground(color_title_gray);
@@ -563,7 +596,6 @@ public class MainForm extends JFrame {
         lblChange.setBounds(20, 830, 100, 27);
 
         JLabel lblChangeAmount = new JLabel();
-        lblChangeAmount.setText("₱9.80");
         lblChangeAmount.setFont(new Font("Segoe UI", Font.BOLD, 30));
         lblChangeAmount.setForeground(new Color(90,167,226));
         pnlRight.add(lblChangeAmount);
@@ -578,6 +610,14 @@ public class MainForm extends JFrame {
         btn1.setFocusable(false);
         pnlRight.add(btn1);
         btn1.setBounds(219,618, 84 , 90);
+        btn1.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // fuck this shit
+                    }
+                }
+        );
 
         JButton btn2 = new JButton("2");
         btn2.setForeground(color_darkergray);
@@ -587,6 +627,15 @@ public class MainForm extends JFrame {
         btn2.setFocusable(false);
         pnlRight.add(btn2);
         btn2.setBounds(302,618, 84 , 90);
+        btn2.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        CALCULATOR_TEXT += "2";
+                        txtPayment.setText(CALCULATOR_TEXT);
+                    }
+                }
+        );
 
         JButton btn3 = new JButton("3");
         btn3.setForeground(color_darkergray);
@@ -596,15 +645,15 @@ public class MainForm extends JFrame {
         btn3.setFocusable(false);
         pnlRight.add(btn3);
         btn3.setBounds(385,618, 84 , 90);
-
-        JButton btn100 = new JButton("₱100");
-        btn100.setForeground(color_darkergray);
-        btn100.setBackground(Color.WHITE);
-        btn100.setFont(new Font("Segoe UI", Font.BOLD, 25));
-        btn100.setBorder(BorderFactory.createLineBorder(color_border_lightgray, 2));
-        btn100.setFocusable(false);
-        pnlRight.add(btn100);
-        btn100.setBounds(468,618, 84 , 90);
+        btn3.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        CALCULATOR_TEXT += "3";
+                        txtPayment.setText(CALCULATOR_TEXT);
+                    }
+                }
+        );
 
         JButton btn4 = new JButton("4");
         btn4.setForeground(color_darkergray);
@@ -614,6 +663,15 @@ public class MainForm extends JFrame {
         btn4.setFocusable(false);
         pnlRight.add(btn4);
         btn4.setBounds(219,708, 84 , 90);
+        btn4.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        CALCULATOR_TEXT += "4";
+                        txtPayment.setText(CALCULATOR_TEXT);
+                    }
+                }
+        );
 
         JButton btn5 = new JButton("5");
         btn5.setForeground(color_darkergray);
@@ -623,6 +681,15 @@ public class MainForm extends JFrame {
         btn5.setFocusable(false);
         pnlRight.add(btn5);
         btn5.setBounds(302,708, 84 , 90);
+        btn5.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        CALCULATOR_TEXT += "5";
+                        txtPayment.setText(CALCULATOR_TEXT);
+                    }
+                }
+        );
 
         JButton btn6 = new JButton("6");
         btn6.setForeground(color_darkergray);
@@ -632,15 +699,15 @@ public class MainForm extends JFrame {
         btn6.setFocusable(false);
         pnlRight.add(btn6);
         btn6.setBounds(385,708, 84 , 90);
-
-        JButton btn50 = new JButton("₱50");
-        btn50.setForeground(color_darkergray);
-        btn50.setBackground(Color.WHITE);
-        btn50.setFont(new Font("Segoe UI", Font.BOLD, 25));
-        btn50.setBorder(BorderFactory.createLineBorder(color_border_lightgray, 2));
-        btn50.setFocusable(false);
-        pnlRight.add(btn50);
-        btn50.setBounds(468,708, 84 , 90);
+        btn6.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        CALCULATOR_TEXT += "6";
+                        txtPayment.setText(CALCULATOR_TEXT);
+                    }
+                }
+        );
 
         JButton btn7 = new JButton("7");
         btn7.setForeground(color_darkergray);
@@ -650,6 +717,15 @@ public class MainForm extends JFrame {
         btn7.setFocusable(false);
         pnlRight.add(btn7);
         btn7.setBounds(219,798, 84 , 90);
+        btn7.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        CALCULATOR_TEXT += "7";
+                        txtPayment.setText(CALCULATOR_TEXT);
+                    }
+                }
+        );
 
         JButton btn8 = new JButton("8");
         btn8.setForeground(color_darkergray);
@@ -659,6 +735,15 @@ public class MainForm extends JFrame {
         btn8.setFocusable(false);
         pnlRight.add(btn8);
         btn8.setBounds(302,798, 84 , 90);
+        btn8.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        CALCULATOR_TEXT += "8";
+                        txtPayment.setText(CALCULATOR_TEXT);
+                    }
+                }
+        );
 
         JButton btn9 = new JButton("9");
         btn9.setForeground(color_darkergray);
@@ -668,6 +753,55 @@ public class MainForm extends JFrame {
         btn9.setFocusable(false);
         pnlRight.add(btn9);
         btn9.setBounds(385,798, 84 , 90);
+        btn9.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        CALCULATOR_TEXT += "9";
+                        txtPayment.setText(CALCULATOR_TEXT);
+                    }
+                }
+        );
+
+        JButton btn50 = new JButton("₱50");
+        btn50.setForeground(color_darkergray);
+        btn50.setBackground(Color.WHITE);
+        btn50.setFont(new Font("Segoe UI", Font.BOLD, 25));
+        btn50.setBorder(BorderFactory.createLineBorder(color_border_lightgray, 2));
+        btn50.setFocusable(false);
+        pnlRight.add(btn50);
+        btn50.setBounds(468,708, 84 , 90);
+        btn50.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        double payment = Double.parseDouble(CALCULATOR_TEXT);
+                        payment += 50;
+                        CALCULATOR_TEXT = String.valueOf(payment);
+                        txtPayment.setText(CALCULATOR_TEXT);
+                    }
+                }
+        );
+
+        JButton btn100 = new JButton("₱100");
+        btn100.setForeground(color_darkergray);
+        btn100.setBackground(Color.WHITE);
+        btn100.setFont(new Font("Segoe UI", Font.BOLD, 25));
+        btn100.setBorder(BorderFactory.createLineBorder(color_border_lightgray, 2));
+        btn100.setFocusable(false);
+        pnlRight.add(btn100);
+        btn100.setBounds(468,618, 84 , 90);
+        btn100.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        double payment = Double.parseDouble(CALCULATOR_TEXT);
+                        payment += 100;
+                        CALCULATOR_TEXT = String.valueOf(payment);
+                        txtPayment.setText(CALCULATOR_TEXT);
+                    }
+                }
+        );
 
         JButton btnC = new JButton("C");
         btnC.setForeground(color_darkergray);
@@ -677,6 +811,15 @@ public class MainForm extends JFrame {
         btnC.setFocusable(false);
         pnlRight.add(btnC);
         btnC.setBounds(468,798, 84 , 90);
+        btnC.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        CALCULATOR_TEXT = "";
+                        txtPayment.setText(CALCULATOR_TEXT);
+                    }
+                }
+        );
 
         JButton btnEqualCal = new JButton("=");
         btnEqualCal.setForeground(color_darkergray);
@@ -695,6 +838,15 @@ public class MainForm extends JFrame {
         btn0.setFocusable(false);
         pnlRight.add(btn0);
         btn0.setBounds(302,888, 84 , 90);
+        btn0.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        CALCULATOR_TEXT += "0";
+                        txtPayment.setText(CALCULATOR_TEXT);
+                    }
+                }
+        );
 
         JButton btnDot = new JButton(".");
         btnDot.setForeground(color_darkergray);
@@ -704,6 +856,15 @@ public class MainForm extends JFrame {
         btnDot.setFocusable(false);
         pnlRight.add(btnDot);
         btnDot.setBounds(385,888, 84 , 90);
+        btnDot.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        CALCULATOR_TEXT += ".";
+                        txtPayment.setText(CALCULATOR_TEXT);
+                    }
+                }
+        );
 
         JButton btnX = new JButton("X");
         btnX.setForeground(color_darkergray);
