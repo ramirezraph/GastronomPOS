@@ -33,6 +33,8 @@ public class MainForm extends JFrame {
     private String CALCULATOR_TEXT;
 
     private DecimalFormat twoDecimalFormat = new DecimalFormat(".00");
+    private DecimalFormat noDecimalFormat = new DecimalFormat("00");
+
     private JPanel pnlMainMenu;
     private JPanel pnlDessertMenu;
     private JComponent pnlDrinksMenu;
@@ -614,7 +616,8 @@ public class MainForm extends JFrame {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // fuck this shit
+                        CALCULATOR_TEXT += "1";
+                        txtPayment.setText(CALCULATOR_TEXT);
                     }
                 }
         );
@@ -763,6 +766,24 @@ public class MainForm extends JFrame {
                 }
         );
 
+        JButton btn0 = new JButton("0");
+        btn0.setForeground(color_darkergray);
+        btn0.setBackground(Color.WHITE);
+        btn0.setFont(new Font("Segoe UI", Font.PLAIN, 33));
+        btn0.setBorder(BorderFactory.createLineBorder(color_border_lightgray, 2));
+        btn0.setFocusable(false);
+        pnlRight.add(btn0);
+        btn0.setBounds(302,888, 84 , 90);
+        btn0.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        CALCULATOR_TEXT += "0";
+                        txtPayment.setText(CALCULATOR_TEXT);
+                    }
+                }
+        );
+
         JButton btn50 = new JButton("₱50");
         btn50.setForeground(color_darkergray);
         btn50.setBackground(Color.WHITE);
@@ -775,9 +796,21 @@ public class MainForm extends JFrame {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        double payment = Double.parseDouble(CALCULATOR_TEXT);
-                        payment += 50;
-                        CALCULATOR_TEXT = String.valueOf(payment);
+                        if (CALCULATOR_TEXT.length() == 0){
+                            CALCULATOR_TEXT = "50";
+                            txtPayment.setText(CALCULATOR_TEXT);
+                            return;
+                        }
+
+                        if (CALCULATOR_TEXT.contains(".")){
+                            double payment = Double.parseDouble(CALCULATOR_TEXT);
+                            payment += 50;
+                            CALCULATOR_TEXT = String.valueOf(payment);
+                        } else {
+                            double payment = Double.parseDouble(CALCULATOR_TEXT);
+                            payment += 50;
+                            CALCULATOR_TEXT = noDecimalFormat.format(payment);
+                        }
                         txtPayment.setText(CALCULATOR_TEXT);
                     }
                 }
@@ -795,9 +828,21 @@ public class MainForm extends JFrame {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        double payment = Double.parseDouble(CALCULATOR_TEXT);
-                        payment += 100;
-                        CALCULATOR_TEXT = String.valueOf(payment);
+                        if (CALCULATOR_TEXT.length() == 0){
+                            CALCULATOR_TEXT = "100";
+                            txtPayment.setText(CALCULATOR_TEXT);
+                            return;
+                        }
+
+                        if (CALCULATOR_TEXT.contains(".")){
+                            double payment = Double.parseDouble(CALCULATOR_TEXT);
+                            payment += 100;
+                            CALCULATOR_TEXT = String.valueOf(payment);
+                        } else {
+                            double payment = Double.parseDouble(CALCULATOR_TEXT);
+                            payment += 100;
+                            CALCULATOR_TEXT = noDecimalFormat.format(payment);
+                        }
                         txtPayment.setText(CALCULATOR_TEXT);
                     }
                 }
@@ -816,33 +861,6 @@ public class MainForm extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         CALCULATOR_TEXT = "";
-                        txtPayment.setText(CALCULATOR_TEXT);
-                    }
-                }
-        );
-
-        JButton btnEqualCal = new JButton("=");
-        btnEqualCal.setForeground(color_darkergray);
-        btnEqualCal.setBackground(Color.WHITE);
-        btnEqualCal.setFont(new Font("Segoe UI", Font.BOLD, 33));
-        btnEqualCal.setBorder(BorderFactory.createLineBorder(color_border_lightgray, 2));
-        btnEqualCal.setFocusable(false);
-        pnlRight.add(btnEqualCal);
-        btnEqualCal.setBounds(219,888, 84 , 90);
-
-        JButton btn0 = new JButton("0");
-        btn0.setForeground(color_darkergray);
-        btn0.setBackground(Color.WHITE);
-        btn0.setFont(new Font("Segoe UI", Font.PLAIN, 33));
-        btn0.setBorder(BorderFactory.createLineBorder(color_border_lightgray, 2));
-        btn0.setFocusable(false);
-        pnlRight.add(btn0);
-        btn0.setBounds(302,888, 84 , 90);
-        btn0.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        CALCULATOR_TEXT += "0";
                         txtPayment.setText(CALCULATOR_TEXT);
                     }
                 }
@@ -874,6 +892,27 @@ public class MainForm extends JFrame {
         btnX.setFocusable(false);
         pnlRight.add(btnX);
         btnX.setBounds(468,888, 84 , 90);
+        btnX.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (CALCULATOR_TEXT.length() > 0){
+                            int length = CALCULATOR_TEXT.length();
+                            CALCULATOR_TEXT = CALCULATOR_TEXT.substring(0,(length-1));
+                            txtPayment.setText(CALCULATOR_TEXT);
+                        }
+                    }
+                }
+        );
+
+        JButton btnEqualCal = new JButton("=");
+        btnEqualCal.setForeground(color_darkergray);
+        btnEqualCal.setBackground(Color.WHITE);
+        btnEqualCal.setFont(new Font("Segoe UI", Font.BOLD, 33));
+        btnEqualCal.setBorder(BorderFactory.createLineBorder(color_border_lightgray, 2));
+        btnEqualCal.setFocusable(false);
+        pnlRight.add(btnEqualCal);
+        btnEqualCal.setBounds(219,888, 84 , 90);
 
         // End Calculator
 
