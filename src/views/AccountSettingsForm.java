@@ -80,8 +80,7 @@ public class AccountSettingsForm extends JDialog {
             @Override
             public void mouseClicked(MouseEvent e) {
                 dispose();
-                MainForm mainForm = new MainForm(USER_NAME,data);
-                mainForm.setVisible(true);
+//                new MainForm(USER_NAME,data);
             }
         });
 

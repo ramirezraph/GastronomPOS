@@ -49,19 +49,11 @@ public class MenuSettingsForm extends JDialog {
 
     private final DecimalFormat twoDecimalFormat = new DecimalFormat(".00");
 
-    private Data DATA;
-
     public MenuSettingsForm(){
         this("",new Data());
     }
 
-    public Data getData(){
-        return DATA;
-    }
-
     public MenuSettingsForm(String USER_NAME, Data data){
-
-        DATA = data;
 
         setSize(1500, 800);
         setLayout(null);
@@ -106,8 +98,7 @@ public class MenuSettingsForm extends JDialog {
             @Override
             public void mouseClicked(MouseEvent e) {
                 dispose();
-                MainForm mainForm = new MainForm(USER_NAME,data);
-                mainForm.setVisible(true);
+//                new MainForm(USER_NAME,data);
             }
         });
 
