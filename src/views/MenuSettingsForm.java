@@ -315,7 +315,8 @@ public class MenuSettingsForm extends JDialog {
                         try {
                             if (res == JFileChooser.APPROVE_OPTION){
                                 File file = fileChooser.getSelectedFile();
-                                imgHolder.setIcon(new ImageIcon(file.getPath()));
+                                imgHolder.setIcon(new ImageIcon(new ImageIcon(file.getPath()).getImage()
+                                        .getScaledInstance(100, 100,Image.SCALE_DEFAULT)));
                             } else {
                                 System.out.println("You must select one image to be the reference.");
                             }
