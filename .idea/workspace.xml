@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c40b2ec-469d-4ff8-ae7e-04d63551f801" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/views/MenuSettingsForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/MenuSettingsForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/MainForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/MainForm.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/MainForm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="982" column="30" selection-start-line="982" selection-start-column="26" selection-end-line="982" selection-end-column="30" />
+            <state relative-caret-position="430">
+              <caret line="876" column="10" lean-forward="true" selection-start-line="876" selection-start-column="10" selection-end-line="876" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -64,11 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/MenuSettingsForm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
-              <caret line="628" column="51" lean-forward="true" selection-start-line="628" selection-start-column="51" selection-end-line="628" selection-end-column="51" />
+            <state relative-caret-position="429">
+              <caret line="635" column="52" lean-forward="true" selection-start-line="635" selection-start-column="52" selection-end-line="635" selection-end-column="52" />
             </state>
           </provider>
         </entry>
@@ -84,7 +84,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>btnMenu</find>
       <find>btnM</find>
       <find>btnPoint</find>
       <find>btnPO</find>
@@ -114,6 +113,7 @@
       <find>edit</find>
       <find>editProd</find>
       <find>btnCrea</find>
+      <find>btnUpdate</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -136,8 +136,8 @@
         <option value="$PROJECT_DIR$/src/common/ButtonColumn.java" />
         <option value="$PROJECT_DIR$/src/common/Data.java" />
         <option value="$PROJECT_DIR$/src/common/Product.java" />
-        <option value="$PROJECT_DIR$/src/views/MainForm.java" />
         <option value="$PROJECT_DIR$/src/views/MenuSettingsForm.java" />
+        <option value="$PROJECT_DIR$/src/views/MainForm.java" />
       </list>
     </option>
   </component>
@@ -502,17 +502,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/MainForm.java">
+    <entry file="file://$PROJECT_DIR$/src/views/MenuSettingsForm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="982" column="30" selection-start-line="982" selection-start-column="26" selection-end-line="982" selection-end-column="30" />
+        <state relative-caret-position="429">
+          <caret line="635" column="52" lean-forward="true" selection-start-line="635" selection-start-column="52" selection-end-line="635" selection-end-column="52" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/MenuSettingsForm.java">
+    <entry file="file://$PROJECT_DIR$/src/views/MainForm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="628" column="51" lean-forward="true" selection-start-line="628" selection-start-column="51" selection-end-line="628" selection-end-column="51" />
+        <state relative-caret-position="430">
+          <caret line="876" column="10" lean-forward="true" selection-start-line="876" selection-start-column="10" selection-end-line="876" selection-end-column="10" />
         </state>
       </provider>
     </entry>

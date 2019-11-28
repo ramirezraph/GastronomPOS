@@ -816,22 +816,26 @@ public class MainForm extends JFrame {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (CALCULATOR_TEXT.length() == 0){
-                            CALCULATOR_TEXT = "50";
-                            txtPayment.setText(CALCULATOR_TEXT);
-                            return;
-                        }
+                        try {
+                            if (CALCULATOR_TEXT.length() == 0){
+                                CALCULATOR_TEXT = "50";
+                                txtPayment.setText(CALCULATOR_TEXT);
+                                return;
+                            }
 
-                        if (CALCULATOR_TEXT.contains(".")){
-                            double payment = Double.parseDouble(CALCULATOR_TEXT);
-                            payment += 50;
-                            CALCULATOR_TEXT = String.valueOf(payment);
-                        } else {
-                            double payment = Double.parseDouble(CALCULATOR_TEXT);
-                            payment += 50;
-                            CALCULATOR_TEXT = noDecimalFormat.format(payment);
+                            if (CALCULATOR_TEXT.contains(".")){
+                                double payment = Double.parseDouble(CALCULATOR_TEXT);
+                                payment += 50;
+                                CALCULATOR_TEXT = String.valueOf(payment);
+                            } else {
+                                double payment = Double.parseDouble(CALCULATOR_TEXT);
+                                payment += 50;
+                                CALCULATOR_TEXT = noDecimalFormat.format(payment);
+                            }
+                            txtPayment.setText(CALCULATOR_TEXT);
+                        } catch (NumberFormatException ex){
+                            System.out.println(ex);
                         }
-                        txtPayment.setText(CALCULATOR_TEXT);
                     }
                 }
         );
@@ -848,22 +852,26 @@ public class MainForm extends JFrame {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (CALCULATOR_TEXT.length() == 0){
-                            CALCULATOR_TEXT = "100";
-                            txtPayment.setText(CALCULATOR_TEXT);
-                            return;
-                        }
+                        try {
+                            if (CALCULATOR_TEXT.length() == 0){
+                                CALCULATOR_TEXT = "100";
+                                txtPayment.setText(CALCULATOR_TEXT);
+                                return;
+                            }
 
-                        if (CALCULATOR_TEXT.contains(".")){
-                            double payment = Double.parseDouble(CALCULATOR_TEXT);
-                            payment += 100;
-                            CALCULATOR_TEXT = String.valueOf(payment);
-                        } else {
-                            double payment = Double.parseDouble(CALCULATOR_TEXT);
-                            payment += 100;
-                            CALCULATOR_TEXT = noDecimalFormat.format(payment);
+                            if (CALCULATOR_TEXT.contains(".")){
+                                double payment = Double.parseDouble(CALCULATOR_TEXT);
+                                payment += 100;
+                                CALCULATOR_TEXT = String.valueOf(payment);
+                            } else {
+                                double payment = Double.parseDouble(CALCULATOR_TEXT);
+                                payment += 100;
+                                CALCULATOR_TEXT = noDecimalFormat.format(payment);
+                            }
+                            txtPayment.setText(CALCULATOR_TEXT);
+                        } catch (NumberFormatException ex){
+                            System.out.println(ex);
                         }
-                        txtPayment.setText(CALCULATOR_TEXT);
                     }
                 }
         );
