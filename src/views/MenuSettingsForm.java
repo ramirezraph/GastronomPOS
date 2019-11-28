@@ -585,9 +585,9 @@ public class MenuSettingsForm extends JDialog {
                             if (!dialogYesNo.getYesNo()){
                                 return;
                             } // otherwise continue.
-                            image = new ImageIcon(".\\src\\resources\\products\\placeholder_100.jpg");
+                            image = new ImageIcon(".\\src\\resources\\placeholder_100.jpg");
                         } else {
-                            image = new ImageIcon(imgHolder.getIcon().toString());
+                            image = new ImageIcon(imageFile.getPath());
                         }
 
                         try { // check if price is number

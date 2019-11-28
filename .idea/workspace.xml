@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c40b2ec-469d-4ff8-ae7e-04d63551f801" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/MenuSettingsForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/MenuSettingsForm.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/MainForm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="485">
-              <caret line="973" column="9" lean-forward="true" selection-start-line="973" selection-start-column="9" selection-end-line="973" selection-end-column="9" />
+            <state relative-caret-position="211">
+              <caret line="982" column="30" selection-start-line="982" selection-start-column="26" selection-end-line="982" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -64,11 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/MenuSettingsForm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="825" column="24" selection-start-line="825" selection-start-column="24" selection-end-line="835" selection-end-column="25" />
+            <state relative-caret-position="317">
+              <caret line="628" column="51" lean-forward="true" selection-start-line="628" selection-start-column="51" selection-end-line="628" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -84,8 +84,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>lblUser</find>
-      <find>btnMenuSett</find>
       <find>btnMenu</find>
       <find>btnM</find>
       <find>btnPoint</find>
@@ -105,7 +103,6 @@
       <find>REsizing</find>
       <find>selectimage</find>
       <find>create</find>
-      <find>btnCrea</find>
       <find>System.ou</find>
       <find>getSelectedFile</find>
       <find>System.out</find>
@@ -114,6 +111,9 @@
       <find>btnSelect</find>
       <find>getPath</find>
       <find>tbl</find>
+      <find>edit</find>
+      <find>editProd</find>
+      <find>btnCrea</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -136,8 +136,8 @@
         <option value="$PROJECT_DIR$/src/common/ButtonColumn.java" />
         <option value="$PROJECT_DIR$/src/common/Data.java" />
         <option value="$PROJECT_DIR$/src/common/Product.java" />
-        <option value="$PROJECT_DIR$/src/views/MenuSettingsForm.java" />
         <option value="$PROJECT_DIR$/src/views/MainForm.java" />
+        <option value="$PROJECT_DIR$/src/views/MenuSettingsForm.java" />
       </list>
     </option>
   </component>
@@ -293,7 +293,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3290461" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.33547696" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33547696" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39978564" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -502,17 +502,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/MenuSettingsForm.java">
+    <entry file="file://$PROJECT_DIR$/src/views/MainForm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="825" column="24" selection-start-line="825" selection-start-column="24" selection-end-line="835" selection-end-column="25" />
+        <state relative-caret-position="211">
+          <caret line="982" column="30" selection-start-line="982" selection-start-column="26" selection-end-line="982" selection-end-column="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/MainForm.java">
+    <entry file="file://$PROJECT_DIR$/src/views/MenuSettingsForm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="485">
-          <caret line="973" column="9" lean-forward="true" selection-start-line="973" selection-start-column="9" selection-end-line="973" selection-end-column="9" />
+        <state relative-caret-position="317">
+          <caret line="628" column="51" lean-forward="true" selection-start-line="628" selection-start-column="51" selection-end-line="628" selection-end-column="51" />
         </state>
       </provider>
     </entry>
