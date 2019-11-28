@@ -192,7 +192,8 @@ public class Data {
         }
     }
 
-    public void editProduct(String codeToEdit, String name, String category, double price, String availability, ImageIcon image){
+    public void editProduct(String codeToEdit, String name, String category, double price, String availability,
+                            ImageIcon image){
         try {
             for (Product o: products){
                 if (codeToEdit.equals(o.getCode())){

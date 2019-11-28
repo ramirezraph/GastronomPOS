@@ -3,6 +3,7 @@ package views;
 import common.Data;
 import common.Product;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -12,7 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
@@ -48,6 +51,8 @@ public class MenuSettingsForm extends JDialog {
     private DefaultTableModel tblProductModel;
 
     private final DecimalFormat twoDecimalFormat = new DecimalFormat(".00");
+
+    private File imageFile;
 
     public MenuSettingsForm(){
         this("",new Data());
@@ -317,9 +322,17 @@ public class MenuSettingsForm extends JDialog {
                         try {
                             if (res == JFileChooser.APPROVE_OPTION){
                                 File file = fileChooser.getSelectedFile();
-//                                imgHolder.setIcon(new ImageIcon(new ImageIcon(file.getPath()).getImage()
-//                                        .getScaledInstance(100, 100,Image.SCALE_DEFAULT)));
-                                imgHolder.setIcon(new ImageIcon(file.getPath()));
+                                imageFile = fileChooser.getSelectedFile();
+                                // resizing image
+                                BufferedImage image = null;
+                                try {
+                                    image = ImageIO.read(file);
+                                    Image dimg = image.getScaledInstance(imgHolder.getWidth(), imgHolder.getHeight(),
+                                            Image.SCALE_SMOOTH);
+                                    imgHolder.setIcon(new ImageIcon(dimg));
+                                } catch (IOException ex){
+                                    ex.printStackTrace();
+                                }
                             } else {
                                 System.out.println("You must select one image to be the reference.");
                             }
@@ -436,7 +449,7 @@ public class MenuSettingsForm extends JDialog {
                             } // otherwise continue.
                             image = new ImageIcon(".\\src\\resources\\placeholder_100.jpg");
                         } else {
-                            image = new ImageIcon(imgHolder.getIcon().toString());
+                            image = new ImageIcon(imageFile.getPath());
                         }
 
                         try { // check if price is number
@@ -474,6 +487,11 @@ public class MenuSettingsForm extends JDialog {
                         Product newProduct = new Product(generatedString,name,category,price,status, image);
                         data.addProduct(newProduct);
                         createProductTable(data, 1);
+
+
+                        // RESET
+
+                        imageFile = null;
 
                         txtProductName.setText("");
                         cmbProductCategory.setSelectedIndex(0);
@@ -804,7 +822,19 @@ public class MenuSettingsForm extends JDialog {
                         cmbProductCategory.setSelectedItem(tableModel.getValueAt(selectedRowIndex, 1).toString());
                         txtProductPrice.setText(tableModel.getValueAt(selectedRowIndex, 2).toString());
                         cmbProductAvailability.setSelectedItem((tableModel.getValueAt(selectedRowIndex, 3).toString()));
-                        imgHolder.setIcon(new ImageIcon(tableModel.getValueAt(selectedRowIndex, 4).toString()));
+
+                        // resizing image
+                        BufferedImage image = null;
+                        try {
+                            File file = new File(tableModel.getValueAt(selectedRowIndex, 4).toString());
+                            image = ImageIO.read(file);
+                            Image dimg = image.getScaledInstance(imgHolder.getWidth(), imgHolder.getHeight(),
+                                    Image.SCALE_SMOOTH);
+                            imgHolder.setIcon(new ImageIcon(dimg));
+                        } catch (IOException ex){
+                            ex.printStackTrace();
+                        }
+
                         lblProductCode.setText(tableModel.getValueAt(selectedRowIndex, 5).toString());
 
                     }

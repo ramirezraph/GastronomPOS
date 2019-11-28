@@ -4,11 +4,15 @@ import common.ButtonColumn;
 import common.Data;
 import common.Product;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -948,8 +952,21 @@ public class MainForm extends JFrame {
         for (Product o: products){
             if (o.getCategory().equals(category)){
                 if (o.getAvailability().equals("Available")){
-                    Icon icon = o.getImage();
-                    Object[] newRow = {icon, o.getName(), o.getPrice(),
+
+                    // resizing image
+                    BufferedImage image = null;
+                    Icon icon = null;
+                    try {
+                        File file = new File(o.getImage().toString());
+                        image = ImageIO.read(file);
+                        Image dimg = image.getScaledInstance(100, 100,
+                                Image.SCALE_SMOOTH);
+                        icon = new ImageIcon(dimg);
+                    } catch (IOException ex){
+                        ex.printStackTrace();
+                    }
+
+                    Object[] newRow = {icon, o.getName(), twoDecimalFormat.format(o.getPrice()),
                             "Order"};
                     tblMenuModel.addRow(newRow);
                 }
