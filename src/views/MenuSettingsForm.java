@@ -52,7 +52,7 @@ public class MenuSettingsForm extends JDialog {
 
     private final DecimalFormat twoDecimalFormat = new DecimalFormat(".00");
 
-    private File imageFile;
+    private File imageFile = null;
 
     public MenuSettingsForm(){
         this("",new Data());
@@ -569,7 +569,7 @@ public class MenuSettingsForm extends JDialog {
                     @Override
                     public void actionPerformed(ActionEvent e) {
 
-                        ImageIcon image;
+                        ImageIcon image = null;
 
                         if (txtProductName.getText().isEmpty() || txtProductPrice.getText().isEmpty() || cmbProductCategory.getSelectedIndex() == 0
                                 || cmbProductAvailability.getSelectedIndex() == 0){
@@ -586,8 +586,17 @@ public class MenuSettingsForm extends JDialog {
                                 return;
                             } // otherwise continue.
                             image = new ImageIcon(".\\src\\resources\\placeholder_100.jpg");
+
                         } else {
-                            image = new ImageIcon(imageFile.getPath());
+                            try {
+                                image = new ImageIcon(imageFile.getPath());
+                            } catch (NullPointerException ex){ // empty icon
+                                for (Product o: data.getProductList()){
+                                    if (o.getCode().equals(lblProductCode.getText())){
+                                        image = new ImageIcon(o.getImage().toString());
+                                    }
+                                }
+                            }
                         }
 
                         try { // check if price is number
@@ -624,7 +633,11 @@ public class MenuSettingsForm extends JDialog {
 
                         data.editProduct(lblProductCode.getText(), name, category, price, status, image);
 
+                        // RESET
+
                         createProductTable(data, 1);
+
+                        imageFile = null;
 
                         lblProductCode.setText("");
                         txtProductName.setText("");

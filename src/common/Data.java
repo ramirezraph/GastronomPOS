@@ -62,7 +62,14 @@ public class Data {
     public void deleteAccount(String usernameToDelete){
         try {
             for (Account o: accounts){
+
                 if (usernameToDelete.equals(o.getUsername())){
+
+                    if (o.getLevel().equals("Administrator")){
+                        DialogOk dialogOk = new DialogOk("Delete Failed", "Administrator account cannot be deleted.");
+                        dialogOk.setVisible(true);
+                        return;
+                    }
 
                     DialogYesNo dialogYesNo = new DialogYesNo("Confirm", "Are you sure you want to delete this " +
                             "account?");
@@ -70,6 +77,9 @@ public class Data {
 
                     if (dialogYesNo.getYesNo()){
                         accounts.remove(o);
+
+                        DialogOk dialogOk = new DialogOk("Delete Success", "Account deleted successfully.");
+                        dialogOk.setVisible(true);
                     }
                     return;
                 }
