@@ -55,8 +55,10 @@ public class MainForm extends JFrame {
     private static DefaultTableModel tblOrderListModel;
 
     public static JLabel lblTotalAmount;
-    private JLabel lblDiscountAmount;
-    private JLabel lblBalanceAmount;
+    public static JLabel lblDiscountAmount;
+    public static JLabel lblBalanceAmount;
+    private JTextField txtPayment;
+    private JLabel lblChangeAmount;
 
     public MainForm(){
         this("No Name", new Data());
@@ -546,6 +548,40 @@ public class MainForm extends JFrame {
         pnlRight.add(lblOrderList);
         lblOrderList.setBounds(20,14,128,33);
 
+        JButton btnReset = new JButton("Reset");
+        btnReset.setForeground(Color.WHITE);
+        btnReset.setBackground(color_darkgray);
+        btnReset.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        btnReset.setBorder(BorderFactory.createEmptyBorder());
+        btnReset.setFocusable(false);
+        pnlRight.add(btnReset);
+        btnReset.setBounds(406,13,129,35);
+        btnReset.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                        DialogYesNo dialogYesNo = new DialogYesNo("Confirm", "Are you sure you want to reset?");
+                        dialogYesNo.setVisible(true);
+
+                        if (dialogYesNo.getYesNo()){
+                            // Remove ALL item from Order List
+                            DATA.getOrderList().removeIf(o -> true);
+                            generateOrderList(DATA);
+
+                            CALCULATOR_TEXT = "";
+
+                            lblTotalAmount.setText("₱00.00");
+                            lblBalanceAmount.setText("₱00.00");
+                            txtPayment.setText("");
+                            lblChangeAmount.setText("");
+                            lblDiscountAmount.setText("₱00.00");
+                        }
+
+                    }
+                }
+        );
+
         JPanel pnlOrderList = new JPanel();
         pnlOrderList.setLayout(null);
         pnlOrderList.setBackground(Color.WHITE);
@@ -704,7 +740,7 @@ public class MainForm extends JFrame {
         pnlRight.add(lblPayment);
         lblPayment.setBounds(20, 719, 100, 27);
 
-        JTextField txtPayment = new JTextField();
+        txtPayment = new JTextField();
         txtPayment.setEditable(false);
         txtPayment.setFont(new Font("Segoe UI", Font.BOLD, 30));
         txtPayment.setForeground(color_title_gray);
@@ -721,7 +757,7 @@ public class MainForm extends JFrame {
         pnlRight.add(lblChange);
         lblChange.setBounds(20, 830, 100, 27);
 
-        JLabel lblChangeAmount = new JLabel();
+        lblChangeAmount = new JLabel();
         lblChangeAmount.setFont(new Font("Segoe UI", Font.BOLD, 30));
         lblChangeAmount.setForeground(new Color(90,167,226));
         pnlRight.add(lblChangeAmount);
@@ -742,6 +778,9 @@ public class MainForm extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         CALCULATOR_TEXT += "1";
                         txtPayment.setText(CALCULATOR_TEXT);
+
+                        lblChangeAmount.setText("");
+
                     }
                 }
         );
@@ -760,6 +799,9 @@ public class MainForm extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         CALCULATOR_TEXT += "2";
                         txtPayment.setText(CALCULATOR_TEXT);
+
+                        lblChangeAmount.setText("");
+
                     }
                 }
         );
@@ -778,6 +820,9 @@ public class MainForm extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         CALCULATOR_TEXT += "3";
                         txtPayment.setText(CALCULATOR_TEXT);
+
+                        lblChangeAmount.setText("");
+
                     }
                 }
         );
@@ -796,6 +841,9 @@ public class MainForm extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         CALCULATOR_TEXT += "4";
                         txtPayment.setText(CALCULATOR_TEXT);
+
+                        lblChangeAmount.setText("");
+
                     }
                 }
         );
@@ -814,6 +862,9 @@ public class MainForm extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         CALCULATOR_TEXT += "5";
                         txtPayment.setText(CALCULATOR_TEXT);
+
+                        lblChangeAmount.setText("");
+
                     }
                 }
         );
@@ -832,6 +883,9 @@ public class MainForm extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         CALCULATOR_TEXT += "6";
                         txtPayment.setText(CALCULATOR_TEXT);
+
+                        lblChangeAmount.setText("");
+
                     }
                 }
         );
@@ -850,6 +904,9 @@ public class MainForm extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         CALCULATOR_TEXT += "7";
                         txtPayment.setText(CALCULATOR_TEXT);
+
+                        lblChangeAmount.setText("");
+
                     }
                 }
         );
@@ -868,6 +925,9 @@ public class MainForm extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         CALCULATOR_TEXT += "8";
                         txtPayment.setText(CALCULATOR_TEXT);
+
+                        lblChangeAmount.setText("");
+
                     }
                 }
         );
@@ -886,6 +946,9 @@ public class MainForm extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         CALCULATOR_TEXT += "9";
                         txtPayment.setText(CALCULATOR_TEXT);
+
+                        lblChangeAmount.setText("");
+
                     }
                 }
         );
@@ -904,6 +967,9 @@ public class MainForm extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         CALCULATOR_TEXT += "0";
                         txtPayment.setText(CALCULATOR_TEXT);
+
+                        lblChangeAmount.setText("");
+
                     }
                 }
         );
@@ -937,6 +1003,9 @@ public class MainForm extends JFrame {
                                 CALCULATOR_TEXT = noDecimalFormat.format(payment);
                             }
                             txtPayment.setText(CALCULATOR_TEXT);
+
+                            lblChangeAmount.setText("");
+
                         } catch (NumberFormatException ex){
                             System.out.println(ex);
                         }
@@ -973,6 +1042,9 @@ public class MainForm extends JFrame {
                                 CALCULATOR_TEXT = noDecimalFormat.format(payment);
                             }
                             txtPayment.setText(CALCULATOR_TEXT);
+
+                            lblChangeAmount.setText("");
+
                         } catch (NumberFormatException ex){
                             System.out.println(ex);
                         }
@@ -994,6 +1066,9 @@ public class MainForm extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         CALCULATOR_TEXT = "";
                         txtPayment.setText(CALCULATOR_TEXT);
+
+                        lblChangeAmount.setText("");
+
                     }
                 }
         );
@@ -1012,6 +1087,9 @@ public class MainForm extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         CALCULATOR_TEXT += ".";
                         txtPayment.setText(CALCULATOR_TEXT);
+
+                        lblChangeAmount.setText("");
+
                     }
                 }
         );
@@ -1032,6 +1110,9 @@ public class MainForm extends JFrame {
                             int length = CALCULATOR_TEXT.length();
                             CALCULATOR_TEXT = CALCULATOR_TEXT.substring(0,(length-1));
                             txtPayment.setText(CALCULATOR_TEXT);
+
+                            lblChangeAmount.setText("");
+
                         }
                     }
                 }
@@ -1045,6 +1126,36 @@ public class MainForm extends JFrame {
         btnEqualCal.setFocusable(false);
         pnlRight.add(btnEqualCal);
         btnEqualCal.setBounds(219,888, 84 , 90);
+        btnEqualCal.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                        if (txtPayment.getText().isEmpty()){
+                            DialogOk dialogOk = new DialogOk("Transaction Error","Incomplete transaction.");
+                            dialogOk.setVisible(true);
+                            return;
+                        }
+
+                        double balance = Double.parseDouble(lblBalanceAmount.getText().substring(1));
+                        double payment = Double.parseDouble(txtPayment.getText());
+
+                        if (balance <= 0){
+                            DialogOk dialogOk = new DialogOk("Transaction Error","Incomplete transaction.");
+                            dialogOk.setVisible(true);
+                            return;
+                        }
+
+                        double change = payment - balance;
+                        if (change < 0){
+                            DialogOk dialogOk = new DialogOk("Payment Error","Insufficient payment.");
+                            dialogOk.setVisible(true);
+                        } else {
+                            lblChangeAmount.setText("₱" + twoDecimalFormat.format(change));
+                        }
+                    }
+                }
+        );
 
         // End Calculator
 

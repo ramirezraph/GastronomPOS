@@ -46,14 +46,6 @@ public class Data {
         return orders;
     }
 
-    public int getOrderListSize(){
-        int counter = 0;
-        for (Order o: orders){
-            counter++;
-        }
-        return counter;
-    }
-
     public void addOrder(Order order){
         try {
             for (Order o: orders){
@@ -64,7 +56,7 @@ public class Data {
                 }
             }
             orders.add(order);
-            updateTotal();
+            getBalance();
         } catch (Exception e){
             System.out.println(e);
         }
@@ -87,7 +79,7 @@ public class Data {
 
                 if (codeToDelete.equals(o.getCode())){
                     orders.remove(o);
-                    updateTotal();
+                    getBalance();
                     return;
                 }
             }
@@ -98,9 +90,14 @@ public class Data {
         }
     }
 
-    public void updateTotal(){
+    public void getBalance(){
         // Update Total Amount
-        MainForm.lblTotalAmount.setText("₱" + twoDecimalFormat.format(getOrderTotal()));
+        double total = getOrderTotal();
+        MainForm.lblTotalAmount.setText("₱" + twoDecimalFormat.format(total));
+        // Update Balance
+        double discount = Double.parseDouble(MainForm.lblDiscountAmount.getText().substring(1));
+        double balance = total - discount;
+        MainForm.lblBalanceAmount.setText("₱" + twoDecimalFormat.format(balance));
     }
 
     public double getOrderTotal(){
