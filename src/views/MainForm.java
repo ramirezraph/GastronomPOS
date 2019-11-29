@@ -2,6 +2,7 @@ package views;
 
 import common.ButtonColumn;
 import common.Data;
+import common.Order;
 import common.Product;
 
 import javax.imageio.ImageIO;
@@ -19,17 +20,16 @@ import java.util.ArrayList;
 
 public class MainForm extends JFrame {
 
-    private final Color color_darkgray = new Color(43,43,43);
+    private static final Color color_darkgray = new Color(43,43,43);
     private final Color color_lightergray = new Color(220,218,215);
-    private final Color color_white = new Color(235, 230, 224);
+    private static final Color color_white = new Color(235, 230, 224);
     private final Color color_red = new Color(228,52,52);
     private final Color color_gray = new Color(138,138,138);
     private final Color color_darkergray = new Color(90,90,90);
     private final Color color_jungle = new Color(72,151,164);
     private final Color color_blue = new Color(125,160,213);
 
-
-    private final Color color_border_lightgray = new Color(200,200,200);
+    private static final Color color_border_lightgray = new Color(200,200,200);
     private final Color color_title_gray = new Color(90,90,90);
 
     // Components
@@ -44,15 +44,19 @@ public class MainForm extends JFrame {
 
     private String CALCULATOR_TEXT;
 
-    private DecimalFormat twoDecimalFormat = new DecimalFormat(".00");
-    private DecimalFormat noDecimalFormat = new DecimalFormat("00");
+    private static DecimalFormat twoDecimalFormat = new DecimalFormat(".00");
+    private static DecimalFormat noDecimalFormat = new DecimalFormat("00");
 
     private JPanel pnlPOSMenu;
-    private JPanel pnlDessertMenu;
-    private JPanel pnlDrinksMenu;
-    private JPanel pnlOthersMenu;
     private JTable tblMenu;
     private DefaultTableModel tblMenuModel;
+
+    private static JTable tblOrderList;
+    private static DefaultTableModel tblOrderListModel;
+
+    public static JLabel lblTotalAmount;
+    private JLabel lblDiscountAmount;
+    private JLabel lblBalanceAmount;
 
     public MainForm(){
         this("No Name", new Data());
@@ -517,6 +521,15 @@ public class MainForm extends JFrame {
         pnlPOSMenu.add(spMenu);
         spMenu.setBounds(0,0,833,725);
 
+        tblMenu.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        clearOrderListSelection();
+                    }
+                }
+        );
+
 
         // Right Side
 
@@ -537,10 +550,27 @@ public class MainForm extends JFrame {
         pnlOrderList.setLayout(null);
         pnlOrderList.setBackground(Color.WHITE);
         pnlOrderList.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(color_border_lightgray, 1),
+                BorderFactory.createLineBorder(color_white, 1),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         pnlRight.add(pnlOrderList);
         pnlOrderList.setBounds(0, 57, 556, 408);
+
+        tblOrderList = new JTable();
+
+        generateOrderList(DATA);
+
+        JScrollPane spOrderList = new JScrollPane(tblOrderList);
+        pnlOrderList.add(spOrderList);
+        spOrderList.setBounds(0,0,556,408);
+
+        tblOrderList.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        clearMenuSelection();
+                    }
+                }
+        );
 
         JLabel btnQty = new JLabel();
         btnQty.setIcon(new ImageIcon(".\\src\\resources\\btnQty.png"));
@@ -548,6 +578,39 @@ public class MainForm extends JFrame {
         btnQty.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
         pnlRight.add(btnQty);
         btnQty.setBounds(12, 495, 195, 45);
+        btnQty.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+
+                        int rowIndex = tblOrderList.getSelectedRow();
+
+                        String productCode = ((DefaultTableModel)tblOrderList.getModel()).getValueAt(rowIndex, 4).toString();
+                        String productName = ((DefaultTableModel)tblOrderList.getModel()).getValueAt(rowIndex, 0).toString();
+                        Double productPrice = Double.parseDouble(((DefaultTableModel)tblOrderList.getModel())
+                                        .getValueAt(rowIndex,1).toString().substring(1));
+                        int productQty = Integer.parseInt(((DefaultTableModel)tblOrderList.getModel()).getValueAt(rowIndex, 2).toString());
+                        String imagePath = "";
+                        for (Product o: DATA.getProductList()){
+                            if (o.getCode().equals(productCode)){
+                                imagePath = o.getImage().toString();
+                            }
+                        }
+
+                        DialogEditOrderQuantity dialogEditOrderQuantity = new DialogEditOrderQuantity(DATA, productCode, imagePath, productName,
+                                productPrice, productQty);
+                        dialogEditOrderQuantity.setVisible(true);
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                    }
+                }
+        );
 
         JLabel btnDeleteItemFromList = new JLabel();
         btnDeleteItemFromList.setIcon(new ImageIcon(".\\src\\resources\\btnDelete.png"));
@@ -555,6 +618,32 @@ public class MainForm extends JFrame {
         btnDeleteItemFromList.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
         pnlRight.add(btnDeleteItemFromList);
         btnDeleteItemFromList.setBounds(12, 552, 195, 45);
+        btnDeleteItemFromList.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        int selectedRowIndex = tblOrderList.getSelectedRow();
+                        if (selectedRowIndex < 0){
+                            DialogOk dialogOk = new DialogOk("Delete Error", "Please select an item.");
+                            dialogOk.setVisible(true);
+                            return;
+                        }
+
+                        DefaultTableModel tableModel = (DefaultTableModel) tblOrderList.getModel();
+                        String codeToDelete = tableModel.getValueAt(selectedRowIndex, 4).toString();
+                        DATA.deleteOrder(codeToDelete);
+                        generateOrderList(DATA);
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                    }
+                }
+        );
 
         JLabel lblTotal = new JLabel("Total:");
         lblTotal.setFont(new Font("Segoe UI", Font.PLAIN, 25));
@@ -562,8 +651,8 @@ public class MainForm extends JFrame {
         pnlRight.add(lblTotal);
         lblTotal.setBounds(234, 497, 85, 47);
 
-        JLabel lblTotalAmount = new JLabel();
-        lblTotalAmount.setText("₱253.70");
+        lblTotalAmount = new JLabel();
+        lblTotalAmount.setText("₱00.00");
         lblTotalAmount.setFont(new Font("Segoe UI", Font.PLAIN, 25));
         lblTotalAmount.setForeground(color_darkgray);
         pnlRight.add(lblTotalAmount);
@@ -575,8 +664,8 @@ public class MainForm extends JFrame {
         pnlRight.add(lblDiscount);
         lblDiscount.setBounds(234, 553, 85, 47);
 
-        JLabel lblDiscountAmount = new JLabel();
-        lblDiscountAmount.setText("₱53.50");
+        lblDiscountAmount = new JLabel();
+        lblDiscountAmount.setText("₱00.00");
         lblDiscountAmount.setFont(new Font("Segoe UI", Font.PLAIN, 25));
         lblDiscountAmount.setForeground(color_darkgray);
         pnlRight.add(lblDiscountAmount);
@@ -588,8 +677,8 @@ public class MainForm extends JFrame {
         pnlRight.add(lblBalance);
         lblBalance.setBounds(20, 625, 68, 27);
 
-        JLabel lblBalanceAmount = new JLabel();
-        lblBalanceAmount.setText("₱200.20");
+        lblBalanceAmount = new JLabel();
+        lblBalanceAmount.setText("₱00.00");
         lblBalanceAmount.setFont(new Font("Segoe UI", Font.BOLD, 30));
         lblBalanceAmount.setForeground(color_red);
         pnlRight.add(lblBalanceAmount);
@@ -945,7 +1034,6 @@ public class MainForm extends JFrame {
 
         // End Calculator
 
-
         // End Right Side
     }
 
@@ -975,13 +1063,14 @@ public class MainForm extends JFrame {
                         ex.printStackTrace();
                     }
 
-                    Object[] newRow = {icon, o.getName(), twoDecimalFormat.format(o.getPrice()),
+                    Object[] newRow = {icon, o.getName(), "₱"+twoDecimalFormat.format(o.getPrice()),
                             "Order", o.getCode()};
                     tblMenuModel.addRow(newRow);
                 }
             }
         }
 
+        tblMenu.setSelectionBackground(new Color(242,242,242));
         tblMenu.setModel(tblMenuModel);
         tblMenu.setGridColor(color_border_lightgray);
         tblMenu.setFont(new Font("Segoe UI", Font.PLAIN, 20));
@@ -1002,10 +1091,10 @@ public class MainForm extends JFrame {
         Action OrderEvent = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                JTable table = (JTable)e.getSource();
-                int rowIndex = Integer.valueOf(e.getActionCommand());
-                System.out.println(rowIndex);
 
+                clearOrderListSelection();
+
+                int rowIndex = Integer.valueOf(e.getActionCommand());
 
                 String imagePath = "";
                 String productCode = ((DefaultTableModel)tblMenu.getModel()).getValueAt(rowIndex, 4).toString();
@@ -1016,20 +1105,69 @@ public class MainForm extends JFrame {
                 }
                 String productName = ((DefaultTableModel)tblMenu.getModel()).getValueAt(rowIndex, 1).toString();
                 Double productPrice = Double.parseDouble(((DefaultTableModel)tblMenu.getModel()).getValueAt(rowIndex,
-                        2).toString());
+                        2).toString().substring(1));
 
-                QuantityForm quantityForm = new QuantityForm(imagePath, productName, productPrice);
-                quantityForm.setVisible(true);
+                DialogQuantity dialogQuantity = new DialogQuantity(data, productCode, imagePath, productName, productPrice);
+                dialogQuantity.setVisible(true);
             }
         };
 
         ButtonColumn buttonColumn = new ButtonColumn(tblMenu, OrderEvent, 3);
 
-        // Hides Column Image
+        // Modify Column
         TableColumnModel tableColumnModel = tblMenu.getColumnModel();
         tableColumnModel.removeColumn(tableColumnModel.getColumn(4)); // hides code
 
+    }
 
+    public void clearMenuSelection(){
+        tblMenu.getSelectionModel().clearSelection();
+        tblMenu.getColumnModel().getSelectionModel().clearSelection();
+    }
+
+    public static void generateOrderList(Data data){
+        String[] colsMenu = {"Item Name", "Each Price", "QTY", "Price", ""};
+        tblOrderListModel = new DefaultTableModel(colsMenu, 0);
+
+        ArrayList<Order> orders = data.getOrderList();
+        for (Order o: orders){
+            Object[] newRow = {o.getName(), "₱"+twoDecimalFormat.format(o.getEachPrice()), o.getQuantity(),
+                    "₱"+twoDecimalFormat.format(o.getTotal()), o.getCode()};
+            tblOrderListModel.addRow(newRow);
+        }
+
+        tblOrderList.setSelectionBackground(color_darkgray);
+        tblOrderList.setSelectionForeground(color_white);
+        tblOrderList.setModel(tblOrderListModel);
+        tblOrderList.setGridColor(color_border_lightgray);
+        tblOrderList.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+        tblOrderList.setRowHeight(40);
+        tblOrderList.setGridColor(Color.WHITE);
+        tblOrderList.setBorder(BorderFactory.createEmptyBorder());
+        tblOrderList.setDefaultEditor(Object.class, null); // editable = false
+        tblOrderList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblOrderList.setFocusable(false);
+        tblOrderList.setShowHorizontalLines(false);
+        tblOrderList.setShowVerticalLines(false);
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        tblOrderList.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tblOrderList.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tblOrderList.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tblOrderList.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+
+        // Modify Column
+        TableColumnModel tableColumnModel = tblOrderList.getColumnModel();
+        tableColumnModel.removeColumn(tableColumnModel.getColumn(4)); // hides code
+        tableColumnModel.getColumn(0).setPreferredWidth(150);
+        tableColumnModel.getColumn(2).setPreferredWidth(20);
+
+    }
+
+    public void clearOrderListSelection(){
+        tblOrderList.getSelectionModel().clearSelection();
+        tblOrderList.getColumnModel().getSelectionModel().clearSelection();
     }
 
     private void createTransactionLogGUI(){

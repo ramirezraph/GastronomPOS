@@ -2,9 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c40b2ec-469d-4ff8-ae7e-04d63551f801" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/common/Order.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/QuantityForm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/DialogEditOrderQuantity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/common/Data.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/common/Data.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/AccountSettingsForm.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MainForm$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MainForm$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MainForm$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MainForm$10.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MainForm$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MainForm$11.class" afterDir="false" />
@@ -38,15 +50,32 @@
       <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MainForm$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MainForm$8.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MainForm$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MainForm$9.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MainForm.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MainForm.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$11.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$12.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$13.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$14.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$15.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$15.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$16.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$16.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm$9.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/MenuSettingsForm.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/QuantityForm$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/QuantityForm$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/QuantityForm$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/QuantityForm$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/QuantityForm.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/AccountSettingsForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/AccountSettingsForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/MainForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/MainForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/MenuSettingsForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/MenuSettingsForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/QuantityForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/DialogQuantity.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -66,26 +95,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/MainForm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="953" column="58" lean-forward="true" selection-start-line="953" selection-start-column="58" selection-end-line="953" selection-end-column="58" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/common/ButtonColumn.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2544">
-              <caret line="159" column="9" selection-start-line="159" selection-start-column="9" selection-end-line="159" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/AccountSettingsForm.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
-              <caret line="704" lean-forward="true" selection-start-line="704" selection-end-line="704" />
+            <state relative-caret-position="371">
+              <caret line="663" column="34" lean-forward="true" selection-start-line="663" selection-start-column="34" selection-end-line="663" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -93,17 +104,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/common/Data.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="47" column="42" lean-forward="true" selection-start-line="47" selection-start-column="42" selection-end-line="47" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/QuantityForm.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="52" column="34" lean-forward="true" selection-start-line="52" selection-start-column="34" selection-end-line="52" selection-end-column="34" />
+            <state relative-caret-position="416">
+              <caret line="59" column="30" selection-start-line="59" selection-start-column="30" selection-end-line="59" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -111,26 +113,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/common/Order.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="12" column="35" lean-forward="true" selection-start-line="12" selection-start-column="35" selection-end-line="12" selection-end-column="35" />
+            <state relative-caret-position="304">
+              <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/common/Account.java">
+        <entry file="file://$PROJECT_DIR$/src/views/DialogQuantity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="35" column="20" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="20" />
+            <state relative-caret-position="320">
+              <caret line="32" column="26" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="89" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/MenuSettingsForm.java">
+        <entry file="file://$PROJECT_DIR$/src/views/DialogEditOrderQuantity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="321" column="29" lean-forward="true" selection-start-line="321" selection-start-column="29" selection-end-line="321" selection-end-column="29" />
+            <state relative-caret-position="371">
+              <caret line="157" column="57" lean-forward="true" selection-start-line="157" selection-start-column="57" selection-end-line="157" selection-end-column="57" />
             </state>
           </provider>
         </entry>
@@ -146,36 +148,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>btnPoi</find>
-      <find>btnMain</find>
-      <find>filter</find>
-      <find>Scroll</find>
-      <find>gene</find>
-      <find>btnClose</find>
-      <find>REsizing</find>
-      <find>selectimage</find>
-      <find>System.ou</find>
-      <find>getSelectedFile</find>
-      <find>System.out</find>
-      <find>btnC</find>
-      <find>btnCreate</find>
-      <find>getPath</find>
-      <find>tbl</find>
-      <find>edit</find>
-      <find>editProd</find>
-      <find>btnCrea</find>
-      <find>generateMenu</find>
-      <find>delete</find>
-      <find>setHorizontalAlignment</find>
-      <find>compound</find>
-      <find>image</find>
-      <find>create</find>
-      <find>generate</find>
-      <find>img</find>
       <find>imgHolder</find>
       <find>Edit</find>
       <find>btnUpdate</find>
       <find>btnSelect</find>
+      <find>generateOr</find>
+      <find>setcellrende</find>
+      <find>selection</find>
+      <find>tblmenu</find>
+      <find>tblOr</find>
+      <find>clearS</find>
+      <find>data.add</find>
+      <find>twodecima</find>
+      <find>generate</find>
+      <find>lblTotal</find>
+      <find>generateme</find>
+      <find>lblDiscount</find>
+      <find>generatemenu</find>
+      <find>btnPoint</find>
+      <find>dispose</find>
+      <find>tblOrderList</find>
+      <find>getval</find>
+      <find>tb</find>
+      <find>getva</find>
+      <find>deleteProduct</find>
+      <find>create</find>
+      <find>createPo</find>
+      <find>btnDelete</find>
+      <find>buttoncol</find>
+      <find>btnQty</find>
+      <find>totalAmo</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -194,14 +196,16 @@
         <option value="$PROJECT_DIR$/src/common/Accounts.java" />
         <option value="$PROJECT_DIR$/src/views/LoginForm.java" />
         <option value="$PROJECT_DIR$/src/views/DialogOk.java" />
-        <option value="$PROJECT_DIR$/src/views/AccountSettingsForm.java" />
         <option value="$PROJECT_DIR$/src/common/ButtonColumn.java" />
         <option value="$PROJECT_DIR$/src/common/Product.java" />
-        <option value="$PROJECT_DIR$/src/views/MenuSettingsForm.java" />
-        <option value="$PROJECT_DIR$/src/views/MainForm.java" />
-        <option value="$PROJECT_DIR$/src/views/QuantityForm.java" />
         <option value="$PROJECT_DIR$/src/common/Order.java" />
+        <option value="$PROJECT_DIR$/src/views/MenuSettingsForm.java" />
+        <option value="$PROJECT_DIR$/src/views/AccountSettingsForm.java" />
         <option value="$PROJECT_DIR$/src/common/Data.java" />
+        <option value="$PROJECT_DIR$/src/views/QuantityForm.java" />
+        <option value="$PROJECT_DIR$/src/views/EditOrderQuantityForm.java" />
+        <option value="$PROJECT_DIR$/src/views/DialogEditOrderQuantity.java" />
+        <option value="$PROJECT_DIR$/src/views/MainForm.java" />
       </list>
     </option>
   </component>
@@ -375,6 +379,34 @@
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="right" id="Maven" order="7" weight="0.32995737" />
     </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24733475" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3290461" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.33547696" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39978564" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.3290461" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.4330118" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Theme Preview" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info anchor="right" id="Maven" order="7" weight="0.32995737" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -540,7 +572,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/common/ButtonColumn.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2544">
+        <state relative-caret-position="252">
           <caret line="159" column="9" selection-start-line="159" selection-start-column="9" selection-end-line="159" selection-end-column="9" />
         </state>
       </provider>
@@ -554,43 +586,57 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/AccountSettingsForm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="704" lean-forward="true" selection-start-line="704" selection-end-line="704" />
+        <state relative-caret-position="244">
+          <caret line="85" column="38" lean-forward="true" selection-start-line="85" selection-start-column="38" selection-end-line="85" selection-end-column="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/MenuSettingsForm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="321" column="29" lean-forward="true" selection-start-line="321" selection-start-column="29" selection-end-line="321" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/QuantityForm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="52" column="34" lean-forward="true" selection-start-line="52" selection-start-column="34" selection-end-line="52" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/Order.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="12" column="35" lean-forward="true" selection-start-line="12" selection-start-column="35" selection-end-line="12" selection-end-column="35" />
+        <state relative-caret-position="276">
+          <caret line="262" column="42" selection-start-line="262" selection-start-column="29" selection-end-line="262" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/common/Data.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="47" column="42" lean-forward="true" selection-start-line="47" selection-start-column="42" selection-end-line="47" selection-end-column="42" />
+        <state relative-caret-position="416">
+          <caret line="59" column="30" selection-start-line="59" selection-start-column="30" selection-end-line="59" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/EditOrderQuantityForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-209">
+          <caret line="14" column="23" lean-forward="true" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/Order.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/DialogQuantity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="32" column="26" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/DialogEditOrderQuantity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="157" column="57" lean-forward="true" selection-start-line="157" selection-start-column="57" selection-end-line="157" selection-end-column="57" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/MainForm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="953" column="58" lean-forward="true" selection-start-line="953" selection-start-column="58" selection-end-line="953" selection-end-column="58" />
+        <state relative-caret-position="371">
+          <caret line="663" column="34" lean-forward="true" selection-start-line="663" selection-start-column="34" selection-end-line="663" selection-end-column="34" />
         </state>
       </provider>
     </entry>

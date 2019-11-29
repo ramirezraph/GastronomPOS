@@ -1,5 +1,8 @@
 package views;
 
+import common.Data;
+import common.Order;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class QuantityForm extends JDialog {
+public class DialogQuantity extends JDialog {
 
     private final Color color_darkgray = new Color(43,43,43);
 
@@ -23,11 +26,11 @@ public class QuantityForm extends JDialog {
 
     public int quantity = 1;
 
-    public QuantityForm(){
-        this("","",0.00);
+    public DialogQuantity(){
+        this(new Data(),"","","",0.00);
     }
 
-    public QuantityForm(String image, String name, double price){
+    public DialogQuantity(Data data, String code, String image, String name, double price){
         setSize(793,388);
         setLayout(null);
         setLocationRelativeTo(null);
@@ -41,8 +44,6 @@ public class QuantityForm extends JDialog {
         pnlContainer.setBorder(BorderFactory.createLineBorder(Color.lightGray, 1));
         add(pnlContainer);
         pnlContainer.setBounds(0,0,793,388);
-
-
 
         imgHolder = new JLabel();
         imgHolder.setBackground(Color.WHITE);
@@ -146,6 +147,13 @@ public class QuantityForm extends JDialog {
                     @Override
                     public void actionPerformed(ActionEvent e) {
 
+                        int qty = Integer.parseInt(txtQuantity.getText());
+                        double total = qty * price;
+
+                        data.addOrder(new Order(code, name, price, qty, total));
+
+                        MainForm.generateOrderList(data);
+                        dispose();
                     }
                 }
         );
@@ -170,7 +178,7 @@ public class QuantityForm extends JDialog {
     }
 
     public static void main(String[] args) {
-        QuantityForm quantityForm = new QuantityForm();
-        quantityForm.setVisible(true);
+        DialogQuantity dialogQuantity = new DialogQuantity();
+        dialogQuantity.setVisible(true);
     }
 }

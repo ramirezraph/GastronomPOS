@@ -2,11 +2,15 @@ package common;
 
 import views.DialogOk;
 import views.DialogYesNo;
+import views.MainForm;
 
 import javax.swing.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Data {
+
+    private DecimalFormat twoDecimalFormat = new DecimalFormat(".00");
 
     private ArrayList<Account> accounts;
     private ArrayList<Product> products;
@@ -33,6 +37,7 @@ public class Data {
 
         // Orders
         orders = new ArrayList<>();
+//        orders.add(new Order("asd", "Mushroom Cake", 120.00, 2, 240.00));
     }
 
     // ORDERS
@@ -46,13 +51,26 @@ public class Data {
             for (Order o: orders){
                 if (order.getCode().equals(o.getCode())){
                     // item already exists
+                    addQuantity(order, o.getQuantity());
                     return;
                 }
             }
             orders.add(order);
+            updateTotal();
         } catch (Exception e){
             System.out.println(e);
         }
+    }
+
+    public void addQuantity(Order order, int oldQty){
+        int quantity = order.getQuantity();
+        quantity += oldQty;
+        double total = order.getEachPrice() * quantity;
+
+        Order newOrder = new Order(order.getCode(), order.getName(), order.getEachPrice(), quantity, total);
+        deleteOrder(order.getCode());
+        addOrder(newOrder);
+
     }
 
     public void deleteOrder(String codeToDelete){
@@ -60,14 +78,8 @@ public class Data {
             for (Order o: orders){
 
                 if (codeToDelete.equals(o.getCode())){
-
-                    DialogYesNo dialogYesNo = new DialogYesNo("Confirm", "Are you sure you want to remove this " +
-                            "item?");
-                    dialogYesNo.setVisible(true);
-
-                    if (dialogYesNo.getYesNo()){
-                        accounts.remove(o);
-                    }
+                    orders.remove(o);
+                    updateTotal();
                     return;
                 }
             }
@@ -76,6 +88,19 @@ public class Data {
         } catch (Exception e){
             System.out.println(e);
         }
+    }
+
+    public void updateTotal(){
+        // Update Total Amount
+        MainForm.lblTotalAmount.setText("₱" + twoDecimalFormat.format(getOrderTotal()));
+    }
+
+    public double getOrderTotal(){
+        double total = 0.00;
+        for (Order o: orders){
+            total += o.getTotal();
+        }
+        return total;
     }
 
     // ACCOUNTS
