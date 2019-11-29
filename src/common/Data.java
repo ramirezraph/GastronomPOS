@@ -46,6 +46,14 @@ public class Data {
         return orders;
     }
 
+    public int getOrderListSize(){
+        int counter = 0;
+        for (Order o: orders){
+            counter++;
+        }
+        return counter;
+    }
+
     public void addOrder(Order order){
         try {
             for (Order o: orders){

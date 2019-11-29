@@ -585,6 +585,12 @@ public class MainForm extends JFrame {
 
                         int rowIndex = tblOrderList.getSelectedRow();
 
+                        if (rowIndex < 0){
+                            DialogOk dialogOk = new DialogOk("Quantity Error.", "Please select an item.");
+                            dialogOk.setVisible(true);
+                            return;
+                        }
+
                         String productCode = ((DefaultTableModel)tblOrderList.getModel()).getValueAt(rowIndex, 4).toString();
                         String productName = ((DefaultTableModel)tblOrderList.getModel()).getValueAt(rowIndex, 0).toString();
                         Double productPrice = Double.parseDouble(((DefaultTableModel)tblOrderList.getModel())
@@ -622,16 +628,24 @@ public class MainForm extends JFrame {
                 new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        int selectedRowIndex = tblOrderList.getSelectedRow();
-                        if (selectedRowIndex < 0){
-                            DialogOk dialogOk = new DialogOk("Delete Error", "Please select an item.");
+                        int[] selectedRowIndex = tblOrderList.getSelectedRows();
+
+                        if (selectedRowIndex.length <= 0){
+                            DialogOk dialogOk = new DialogOk("Delete Error.", "Please select an item.");
                             dialogOk.setVisible(true);
                             return;
                         }
 
-                        DefaultTableModel tableModel = (DefaultTableModel) tblOrderList.getModel();
-                        String codeToDelete = tableModel.getValueAt(selectedRowIndex, 4).toString();
-                        DATA.deleteOrder(codeToDelete);
+                        for (int i = 0; i < selectedRowIndex.length; i++){
+                            if (selectedRowIndex[i] < 0){
+                                DialogOk dialogOk = new DialogOk("Delete Error", "Please select an item.");
+                                dialogOk.setVisible(true);
+                                return;
+                            }
+                            DefaultTableModel tableModel = (DefaultTableModel) tblOrderList.getModel();
+                            String codeToDelete = tableModel.getValueAt(selectedRowIndex[i], 4).toString();
+                            DATA.deleteOrder(codeToDelete);
+                        }
                         generateOrderList(DATA);
                     }
 
@@ -1145,7 +1159,7 @@ public class MainForm extends JFrame {
         tblOrderList.setGridColor(Color.WHITE);
         tblOrderList.setBorder(BorderFactory.createEmptyBorder());
         tblOrderList.setDefaultEditor(Object.class, null); // editable = false
-        tblOrderList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//        tblOrderList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblOrderList.setFocusable(false);
         tblOrderList.setShowHorizontalLines(false);
         tblOrderList.setShowVerticalLines(false);
