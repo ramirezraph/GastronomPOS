@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -950,7 +951,7 @@ public class MainForm extends JFrame {
 
     public void generateMenu(Data data, String category){
 
-        String[] colsMenu = {"", "Item", "Price", ""};
+        String[] colsMenu = {"", "Item", "Price", "", ""};
         tblMenuModel = new DefaultTableModel(colsMenu, 0){
             public Class getColumnClass(int column){
                 return getValueAt(0,column).getClass();
@@ -975,7 +976,7 @@ public class MainForm extends JFrame {
                     }
 
                     Object[] newRow = {icon, o.getName(), twoDecimalFormat.format(o.getPrice()),
-                            "Order"};
+                            "Order", o.getCode()};
                     tblMenuModel.addRow(newRow);
                 }
             }
@@ -1004,11 +1005,29 @@ public class MainForm extends JFrame {
 //                JTable table = (JTable)e.getSource();
                 int rowIndex = Integer.valueOf(e.getActionCommand());
                 System.out.println(rowIndex);
-                //((DefaultTableModel)table.getModel()).removeRow(modelRow);
+
+
+                String imagePath = "";
+                String productCode = ((DefaultTableModel)tblMenu.getModel()).getValueAt(rowIndex, 4).toString();
+                for (Product o: data.getProductList()){
+                    if (o.getCode().equals(productCode)){
+                        imagePath = o.getImage().toString();
+                    }
+                }
+                String productName = ((DefaultTableModel)tblMenu.getModel()).getValueAt(rowIndex, 1).toString();
+                Double productPrice = Double.parseDouble(((DefaultTableModel)tblMenu.getModel()).getValueAt(rowIndex,
+                        2).toString());
+
+                QuantityForm quantityForm = new QuantityForm(imagePath, productName, productPrice);
+                quantityForm.setVisible(true);
             }
         };
 
         ButtonColumn buttonColumn = new ButtonColumn(tblMenu, OrderEvent, 3);
+
+        // Hides Column Image
+        TableColumnModel tableColumnModel = tblMenu.getColumnModel();
+        tableColumnModel.removeColumn(tableColumnModel.getColumn(4)); // hides code
 
 
     }

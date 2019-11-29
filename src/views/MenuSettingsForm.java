@@ -594,6 +594,7 @@ public class MenuSettingsForm extends JDialog {
                                 for (Product o: data.getProductList()){
                                     if (o.getCode().equals(lblProductCode.getText())){
                                         image = new ImageIcon(o.getImage().toString());
+                                        System.out.println(image);
                                     }
                                 }
                             }

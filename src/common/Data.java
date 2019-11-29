@@ -10,6 +10,8 @@ public class Data {
 
     private ArrayList<Account> accounts;
     private ArrayList<Product> products;
+    private ArrayList<Order> orders;
+
 
     public Data() {
 
@@ -28,7 +30,55 @@ public class Data {
         products.add(new Product("KDGDF","Steak Frites", "Main", 130, "Available"));
         products.add(new Product("PYUGH","Roasted Duck Breast", "Main", 150, "Available"));
         products.add(new Product("QWEGD","Roasted Beef Breast", "Others", 150, "Available"));
+
+        // Orders
+        orders = new ArrayList<>();
     }
+
+    // ORDERS
+
+    public ArrayList<Order> getOrderList(){
+        return orders;
+    }
+
+    public void addOrder(Order order){
+        try {
+            for (Order o: orders){
+                if (order.getCode().equals(o.getCode())){
+                    // item already exists
+                    return;
+                }
+            }
+            orders.add(order);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public void deleteOrder(String codeToDelete){
+        try {
+            for (Order o: orders){
+
+                if (codeToDelete.equals(o.getCode())){
+
+                    DialogYesNo dialogYesNo = new DialogYesNo("Confirm", "Are you sure you want to remove this " +
+                            "item?");
+                    dialogYesNo.setVisible(true);
+
+                    if (dialogYesNo.getYesNo()){
+                        accounts.remove(o);
+                    }
+                    return;
+                }
+            }
+            DialogOk dialogOk = new DialogOk("Remove Failed", "Order does not exist.");
+            dialogOk.setVisible(true);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
+    // ACCOUNTS
 
     public ArrayList<Account> getAccountList(){
         return accounts;
