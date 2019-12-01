@@ -178,9 +178,4 @@ public class DialogEditOrderQuantity extends JDialog {
                 }
         );
     }
-
-    public static void main(String[] args) {
-        DialogEditOrderQuantity dialogEditOrderQuantity = new DialogEditOrderQuantity();
-        dialogEditOrderQuantity.setVisible(true);
-    }
 }

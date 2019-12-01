@@ -1,7 +1,5 @@
 package common;
 
-import views.MainForm;
-
 public class Sales {
 
     private String code;
@@ -12,7 +10,7 @@ public class Sales {
     private double percentage;
 
     public Sales(String code, String name, double price, double numberOfOrder) {
-        this(code, name,price,numberOfOrder, 0, 1);
+        this(code, name,price,numberOfOrder, (numberOfOrder*price), 1);
     }
 
     public Sales(String code, String name, double price, double numberOfOrder,
@@ -66,9 +64,7 @@ public class Sales {
     }
 
     public double getPercentage() {
-        double overallEarnings = MainForm.DATA.getTotalEarnings();
-
-        return (totalEarnings / overallEarnings * 100);
+        return percentage;
     }
 
     public void setPercentage(double percentage) {

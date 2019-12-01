@@ -491,8 +491,6 @@ public class MenuSettingsForm extends JDialog {
 
                         // RESET
 
-                        MainForm.refreshStatsData(data);
-
                         imageFile = null;
 
                         txtProductName.setText("");
@@ -513,8 +511,7 @@ public class MenuSettingsForm extends JDialog {
                         btnCancelCreate.setEnabled(false);
                         btnCancelCreate.setVisible(false);
 
-                        MainForm main = new MainForm(data.getAccountName("admin"),data);
-                        main.generateMenu(data, "Main");
+                        MainForm.generateMenu(data, "Main");
                     }
                 }
         );
@@ -928,10 +925,5 @@ public class MenuSettingsForm extends JDialog {
     public void clearTableSelection(){
         tblProducts.getSelectionModel().clearSelection();
         tblProducts.getColumnModel().getSelectionModel().clearSelection();
-    }
-
-    public static void main(String[] args) {
-        MenuSettingsForm menuSettingsForm = new MenuSettingsForm();
-        menuSettingsForm.setVisible(true);
     }
 }

@@ -62,10 +62,4 @@ public class DialogOk extends JDialog {
         });
 
     }
-
-    public static void main(String[] args) {
-        DialogOk dialogOk = new DialogOk();
-        dialogOk.setVisible(true);
-
-    }
 }

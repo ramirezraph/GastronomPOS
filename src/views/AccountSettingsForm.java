@@ -710,9 +710,4 @@ public class AccountSettingsForm extends JDialog {
         tblAccounts.getSelectionModel().clearSelection();
         tblAccounts.getColumnModel().getSelectionModel().clearSelection();
     }
-
-    public static void main(String[] args) {
-        AccountSettingsForm accountSettingsForm = new AccountSettingsForm();
-        accountSettingsForm.setVisible(true);
-    }
 }

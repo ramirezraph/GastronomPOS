@@ -85,10 +85,4 @@ public class DialogYesNo extends JDialog {
     public boolean getYesNo(){
         return isYes;
     }
-
-    public static void main(String[] args) {
-        DialogOk dialogOk = new DialogOk();
-        dialogOk.setVisible(true);
-
-    }
 }

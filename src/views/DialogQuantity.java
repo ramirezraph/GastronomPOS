@@ -176,9 +176,4 @@ public class DialogQuantity extends JDialog {
         );
 
     }
-
-    public static void main(String[] args) {
-        DialogQuantity dialogQuantity = new DialogQuantity();
-        dialogQuantity.setVisible(true);
-    }
 }

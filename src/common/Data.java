@@ -5,6 +5,7 @@ import views.DialogYesNo;
 import views.MainForm;
 
 import javax.swing.*;
+import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -43,7 +44,10 @@ public class Data {
 
         // Products
         sales = new ArrayList<>();
-//        sales.add(new Sales("ASD","Burger", 50.32, 50));
+        sales.add(new Sales("KSDWS","Trout Amandine", 120, 23));
+        sales.add(new Sales("UFGDF","Seared Diver Scallop", 139, 17));
+        sales.add(new Sales("KDGDF","Steak Frites", 130, 20));
+        sales.add(new Sales("QWEGD","Roasted Duck Breast", 150, 23));
 
         // Logs
         transactionlog = new ArrayList<>();
@@ -59,6 +63,57 @@ public class Data {
 //        transactionlog.add(new Log("12120194", "10", "5", "2019",
 //                "2:07 PM", "Administrator", "Burger 2x Squid 1x Pineapply 1x", 532.50,
 //                "30.50 - 2%", 600, 97.50));
+    }
+
+    public void FindBestSelling(){
+
+        String firstPlace = "";
+        String secondPlace = "";
+        String thirdPlace = "";
+
+        double first = 0;
+        for (Sales o: sales){
+            if (o.getNumberOfOrder() >= first){
+                first = o.getNumberOfOrder();
+                firstPlace = o.getName();
+            }
+        }
+        double second = 0;
+        for (Sales o: sales){
+            if (!o.getName().equals(firstPlace)){
+                if (o.getNumberOfOrder() >= second){
+                    second = o.getNumberOfOrder();
+                    secondPlace = o.getName();
+                }
+            }
+        }
+
+        double third = 0;
+        for (Sales o: sales){
+            if (!o.getName().equals(firstPlace) && !o.getName().equals(secondPlace)){
+                if (o.getNumberOfOrder() >= third){
+                    third = o.getNumberOfOrder();
+                    thirdPlace = o.getName();
+                }
+            }
+        }
+
+        for (Product o: products){
+            if (o.getName().equals(firstPlace)){
+                MainForm.imgProduct1stPlace.setIcon(new ImageIcon(new ImageIcon(o.getImage().toString()).getImage()
+                        .getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+                MainForm.lblProductName1stPlace.setText(o.getName());
+            } else if (o.getName().equals(secondPlace)){
+                MainForm.imgProduct2ndPlace.setIcon(new ImageIcon(new ImageIcon(o.getImage().toString()).getImage()
+                        .getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+                MainForm.lblProductName2ndPlace.setText(o.getName());
+            } else if (o.getName().equals(thirdPlace)){
+                MainForm.imgProduct3rdPlace.setIcon(new ImageIcon(new ImageIcon(o.getImage().toString()).getImage()
+                        .getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+                MainForm.lblProductName3rdPlace.setText(o.getName());
+            }
+        }
+
     }
 
     // TRANSACTION LOG
@@ -94,31 +149,41 @@ public class Data {
         return sales;
     }
 
-    public double getTotalEarnings(){
+    public void resetSalesList(){
+        sales = new ArrayList<>();
+
+        DialogOk dialogOk = new DialogOk("Reset Success", "Sales data has been reset.");
+        dialogOk.setVisible(true);
+
+    }
+
+    public double getTotalEarningsByLogs(){
         double total = 0;
         for (Log o: transactionlog){
             total += o.getTotal();
         }
         return total;
     }
+    public double getTotalEarningsBySales(){
+        double total = 0;
+        for (Sales o: sales){
+            total += o.getTotalEarnings();
+        }
+        return total;
+    }
+
 
     public void addToSales(Sales sale){
         for (Sales o: sales){
             if (o.getCode().equals(sale.getCode())){
                 // item already exists
 
-                double earnings = o.getTotalEarnings();
-                System.out.println(earnings);
-                double price = sale.getPrice();
-                System.out.println(price);
-                double qty = sale.getNumberOfOrder();
-                System.out.println(qty);
+                double price = o.getPrice();
+                double qty = o.getNumberOfOrder() + sale.getNumberOfOrder();
+                double totalearning = price * qty;
 
-                earnings += (price * qty);
-                System.out.println(earnings);
-
-                o.setNumberOfOrder(qty + o.getNumberOfOrder());
-                o.setTotalEarnings(earnings);
+                o.setNumberOfOrder(qty);
+                o.setTotalEarnings(totalearning);
                 return;
             }
         }

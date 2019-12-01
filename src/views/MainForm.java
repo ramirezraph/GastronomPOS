@@ -40,7 +40,7 @@ public class MainForm extends JFrame {
 
     public static Data DATA;
     private String USER_NAME;
-    private final JLabel lblUserName;
+    public static JLabel lblUserName;
 
     private String CALCULATOR_TEXT;
 
@@ -48,8 +48,8 @@ public class MainForm extends JFrame {
     private static DecimalFormat noDecimalFormat = new DecimalFormat("00");
 
     private JPanel pnlPOSMenu;
-    private JTable tblMenu;
-    private DefaultTableModel tblMenuModel;
+    private static JTable tblMenu;
+    private static DefaultTableModel tblMenuModel;
 
     private static JTable tblOrderList;
     private static DefaultTableModel tblOrderListModel;
@@ -69,6 +69,12 @@ public class MainForm extends JFrame {
 
     private static JTable tblTransactionLog;
     private static DefaultTableModel tblTransactionLogModel;
+    public static JLabel imgProduct1stPlace;
+    public static JLabel imgProduct2ndPlace;
+    public static JLabel imgProduct3rdPlace;
+    public static JLabel lblProductName1stPlace;
+    public static JLabel lblProductName2ndPlace;
+    public static JLabel lblProductName3rdPlace;
 
     public MainForm(){
         this("No Name", new Data());
@@ -456,17 +462,17 @@ public class MainForm extends JFrame {
         pnlTopContent.add(img1stPlace);
         img1stPlace.setBounds(312,703,288,107);
 
-        JLabel imgProduct1stPlace = new JLabel();
-        imgProduct1stPlace.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\placeholder_100.jpg").getImage()
-                .getScaledInstance(150, 150,Image.SCALE_SMOOTH)));
+        imgProduct1stPlace = new JLabel();
+        imgProduct1stPlace.setIcon(null);
         pnlTopContent.add(imgProduct1stPlace);
         imgProduct1stPlace.setBounds(382,579,150,150);
 
-        JLabel lblProductName1stPlace = new JLabel("Hawaiian Burger");
-        lblProductName1stPlace.setFont(new Font("Segoe UI", Font.PLAIN, 34));
+        lblProductName1stPlace = new JLabel();
+        lblProductName1stPlace.setFont(new Font("Segoe UI", Font.PLAIN, 21));
         lblProductName1stPlace.setForeground(color_lightergray);
+        lblProductName1stPlace.setHorizontalAlignment(JLabel.CENTER);
         pnlTopContent.add(lblProductName1stPlace);
-        lblProductName1stPlace.setBounds(329,817,255,46);
+        lblProductName1stPlace.setBounds(310,817,288,46);
 
 
         // SECOND PLACE
@@ -476,17 +482,17 @@ public class MainForm extends JFrame {
         pnlTopContent.add(img2ndPlace);
         img2ndPlace.setBounds(640,703,288,107);
 
-        JLabel imgProduct2ndPlace = new JLabel();
-        imgProduct2ndPlace.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\placeholder_100.jpg").getImage()
-                .getScaledInstance(150, 150,Image.SCALE_SMOOTH)));
+        imgProduct2ndPlace = new JLabel();
+        imgProduct2ndPlace.setIcon(null);
         pnlTopContent.add(imgProduct2ndPlace);
         imgProduct2ndPlace.setBounds(710,579,150,150);
 
-        JLabel lblProductName2ndPlace = new JLabel("Hawaiian Pizza");
-        lblProductName2ndPlace.setFont(new Font("Segoe UI", Font.PLAIN, 34));
+        lblProductName2ndPlace = new JLabel();
+        lblProductName2ndPlace.setFont(new Font("Segoe UI", Font.PLAIN, 21));
         lblProductName2ndPlace.setForeground(color_lightergray);
+        lblProductName2ndPlace.setHorizontalAlignment(JLabel.CENTER);
         pnlTopContent.add(lblProductName2ndPlace);
-        lblProductName2ndPlace.setBounds(670,817,255,46);
+        lblProductName2ndPlace.setBounds(639,817,288,46);
 
         // THIRD PLACE
 
@@ -495,17 +501,17 @@ public class MainForm extends JFrame {
         pnlTopContent.add(img3rdPlace);
         img3rdPlace.setBounds(968,703,288,107);
 
-        JLabel imgProduct3rdPlace = new JLabel();
-        imgProduct3rdPlace.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\placeholder_100.jpg").getImage()
-                .getScaledInstance(150, 150,Image.SCALE_SMOOTH)));
+        imgProduct3rdPlace = new JLabel();
+        imgProduct3rdPlace.setIcon(null);
         pnlTopContent.add(imgProduct3rdPlace);
         imgProduct3rdPlace.setBounds(1038,579,150,150);
 
-        JLabel lblProductName3rdPlace = new JLabel("Hawaiian Kikiam");
-        lblProductName3rdPlace.setFont(new Font("Segoe UI", Font.PLAIN, 34));
+        lblProductName3rdPlace = new JLabel();
+        lblProductName3rdPlace.setFont(new Font("Segoe UI", Font.PLAIN, 21));
         lblProductName3rdPlace.setForeground(color_lightergray);
+        lblProductName3rdPlace.setHorizontalAlignment(JLabel.CENTER);
         pnlTopContent.add(lblProductName3rdPlace);
-        lblProductName3rdPlace.setBounds(1001,817,255,46);
+        lblProductName3rdPlace.setBounds(968,817,288,46);
 
         // Background
         JLabel pnlBestSelling = new JLabel();
@@ -583,7 +589,7 @@ public class MainForm extends JFrame {
                 }
         );
 
-        JLabel lblStatistic = new JLabel("Statistics Data");
+        JLabel lblStatistic = new JLabel("App Data");
         lblStatistic.setForeground(color_darkgray);
         lblStatistic.setFont(new Font("Segoe UI", Font.PLAIN, 40));
         pnlBottomContent.add(lblStatistic);
@@ -714,6 +720,39 @@ public class MainForm extends JFrame {
                 }
         );
 
+        JButton btnResetSales = new JButton("RESET");
+        btnResetSales.setFocusable(false);
+        btnResetSales.setBackground(color_red);
+        btnResetSales.setForeground(Color.WHITE);
+        btnResetSales.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+        btnResetSales.setBorder(BorderFactory.createEmptyBorder());
+        pnlBottomContent.add(btnResetSales);
+        btnResetSales.setBounds(1148,346,223,39);
+        btnResetSales.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                        DialogYesNo dialogYesNo = new DialogYesNo("Confirm", "Are you sure you want to reset sales " +
+                                "data?");
+                        dialogYesNo.setVisible(true);
+
+                        if (dialogYesNo.getYesNo()){
+                            DATA.resetSalesList();
+                            generateSalesTable(DATA, "");
+
+                            DATA.FindBestSelling();
+
+                            lblProductName1stPlace.setText("");
+                            lblProductName2ndPlace.setText("");
+                            lblProductName3rdPlace.setText("");
+                            imgProduct1stPlace.setIcon(null);
+                            imgProduct2ndPlace.setIcon(null);
+                            imgProduct3rdPlace.setIcon(null);
+                        }
+                    }
+                }
+        );
         tblSales = new JTable();
 
         JScrollPane spSalesTable = new JScrollPane(tblSales);
@@ -755,7 +794,7 @@ public class MainForm extends JFrame {
     public static void refreshStatsData(Data data){
         lblNumberOfItem.setText(String.valueOf(data.getProductList().size()));
         lblNumberOfEmployee.setText(String.valueOf(data.getAccountList().size()));
-        lblTotalEarning.setText(String.valueOf("₱"+twoDecimalFormat.format(data.getTotalEarnings())));
+        lblTotalEarning.setText(String.valueOf("₱"+twoDecimalFormat.format(data.getTotalEarningsByLogs())));
     }
 
     private static void generateSalesTable(Data data, String search){
@@ -770,9 +809,9 @@ public class MainForm extends JFrame {
                 Object[] newRow = {o.getCode(), o.getName(), "₱"+twoDecimalFormat.format(o.getPrice()),
                         noDecimalFormat.format(o.getNumberOfOrder()),
                         "₱"+twoDecimalFormat.format(o.getTotalEarnings()),
-                        (twoDecimalFormat.format((o.getTotalEarnings() / data.getTotalEarnings() * 100)) + "%")};
+                        (twoDecimalFormat.format((o.getTotalEarnings() / data.getTotalEarningsBySales() * 100)) + "%")};
                 tblSalesModel.addRow(newRow);
-                o.setPercentage((o.getTotalEarnings() / data.getTotalEarnings() * 100));
+                o.setPercentage((o.getTotalEarnings() / data.getTotalEarningsBySales() * 100));
             }
         }
         tblSales.setModel(tblSalesModel);
@@ -795,6 +834,7 @@ public class MainForm extends JFrame {
         tblSales.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
         tblSales.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
 
+        data.FindBestSelling();
 
     }
 
@@ -919,7 +959,6 @@ public class MainForm extends JFrame {
                 }
         );
 
-
         // Right Side
 
         JPanel pnlRight = new JPanel();
@@ -948,7 +987,7 @@ public class MainForm extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
 
-                        DialogYesNo dialogYesNo = new DialogYesNo("Confirm", "Are you sure you want to reset?");
+                        DialogYesNo dialogYesNo = new DialogYesNo("Confirm Reset", "Click 'Yes' to continue.");
                         dialogYesNo.setVisible(true);
 
                         if (dialogYesNo.getYesNo()){
@@ -1017,7 +1056,7 @@ public class MainForm extends JFrame {
                         String productCode = ((DefaultTableModel)tblOrderList.getModel()).getValueAt(rowIndex, 4).toString();
                         String productName = ((DefaultTableModel)tblOrderList.getModel()).getValueAt(rowIndex, 0).toString();
                         Double productPrice = Double.parseDouble(((DefaultTableModel)tblOrderList.getModel())
-                                        .getValueAt(rowIndex,1).toString().substring(1));
+                                .getValueAt(rowIndex,1).toString().substring(1));
                         int productQty = Integer.parseInt(((DefaultTableModel)tblOrderList.getModel()).getValueAt(rowIndex, 2).toString());
                         String imagePath = "";
                         for (Product o: DATA.getProductList()){
@@ -1605,6 +1644,15 @@ public class MainForm extends JFrame {
                 new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
+
+                        try {
+                            double change = Double.parseDouble(lblChangeAmount.getText().substring(1));
+                        } catch (StringIndexOutOfBoundsException ex){ // no change amount
+                            DialogOk dialogOk = new DialogOk("Error", "Incomplete transaction.");
+                            dialogOk.setVisible(true);
+                            return;
+                        }
+
                         DialogYesNo dialogYesNo = new DialogYesNo("Confirm","Please click 'Yes' to continue.");
                         dialogYesNo.setVisible(true);
 
@@ -1628,7 +1676,7 @@ public class MainForm extends JFrame {
                             for(Order order: DATA.getOrderList()){
                                 itemordered.append(order.getName()).append(" ").append(order.getQuantity()).append("x").append(" ");
                             }
-                            double total = Double.parseDouble(lblTotalAmount.getText().substring(1));
+                            double total = Double.parseDouble(lblBalanceAmount.getText().substring(1));
                             String discount = lblDiscountAmount.getText().substring(1);
                             double payment = Double.parseDouble(txtPayment.getText());
                             double change = Double.parseDouble(lblChangeAmount.getText().substring(1));
@@ -1649,6 +1697,8 @@ public class MainForm extends JFrame {
                             }
 
                             generateSalesTable(DATA, "");
+
+                            btnReset.doClick();
                         }
 
                     }
@@ -1668,7 +1718,7 @@ public class MainForm extends JFrame {
         // End Right Side
     }
 
-    public void generateMenu(Data data, String category){
+    public static void generateMenu(Data data, String category){
         String[] colsMenu = {"", "Item", "Price", "", ""};
         tblMenuModel = new DefaultTableModel(colsMenu, 0){
             public Class getColumnClass(int column){
@@ -1797,7 +1847,7 @@ public class MainForm extends JFrame {
 
     }
 
-    public void clearOrderListSelection(){
+    public static void clearOrderListSelection(){
         tblOrderList.getSelectionModel().clearSelection();
         tblOrderList.getColumnModel().getSelectionModel().clearSelection();
     }
@@ -2003,15 +2053,15 @@ public class MainForm extends JFrame {
 
     private static void generateTransactionTable(Data data, int filterMode, String month, String day){
 
-        String[] colsLog = {"ID","Date of Purchase", "Staff-in-Charge", "Item/s Ordered" , "Total Price", "Discount %",
-                    "Payment", "Change"};
+        String[] colsLog = {"ID","Date of Purchase", "Staff-in-Charge", "Item/s Ordered" , "Discount", "Total Price",
+                "Payment", "Change"};
         tblTransactionLogModel = new DefaultTableModel(colsLog, 0);
         for (Log o: data.getTransactionLog()){
             switch (filterMode){
                 case 1: { // no filter
                     String dateOfPurchase = o.getMonthOfPurchase() + "/" + o.getDayOfPurchase() + "/" + o.getYearOfPurchase();
-                    Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(), "₱"+twoDecimalFormat.format(o.getTotal()),
-                            "₱"+o.getDiscount(), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
+                    Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(),"₱"+o.getDiscount(),
+                            "₱"+twoDecimalFormat.format(o.getTotal()), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
                     tblTransactionLogModel.addRow(newRow);
                     break;
                 } case 2: { // month filter
@@ -2302,11 +2352,5 @@ public class MainForm extends JFrame {
                     }
                 }
         );
-    }
-
-
-    public static void main(String[] args) {
-        MainForm mainForm = new MainForm();
-        mainForm.setVisible(true);
     }
 }
