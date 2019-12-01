@@ -15,6 +15,7 @@ public class Data {
     private ArrayList<Account> accounts;
     private ArrayList<Product> products;
     private ArrayList<Order> orders;
+    private ArrayList<Sales> sales;
 
 
     public Data() {
@@ -38,6 +39,41 @@ public class Data {
         // Orders
         orders = new ArrayList<>();
 //        orders.add(new Order("asd", "Mushroom Cake", 120.00, 2, 240.00));
+
+        // Products
+        sales = new ArrayList<>();
+//        sales.add(new Sales("ASD","Burger", 50.32, 50));
+    }
+
+    // SALES
+
+    public ArrayList<Sales> getSalesList(){
+        return sales;
+    }
+
+    public double getTotalEarnings(){
+        double total = 0;
+        for (Sales o: sales){
+            total += o.getTotalEarnings();
+        }
+        return total;
+    }
+
+    public void addToSales(Sales sale){
+        for (Sales o: sales){
+            if (o.getCode().equals(sale.getCode())){
+                // item already exists
+
+                double price = o.getPrice();
+                double qty = o.getNumberOfOrder() + sale.getNumberOfOrder();
+                double totalearning = price * qty;
+
+                o.setNumberOfOrder(qty);
+                o.setTotalEarnings(totalearning);
+                return;
+            }
+        }
+        sales.add(sale);
     }
 
     // ORDERS
@@ -56,7 +92,9 @@ public class Data {
                 }
             }
             orders.add(order);
+            MainForm.lblDiscountAmount.setText("₱00.00");
             getBalance();
+
         } catch (Exception e){
             System.out.println(e);
         }
@@ -79,6 +117,7 @@ public class Data {
 
                 if (codeToDelete.equals(o.getCode())){
                     orders.remove(o);
+                    MainForm.lblDiscountAmount.setText("₱00.00");
                     getBalance();
                     return;
                 }
@@ -98,6 +137,8 @@ public class Data {
         double discount = Double.parseDouble(MainForm.lblDiscountAmount.getText().substring(1));
         double balance = total - discount;
         MainForm.lblBalanceAmount.setText("₱" + twoDecimalFormat.format(balance));
+
+        MainForm.lblChangeAmount.setText("");
     }
 
     public double getOrderTotal(){

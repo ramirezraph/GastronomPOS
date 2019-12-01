@@ -1,9 +1,6 @@
 package views;
 
-import common.ButtonColumn;
-import common.Data;
-import common.Order;
-import common.Product;
+import common.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -44,7 +41,7 @@ public class MainForm extends JFrame {
 
     private String CALCULATOR_TEXT;
 
-    private static DecimalFormat twoDecimalFormat = new DecimalFormat(".00");
+    private static DecimalFormat twoDecimalFormat = new DecimalFormat("00.00");
     private static DecimalFormat noDecimalFormat = new DecimalFormat("00");
 
     private JPanel pnlPOSMenu;
@@ -57,8 +54,16 @@ public class MainForm extends JFrame {
     public static JLabel lblTotalAmount;
     public static JLabel lblDiscountAmount;
     public static JLabel lblBalanceAmount;
+    public static JLabel lblChangeAmount;
+
     private JTextField txtPayment;
-    private JLabel lblChangeAmount;
+
+    private static JTable tblSales;
+    private static DefaultTableModel tblSalesModel;
+    private static JLabel lblTotalEarning;
+    private static JLabel lblNumberOfItem;
+    private static JLabel lblNumberOfEmployee;
+
 
     public MainForm(){
         this("No Name", new Data());
@@ -206,6 +211,8 @@ public class MainForm extends JFrame {
 
                 pnlSystemSettings.setVisible(false);
                 pnlSystemSettings.setEnabled(false);
+
+                refreshStatsData(data);
 
             }
         });
@@ -394,6 +401,7 @@ public class MainForm extends JFrame {
     }
 
     private void createDashboardGUI(){
+
         pnlDashboard = new JPanel();
         pnlDashboard.setBackground(Color.WHITE);
         pnlDashboard.setForeground(color_darkgray);
@@ -401,14 +409,379 @@ public class MainForm extends JFrame {
         add(pnlDashboard);
         pnlDashboard.setBounds(354, 98, 1566, 977);
 
+        JPanel pnlTopContent = new JPanel();
+        JPanel pnlBottomContent = new JPanel();
+
+        // TOP CONTENT /////////////////////////////////////////////////////////
+
+        pnlTopContent.setLayout(null);
+        pnlTopContent.setEnabled(true);
+        pnlTopContent.setVisible(true);
+        pnlDashboard.add(pnlTopContent);
+        pnlTopContent.setBounds(0,0,1566,977);
+
         JLabel imgDashboard = new JLabel(new ImageIcon(".\\src\\resources\\dashboardheaderbg.png"));
-        pnlDashboard.add(imgDashboard);
+        pnlTopContent.add(imgDashboard);
         imgDashboard.setBounds(0,0, 1566,200);
 
         JPanel pnlDivider = new JPanel();
         pnlDivider.setBackground(color_darkergray);
-        pnlDashboard.add(pnlDivider);
+        pnlTopContent.add(pnlDivider);
         pnlDivider.setBounds(0,200, 1566,43);
+
+        JLabel lblWelcomeText = new JLabel("Welcome to Gastronom Point-of-Sale System!");
+        lblWelcomeText.setFont(new Font("Segoe UI", Font.PLAIN, 60));
+        lblWelcomeText.setForeground(color_darkgray);
+        pnlTopContent.add(lblWelcomeText);
+        lblWelcomeText.setBounds(195,305, 1241, 80);
+
+        // FIRST PLACE
+
+        JLabel img1stPlace = new JLabel();
+        img1stPlace.setIcon(new ImageIcon(".\\src\\resources\\1stPlace.png"));
+        pnlTopContent.add(img1stPlace);
+        img1stPlace.setBounds(312,703,288,107);
+
+        JLabel imgProduct1stPlace = new JLabel();
+        imgProduct1stPlace.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\placeholder_100.jpg").getImage()
+                .getScaledInstance(150, 150,Image.SCALE_SMOOTH)));
+        pnlTopContent.add(imgProduct1stPlace);
+        imgProduct1stPlace.setBounds(382,579,150,150);
+
+        JLabel lblProductName1stPlace = new JLabel("Hawaiian Burger");
+        lblProductName1stPlace.setFont(new Font("Segoe UI", Font.PLAIN, 34));
+        lblProductName1stPlace.setForeground(color_lightergray);
+        pnlTopContent.add(lblProductName1stPlace);
+        lblProductName1stPlace.setBounds(329,817,255,46);
+
+
+        // SECOND PLACE
+
+        JLabel img2ndPlace = new JLabel();
+        img2ndPlace.setIcon(new ImageIcon(".\\src\\resources\\2ndPlace.png"));
+        pnlTopContent.add(img2ndPlace);
+        img2ndPlace.setBounds(640,703,288,107);
+
+        JLabel imgProduct2ndPlace = new JLabel();
+        imgProduct2ndPlace.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\placeholder_100.jpg").getImage()
+                .getScaledInstance(150, 150,Image.SCALE_SMOOTH)));
+        pnlTopContent.add(imgProduct2ndPlace);
+        imgProduct2ndPlace.setBounds(710,579,150,150);
+
+        JLabel lblProductName2ndPlace = new JLabel("Hawaiian Pizza");
+        lblProductName2ndPlace.setFont(new Font("Segoe UI", Font.PLAIN, 34));
+        lblProductName2ndPlace.setForeground(color_lightergray);
+        pnlTopContent.add(lblProductName2ndPlace);
+        lblProductName2ndPlace.setBounds(670,817,255,46);
+
+        // THIRD PLACE
+
+        JLabel img3rdPlace = new JLabel();
+        img3rdPlace.setIcon(new ImageIcon(".\\src\\resources\\3rdPlace.png"));
+        pnlTopContent.add(img3rdPlace);
+        img3rdPlace.setBounds(968,703,288,107);
+
+        JLabel imgProduct3rdPlace = new JLabel();
+        imgProduct3rdPlace.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\placeholder_100.jpg").getImage()
+                .getScaledInstance(150, 150,Image.SCALE_SMOOTH)));
+        pnlTopContent.add(imgProduct3rdPlace);
+        imgProduct3rdPlace.setBounds(1038,579,150,150);
+
+        JLabel lblProductName3rdPlace = new JLabel("Hawaiian Kikiam");
+        lblProductName3rdPlace.setFont(new Font("Segoe UI", Font.PLAIN, 34));
+        lblProductName3rdPlace.setForeground(color_lightergray);
+        pnlTopContent.add(lblProductName3rdPlace);
+        lblProductName3rdPlace.setBounds(1001,817,255,46);
+
+        // Background
+        JLabel pnlBestSelling = new JLabel();
+        pnlBestSelling.setIcon(new ImageIcon(".\\src\\resources\\bestsellingbg.png"));
+        pnlTopContent.add(pnlBestSelling);
+        pnlBestSelling.setBounds(231,449,1105,454);
+
+        JLabel btnDown = new JLabel();
+        btnDown.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\btnDown.png").getImage()
+                .getScaledInstance(120, 120,Image.SCALE_SMOOTH)));
+        pnlTopContent.add(btnDown);
+        btnDown.setBounds(56,764,120,120);
+        btnDown.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+
+                        pnlTopContent.setVisible(false);
+                        pnlTopContent.setEnabled(false);
+
+                        pnlBottomContent.setVisible(true);
+                        pnlBottomContent.setEnabled(true);
+
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        btnDown.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\btnDownHl.png").getImage()
+                                .getScaledInstance(120, 120,Image.SCALE_SMOOTH)));
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        btnDown.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\btnDown.png").getImage()
+                                .getScaledInstance(120, 120,Image.SCALE_SMOOTH)));
+                    }
+                }
+        );
+
+        // BOTTOM CONTENT /////////////////////////////////////////////////////////
+
+        pnlBottomContent.setLayout(null);
+        pnlBottomContent.setEnabled(false);
+        pnlBottomContent.setVisible(false);
+        pnlDashboard.add(pnlBottomContent);
+        pnlBottomContent.setBounds(0,0,1566,977);
+
+        JLabel btnUp = new JLabel();
+        btnUp.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\btnUp.png").getImage()
+                .getScaledInstance(120, 120,Image.SCALE_SMOOTH)));
+        pnlBottomContent.add(btnUp);
+        btnUp.setBounds(56,60,120,120);
+        btnUp.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        pnlTopContent.setVisible(true);
+                        pnlTopContent.setEnabled(true);
+
+                        pnlBottomContent.setVisible(false);
+                        pnlBottomContent.setEnabled(false);
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        btnUp.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\btnUpHl.png").getImage()
+                                .getScaledInstance(120, 120,Image.SCALE_SMOOTH)));
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        btnUp.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\btnUp.png").getImage()
+                                .getScaledInstance(120, 120,Image.SCALE_SMOOTH)));
+                    }
+                }
+        );
+
+        JLabel lblStatistic = new JLabel("Statistics Data");
+        lblStatistic.setForeground(color_darkgray);
+        lblStatistic.setFont(new Font("Segoe UI", Font.PLAIN, 40));
+        pnlBottomContent.add(lblStatistic);
+        lblStatistic.setBounds(266,23,255,53);
+
+        // No. of Item
+
+        JPanel pnlNoOfItem = new JPanel();
+        pnlNoOfItem.setLayout(null);
+        pnlNoOfItem.setBorder(BorderFactory.createLineBorder(color_border_lightgray, 1));
+        pnlBottomContent.add(pnlNoOfItem);
+        pnlNoOfItem.setBounds(255,111,382,194);
+
+        lblNumberOfItem = new JLabel("11");
+        lblNumberOfItem.setHorizontalAlignment(JLabel.CENTER);
+        lblNumberOfItem.setForeground(color_jungle);
+        lblNumberOfItem.setFont(new Font("Segoe UI", Font.BOLD, 72));
+        pnlNoOfItem.add(lblNumberOfItem);
+        lblNumberOfItem.setBounds(0,20, 382,91);
+
+        JPanel pnlTextNo = new JPanel();
+        pnlTextNo.setBackground(color_darkgray);
+        pnlTextNo.setLayout(null);
+        pnlNoOfItem.add(pnlTextNo);
+        pnlTextNo.setBounds(0, 126,382,68);
+
+        JLabel lblNoOfItem = new JLabel("No. of Item/s");
+        lblNoOfItem.setHorizontalAlignment(JLabel.CENTER);
+        lblNoOfItem.setForeground(color_white);
+        lblNoOfItem.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        pnlTextNo.add(lblNoOfItem);
+        lblNoOfItem.setBounds(0, 19, 382,30);
+
+        // No. of Employee
+
+        JPanel pnlNoOfEmployee = new JPanel();
+        pnlNoOfEmployee.setLayout(null);
+        pnlNoOfEmployee.setBorder(BorderFactory.createLineBorder(color_border_lightgray, 1));
+        pnlBottomContent.add(pnlNoOfEmployee);
+        pnlNoOfEmployee.setBounds(646,111,382,194);
+
+        lblNumberOfEmployee = new JLabel("11");
+        lblNumberOfEmployee.setHorizontalAlignment(JLabel.CENTER);
+        lblNumberOfEmployee.setForeground(color_red);
+        lblNumberOfEmployee.setFont(new Font("Segoe UI", Font.BOLD, 72));
+        pnlNoOfEmployee.add(lblNumberOfEmployee);
+        lblNumberOfEmployee.setBounds(0,20, 382,91);
+
+        JPanel pnlTextEmployee = new JPanel();
+        pnlTextEmployee.setBackground(color_darkgray);
+        pnlTextEmployee.setLayout(null);
+        pnlNoOfEmployee.add(pnlTextEmployee);
+        pnlTextEmployee.setBounds(0, 126,382,68);
+
+        JLabel lblNoOfEmp = new JLabel("No. of Employee/s");
+        lblNoOfEmp.setHorizontalAlignment(JLabel.CENTER);
+        lblNoOfEmp.setForeground(color_white);
+        lblNoOfEmp.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        pnlTextEmployee.add(lblNoOfEmp);
+        lblNoOfEmp.setBounds(0, 19, 382,30);
+
+        // Total Earnings
+
+        JPanel pnlEarnings = new JPanel();
+        pnlEarnings.setLayout(null);
+        pnlEarnings.setBorder(BorderFactory.createLineBorder(color_border_lightgray, 1));
+        pnlBottomContent.add(pnlEarnings);
+        pnlEarnings.setBounds(1037,111,382,194);
+
+        lblTotalEarning = new JLabel();
+        lblTotalEarning.setHorizontalAlignment(JLabel.CENTER);
+        lblTotalEarning.setForeground(new Color(177,142,46));
+        lblTotalEarning.setFont(new Font("Segoe UI", Font.BOLD, 57));
+        pnlEarnings.add(lblTotalEarning);
+        lblTotalEarning.setBounds(0,20, 382,91);
+
+        JPanel pnlTextEarnings = new JPanel();
+        pnlTextEarnings.setBackground(color_darkgray);
+        pnlTextEarnings.setLayout(null);
+        pnlEarnings.add(pnlTextEarnings);
+        pnlTextEarnings.setBounds(0, 126,382,68);
+
+        JLabel lblEarn = new JLabel("Total Earnings");
+        lblEarn.setHorizontalAlignment(JLabel.CENTER);
+        lblEarn.setForeground(color_white);
+        lblEarn.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        pnlTextEarnings.add(lblEarn);
+        lblEarn.setBounds(0, 19, 382,30);
+
+        // Sales
+
+        JLabel lblSales = new JLabel("Sales");
+        lblSales.setForeground(color_darkgray);
+        lblSales.setFont(new Font("Segoe UI", Font.PLAIN, 40));
+        pnlBottomContent.add(lblSales);
+        lblSales.setBounds(186, 334, 100,53);
+
+        JLabel lblSearchProduct = new JLabel("Search Product");
+        lblSearchProduct.setForeground(color_darkergray);
+        lblSearchProduct.setFont(new Font("Segoe UI", Font.PLAIN, 21));
+        pnlBottomContent.add(lblSearchProduct);
+        lblSearchProduct.setBounds(354, 351, 144,28);
+
+        JTextField txtSearchProduct = new JTextField();
+        txtSearchProduct.setForeground(color_darkergray);
+        txtSearchProduct.setFont(new Font("Segoe UI", Font.PLAIN, 21));
+        txtSearchProduct.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(color_darkergray, 1),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        pnlBottomContent.add(txtSearchProduct);
+        txtSearchProduct.setBounds(519, 346, 284,39);
+
+        JButton btnSearch = new JButton("Search");
+        btnSearch.setFocusable(false);
+        btnSearch.setBackground(Color.WHITE);
+        btnSearch.setForeground(color_darkergray);
+        btnSearch.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+        btnSearch.setBorder(BorderFactory.createLineBorder(color_border_lightgray, 2));
+        pnlBottomContent.add(btnSearch);
+        btnSearch.setBounds(818,346,135,39);
+        btnSearch.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String search = txtSearchProduct.getText().toLowerCase();
+                        generateSalesTable(DATA, search);
+                    }
+                }
+        );
+
+        tblSales = new JTable();
+
+        JScrollPane spSalesTable = new JScrollPane(tblSales);
+        spSalesTable.setBorder(BorderFactory.createLineBorder(color_darkergray,1));
+        pnlBottomContent.add(spSalesTable);
+        spSalesTable.setBounds(175,400,1257,485);
+
+        JButton btnViewTransactionLog = new JButton("VIEW TRANSACTION LOG");
+        btnViewTransactionLog.setBackground(color_darkgray);
+        btnViewTransactionLog.setForeground(color_white);
+        btnViewTransactionLog.setFont(new Font("Segoe UI", Font.PLAIN, 21));
+        btnViewTransactionLog.setFocusable(false);
+        btnViewTransactionLog.setBorder(BorderFactory.createEmptyBorder());
+        pnlBottomContent.add(btnViewTransactionLog);
+        btnViewTransactionLog.setBounds(175,900,444,58);
+        btnViewTransactionLog.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        pnlDashboard.setVisible(false);
+                        pnlDashboard.setEnabled(false);
+
+                        pnlPointOfSale.setVisible(false);
+                        pnlPointOfSale.setEnabled(false);
+
+                        pnlTransactionLog.setVisible(true);
+                        pnlTransactionLog.setEnabled(true);
+
+                        pnlSystemSettings.setVisible(false);
+                        pnlSystemSettings.setEnabled(false);
+                    }
+                }
+        );
+
+        generateSalesTable(DATA, "");
+
+    }
+
+    public static void refreshStatsData(Data data){
+        lblNumberOfItem.setText(String.valueOf(data.getProductList().size()));
+        lblNumberOfEmployee.setText(String.valueOf(data.getAccountList().size()));
+        lblTotalEarning.setText(String.valueOf("₱"+twoDecimalFormat.format(data.getTotalEarnings())));
+    }
+
+    private static void generateSalesTable(Data data, String search){
+
+        refreshStatsData(data);
+
+        String[] colsSales = {"Code","Item Name", "Price", "Number of Order/s" , "Total Earning/s", "Percentage"};
+        tblSalesModel = new DefaultTableModel(colsSales, 0);
+        ArrayList<Account> accounts = data.getAccountList();
+        for (Sales o: data.getSalesList()){
+            if (o.getName().toLowerCase().contains(search)){
+                Object[] newRow = {o.getCode(), o.getName(), "₱"+twoDecimalFormat.format(o.getPrice()),
+                        noDecimalFormat.format(o.getNumberOfOrder()),
+                        "₱"+twoDecimalFormat.format(o.getTotalEarnings()),
+                        (twoDecimalFormat.format((o.getTotalEarnings() / data.getTotalEarnings() * 100)) + "%")};
+                tblSalesModel.addRow(newRow);
+                o.setPercentage((o.getTotalEarnings() / data.getTotalEarnings() * 100));
+            }
+        }
+        tblSales.setModel(tblSalesModel);
+        tblSales.setGridColor(color_border_lightgray);
+        tblSales.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+        tblSales.setRowHeight(50);
+        tblSales.setDefaultEditor(Object.class, null); // editable = false
+        tblSales.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblSales.setFocusable(false);
+
+        // Modify Column
+        TableColumnModel tableColumnModel = tblSales.getColumnModel();
+        tableColumnModel.removeColumn(tableColumnModel.getColumn(0)); // hides code
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        tblSales.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tblSales.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tblSales.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tblSales.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        tblSales.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+
+
     }
 
     private void createPointOfSaleGUI(){
@@ -646,10 +1019,12 @@ public class MainForm extends JFrame {
 
                     @Override
                     public void mouseEntered(MouseEvent e) {
+                        btnQty.setIcon(new ImageIcon(".\\src\\resources\\btnQtyHl.png"));
                     }
 
                     @Override
                     public void mouseExited(MouseEvent e) {
+                        btnQty.setIcon(new ImageIcon(".\\src\\resources\\btnQty.png"));
                     }
                 }
         );
@@ -687,10 +1062,12 @@ public class MainForm extends JFrame {
 
                     @Override
                     public void mouseEntered(MouseEvent e) {
+                        btnDeleteItemFromList.setIcon(new ImageIcon(".\\src\\resources\\btnDeleteHl.png"));
                     }
 
                     @Override
                     public void mouseExited(MouseEvent e) {
+                        btnDeleteItemFromList.setIcon(new ImageIcon(".\\src\\resources\\btnDelete.png"));
                     }
                 }
         );
@@ -713,6 +1090,53 @@ public class MainForm extends JFrame {
         lblDiscount.setForeground(color_title_gray);
         pnlRight.add(lblDiscount);
         lblDiscount.setBounds(234, 553, 85, 47);
+
+        JLabel btnDiscount = new JLabel();
+        btnDiscount.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\discount_128.png").getImage()
+                .getScaledInstance(50, 50,Image.SCALE_DEFAULT)));
+        pnlRight.add(btnDiscount);
+        btnDiscount.setBounds(428, 545, 50,50);
+        btnDiscount.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        double total = Double.parseDouble(lblTotalAmount.getText().substring(1));
+                        if (total <= 0){
+                            DialogOk dialogOk = new DialogOk("Discount Error", "Please order an item first.");
+                            dialogOk.setVisible(true);
+                            return;
+                        }
+
+
+                        Double balance1 = Double.parseDouble(lblBalanceAmount.getText().substring(1));
+                        Double totalprice = Double.parseDouble(lblTotalAmount.getText().substring(1));
+                        double oldpercentage = Math.abs(Math.floor((balance1 / totalprice * 100) - 100));
+
+                        DialogDiscount dialogDiscount = new DialogDiscount(Integer.parseInt(noDecimalFormat.format(oldpercentage)));
+                        dialogDiscount.setVisible(true);
+
+                        double percentage = dialogDiscount.getDiscountPercentage();
+                        double discount = total * (percentage/100);
+                        double balance = total - discount;
+                        lblDiscountAmount.setText("₱" + twoDecimalFormat.format(discount));
+                        lblBalanceAmount.setText("₱" + twoDecimalFormat.format(balance));
+
+                        lblChangeAmount.setText("");
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        btnDiscount.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\discountHl_128.png").getImage()
+                                .getScaledInstance(50, 50,Image.SCALE_DEFAULT)));
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        btnDiscount.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\discount_128.png").getImage()
+                                .getScaledInstance(50, 50,Image.SCALE_DEFAULT)));
+                    }
+                }
+        );
 
         lblDiscountAmount = new JLabel();
         lblDiscountAmount.setText("₱00.00");
@@ -1143,6 +1567,7 @@ public class MainForm extends JFrame {
                         if (balance <= 0){
                             DialogOk dialogOk = new DialogOk("Transaction Error","Incomplete transaction.");
                             dialogOk.setVisible(true);
+                            txtPayment.setText("");
                             return;
                         }
 
@@ -1159,11 +1584,47 @@ public class MainForm extends JFrame {
 
         // End Calculator
 
+        JLabel btnGenerateReceipt = new JLabel(new ImageIcon(".\\src\\resources\\btnGenerateReceipt.png"));
+        pnlRight.add(btnGenerateReceipt);
+        btnGenerateReceipt.setBounds(11,920,196,45);
+        btnGenerateReceipt.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        DialogYesNo dialogYesNo = new DialogYesNo("Confirm","Please click 'Yes' to continue.");
+                        dialogYesNo.setVisible(true);
+
+                        if (dialogYesNo.getYesNo()){
+                            // generate receipt
+
+                            // add to transaction history
+
+                            // add to sales
+                            for (Order o: DATA.getOrderList()){
+                                DATA.addToSales(new Sales(o.getCode(), o.getName(), o.getEachPrice(),o.getQuantity()));
+                            }
+
+                            generateSalesTable(DATA, "");
+                        }
+
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        btnGenerateReceipt.setIcon(new ImageIcon(".\\src\\resources\\btnGenerateReceiptHl.png"));
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        btnGenerateReceipt.setIcon(new ImageIcon(".\\src\\resources\\btnGenerateReceipt.png"));
+                    }
+                }
+        );
+
         // End Right Side
     }
 
     public void generateMenu(Data data, String category){
-
         String[] colsMenu = {"", "Item", "Price", "", ""};
         tblMenuModel = new DefaultTableModel(colsMenu, 0){
             public Class getColumnClass(int column){
@@ -1231,6 +1692,8 @@ public class MainForm extends JFrame {
                 String productName = ((DefaultTableModel)tblMenu.getModel()).getValueAt(rowIndex, 1).toString();
                 Double productPrice = Double.parseDouble(((DefaultTableModel)tblMenu.getModel()).getValueAt(rowIndex,
                         2).toString().substring(1));
+
+
 
                 DialogQuantity dialogQuantity = new DialogQuantity(data, productCode, imagePath, productName, productPrice);
                 dialogQuantity.setVisible(true);
@@ -1303,10 +1766,50 @@ public class MainForm extends JFrame {
         add(pnlTransactionLog);
         pnlTransactionLog.setBounds(354, 103, 1566, 977);
 
+        JPanel pnlMainTransactionLog = new JPanel();
+        pnlMainTransactionLog.setBackground(Color.WHITE);
+        pnlMainTransactionLog.setBorder(BorderFactory.createLineBorder(color_border_lightgray, 1));
+        pnlMainTransactionLog.setLayout(null);
+        pnlTransactionLog.add(pnlMainTransactionLog);
+        pnlMainTransactionLog.setBounds(64,33,1406,902);
+
         JLabel lblTransactionLog = new JLabel("TRANSACTION LOG");
         lblTransactionLog.setFont(new Font("Segoe UI", Font.BOLD, 30));
-        pnlTransactionLog.add(lblTransactionLog);
-        lblTransactionLog.setBounds(112, 41, 500, 46);
+        pnlMainTransactionLog.add(lblTransactionLog);
+        lblTransactionLog.setBounds(50, 40, 390, 56);
+
+        JButton btnExportLog = new JButton("EXPORT LOG");
+        btnExportLog.setBackground(new Color(225,176,20));
+        btnExportLog.setForeground(Color.WHITE);
+        btnExportLog.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+        btnExportLog.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\add_128.png").getImage()
+                .getScaledInstance(32, 32,Image.SCALE_DEFAULT)));
+        btnExportLog.setIconTextGap(10);
+        btnExportLog.setFocusable(false);
+        btnExportLog.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        pnlMainTransactionLog.add(btnExportLog);
+        btnExportLog.setBounds(469,38,317,58);
+
+        JButton btnReset = new JButton("RESET LOG");
+        btnReset.setBackground(color_darkgray);
+        btnReset.setForeground(Color.WHITE);
+        btnReset.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+        btnReset.setFocusable(false);
+        btnReset.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        pnlMainTransactionLog.add(btnReset);
+        btnReset.setBounds(806,38,226,58);
+
+        JLabel lblDivider = new JLabel(
+                "___________________________________________________________________________________________________________________________________________________________");
+        lblDivider.setFont(new Font("Segoe UI", Font.BOLD, 19));
+        lblDivider.setForeground(color_darkgray);
+        pnlMainTransactionLog.add(lblDivider);
+        lblDivider.setBounds(50,90,1316,30);
+
+        JLabel lblMonth = new JLabel("Month:");
+        lblMonth.setFont(new Font("Segoe UI", Font.PLAIN, 21));
+        pnlMainTransactionLog.add(lblMonth);
+        lblMonth.setBounds(131,160,65,28);
 
     }
 
