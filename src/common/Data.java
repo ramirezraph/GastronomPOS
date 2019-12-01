@@ -16,6 +16,7 @@ public class Data {
     private ArrayList<Product> products;
     private ArrayList<Order> orders;
     private ArrayList<Sales> sales;
+    private ArrayList<Log> transactionlog;
 
 
     public Data() {
@@ -43,7 +44,49 @@ public class Data {
         // Products
         sales = new ArrayList<>();
 //        sales.add(new Sales("ASD","Burger", 50.32, 50));
+
+        // Logs
+        transactionlog = new ArrayList<>();
+//        transactionlog.add(new Log("12120191", "12", "1", "2019",
+//                "2:07 PM", "Administrator", "Burger 2x Squid 1x Pineapply 1x", 532.50,
+//                "30.50 - 2%", 600, 97.50));
+//        transactionlog.add(new Log("12120192", "11", "27", "2019",
+//                "2:07 PM", "Administrator", "Burger 2x Squid 1x Pineapply 1x", 532.50,
+//                "30.50 - 2%", 600, 97.50));
+//        transactionlog.add(new Log("12120193", "11", "28", "2019",
+//                "2:07 PM", "Administrator", "Burger 2x Squid 1x Pineapply 1x", 532.50,
+//                "30.50 - 2%", 600, 97.50));
+//        transactionlog.add(new Log("12120194", "10", "5", "2019",
+//                "2:07 PM", "Administrator", "Burger 2x Squid 1x Pineapply 1x", 532.50,
+//                "30.50 - 2%", 600, 97.50));
     }
+
+    // TRANSACTION LOG
+
+    public ArrayList<Log> getTransactionLog(){
+        return transactionlog;
+    }
+
+    public void saveTransaction(Log log){
+        transactionlog.add(log);
+    }
+
+    public void deleteAllTransaction(){
+        try {
+//            for (Log log: transactionlog){
+//                transactionlog.remove(log);
+//            }
+
+            transactionlog = new ArrayList<>();
+
+            DialogOk dialogOk = new DialogOk("Success", "Transaction log has been reset successfully.");
+            dialogOk.setVisible(true);
+
+        } catch (Exception ex){
+
+        }
+    }
+
 
     // SALES
 
@@ -53,8 +96,8 @@ public class Data {
 
     public double getTotalEarnings(){
         double total = 0;
-        for (Sales o: sales){
-            total += o.getTotalEarnings();
+        for (Log o: transactionlog){
+            total += o.getTotal();
         }
         return total;
     }
@@ -64,12 +107,18 @@ public class Data {
             if (o.getCode().equals(sale.getCode())){
                 // item already exists
 
-                double price = o.getPrice();
-                double qty = o.getNumberOfOrder() + sale.getNumberOfOrder();
-                double totalearning = price * qty;
+                double earnings = o.getTotalEarnings();
+                System.out.println(earnings);
+                double price = sale.getPrice();
+                System.out.println(price);
+                double qty = sale.getNumberOfOrder();
+                System.out.println(qty);
 
-                o.setNumberOfOrder(qty);
-                o.setTotalEarnings(totalearning);
+                earnings += (price * qty);
+                System.out.println(earnings);
+
+                o.setNumberOfOrder(qty + o.getNumberOfOrder());
+                o.setTotalEarnings(earnings);
                 return;
             }
         }
@@ -173,6 +222,7 @@ public class Data {
                 }
             }
             accounts.add(account);
+
             DialogOk dialogOk = new DialogOk("Success", "Account has been created successfully.");
             dialogOk.setVisible(true);
         } catch (Exception e){

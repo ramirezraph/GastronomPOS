@@ -13,6 +13,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class MainForm extends JFrame {
@@ -35,7 +38,7 @@ public class MainForm extends JFrame {
     private JPanel pnlTransactionLog;
     private JPanel pnlSystemSettings;
 
-    private Data DATA;
+    public static Data DATA;
     private String USER_NAME;
     private final JLabel lblUserName;
 
@@ -64,6 +67,8 @@ public class MainForm extends JFrame {
     private static JLabel lblNumberOfItem;
     private static JLabel lblNumberOfEmployee;
 
+    private static JTable tblTransactionLog;
+    private static DefaultTableModel tblTransactionLogModel;
 
     public MainForm(){
         this("No Name", new Data());
@@ -147,6 +152,15 @@ public class MainForm extends JFrame {
                 dialogYesNo.setVisible(true);
 
                 if (dialogYesNo.getYesNo()){
+
+                    for (Account o: DATA.getAccountList()){
+                        if (o.getName().equals(lblUserName.getText())){
+                            String date = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/uuuu"));
+//                            String time = LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm"));
+                            o.setLastLogin(date);
+                            break;
+                        }
+                    }
                     dispose();
                     LoginForm loginForm = new LoginForm(data);
                     loginForm.setVisible(true);
@@ -1598,8 +1612,38 @@ public class MainForm extends JFrame {
                             // generate receipt
 
                             // add to transaction history
+//                            Log log = new Log("120120191", "12", "1", "2019",
+//                                    "2:07 PM", "Administrator", "Burger 2x Squid 1x Pineapply 1x", 532.50,
+//                                    "30.50 - 2%", 600, 97.50);
+
+                            String date = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/uuuu"));
+                            LocalDate DATE = LocalDate.now();
+
+                            String month = String.valueOf(DATE.getMonthValue());
+                            String day = String.valueOf(DATE.getDayOfMonth());
+                            String year = String.valueOf(DATE.getYear());
+                            String time = LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm"));
+                            String staffincharge = lblUserName.getText();
+                            StringBuilder itemordered = new StringBuilder();
+                            for(Order order: DATA.getOrderList()){
+                                itemordered.append(order.getName()).append(" ").append(order.getQuantity()).append("x").append(" ");
+                            }
+                            double total = Double.parseDouble(lblTotalAmount.getText().substring(1));
+                            String discount = lblDiscountAmount.getText().substring(1);
+                            double payment = Double.parseDouble(txtPayment.getText());
+                            double change = Double.parseDouble(lblChangeAmount.getText().substring(1));
+
+                            String id = month + day + year + (DATA.getTransactionLog().size()+1);
+
+                            Log log = new Log(id,month,day,year,time,staffincharge,itemordered.toString(),total,discount,payment
+                                    ,change);
+
+                            DATA.saveTransaction(log);
+
+                            generateTransactionTable(DATA, 1);
 
                             // add to sales
+
                             for (Order o: DATA.getOrderList()){
                                 DATA.addToSales(new Sales(o.getCode(), o.getName(), o.getEachPrice(),o.getQuantity()));
                             }
@@ -1765,6 +1809,14 @@ public class MainForm extends JFrame {
         pnlTransactionLog.setLayout(null);
         add(pnlTransactionLog);
         pnlTransactionLog.setBounds(354, 103, 1566, 977);
+        pnlTransactionLog.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        clearTransactionSelection();
+                    }
+                }
+        );
 
         JPanel pnlMainTransactionLog = new JPanel();
         pnlMainTransactionLog.setBackground(Color.WHITE);
@@ -1790,14 +1842,29 @@ public class MainForm extends JFrame {
         pnlMainTransactionLog.add(btnExportLog);
         btnExportLog.setBounds(469,38,317,58);
 
-        JButton btnReset = new JButton("RESET LOG");
-        btnReset.setBackground(color_darkgray);
-        btnReset.setForeground(Color.WHITE);
-        btnReset.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-        btnReset.setFocusable(false);
-        btnReset.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        pnlMainTransactionLog.add(btnReset);
-        btnReset.setBounds(806,38,226,58);
+        JButton btnResetTransactionLog = new JButton("RESET LOG");
+        btnResetTransactionLog.setBackground(color_darkgray);
+        btnResetTransactionLog.setForeground(Color.WHITE);
+        btnResetTransactionLog.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+        btnResetTransactionLog.setFocusable(false);
+        btnResetTransactionLog.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        pnlMainTransactionLog.add(btnResetTransactionLog);
+        btnResetTransactionLog.setBounds(806,38,226,58);
+        btnResetTransactionLog.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        DialogYesNo dialogYesNo = new DialogYesNo("Confirm","Are you sure you want to delete all " +
+                                "logs?");
+                        dialogYesNo.setVisible(true);
+
+                        if (dialogYesNo.getYesNo()){
+                            DATA.deleteAllTransaction();
+                        }
+                        generateTransactionTable(DATA, 1);
+                    }
+                }
+        );
 
         JLabel lblDivider = new JLabel(
                 "___________________________________________________________________________________________________________________________________________________________");
@@ -1809,8 +1876,200 @@ public class MainForm extends JFrame {
         JLabel lblMonth = new JLabel("Month:");
         lblMonth.setFont(new Font("Segoe UI", Font.PLAIN, 21));
         pnlMainTransactionLog.add(lblMonth);
-        lblMonth.setBounds(131,160,65,28);
+        lblMonth.setBounds(131,160,70,28);
 
+        final String[] months = {"- select -", "January", "February", "March", "April", "May", "June", "July",
+                "August",
+                "September",
+                "October", "November", "December"};
+        JComboBox<String> cmbMonth = new JComboBox<>(months);
+        cmbMonth.setFont(new Font("Segoe UI", Font.PLAIN, 21));
+        cmbMonth.setBackground(Color.WHITE);
+        cmbMonth.setForeground(color_darkgray);
+        cmbMonth.setFocusable(false);
+        ((JLabel)cmbMonth.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+        pnlMainTransactionLog.add(cmbMonth);
+        cmbMonth.setBounds(213,155,284,39);
+
+        JLabel lblDay = new JLabel("Day:");
+        lblDay.setFont(new Font("Segoe UI", Font.PLAIN, 21));
+        pnlMainTransactionLog.add(lblDay);
+        lblDay.setBounds(519,160,50,28);
+
+        final String[] days = {"- select -","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17",
+                "18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
+        JComboBox<String> cmbDay = new JComboBox<>(days);
+        cmbDay.setFont(new Font("Segoe UI", Font.PLAIN, 21));
+        cmbDay.setBackground(Color.WHITE);
+        cmbDay.setForeground(color_darkgray);
+        cmbDay.setFocusable(false);
+        ((JLabel)cmbDay.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+        pnlMainTransactionLog.add(cmbDay);
+        cmbDay.setBounds(575,155,284,39);
+
+        JButton btnApplyFilter = new JButton("Apply Filter");
+        btnApplyFilter.setBackground(Color.WHITE);
+        btnApplyFilter.setFocusable(false);
+        btnApplyFilter.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+        pnlMainTransactionLog.add(btnApplyFilter);
+        btnApplyFilter.setBounds(881,155,149,39);
+        btnApplyFilter.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                        String monthNumber;
+
+                        if (cmbMonth.getSelectedItem().equals("January")){
+                            monthNumber = "1";
+                        } else if (cmbMonth.getSelectedItem().equals("February")){
+                            monthNumber = "2";
+                        } else if (cmbMonth.getSelectedItem().equals("March")){
+                            monthNumber = "3";
+                        } else if (cmbMonth.getSelectedItem().equals("April")){
+                            monthNumber = "4";
+                        } else if (cmbMonth.getSelectedItem().equals("May")){
+                            monthNumber = "5";
+                        } else if (cmbMonth.getSelectedItem().equals("June")){
+                            monthNumber = "6";
+                        } else if (cmbMonth.getSelectedItem().equals("July")){
+                            monthNumber = "7";
+                        } else if (cmbMonth.getSelectedItem().equals("August")){
+                            monthNumber = "8";
+                        } else if (cmbMonth.getSelectedItem().equals("September")){
+                            monthNumber = "9";
+                        } else if (cmbMonth.getSelectedItem().equals("October")){
+                            monthNumber = "10";
+                        } else if (cmbMonth.getSelectedItem().equals("November")){
+                            monthNumber = "11";
+                        } else if (cmbMonth.getSelectedItem().equals("December")){
+                            monthNumber = "12";
+                        } else {
+                            monthNumber = "0";
+                        }
+
+                        if (cmbMonth.getSelectedIndex() == 0 && cmbDay.getSelectedIndex() == 0){
+                            System.out.println("no filter");
+                            generateTransactionTable(DATA, 1);
+                        } else if (cmbMonth.getSelectedIndex() != 0 && cmbDay.getSelectedIndex() == 0){
+                            System.out.println("filter month");
+                            generateTransactionTable(DATA, 2, monthNumber);
+                        } else if (cmbMonth.getSelectedIndex() == 0 && cmbDay.getSelectedIndex() != 0){
+                            System.out.println("filter day");
+                            generateTransactionTable(DATA, 3, monthNumber, cmbDay.getSelectedItem().toString());
+                        } else if (cmbMonth.getSelectedIndex() != 0 && cmbDay.getSelectedIndex() != 0) {
+                            System.out.println("filter both");
+                            generateTransactionTable(DATA, 4, monthNumber,
+                                    cmbDay.getSelectedItem().toString());
+                        }
+                    }
+                }
+        );
+
+        JButton btnClearFilter = new JButton("Clear Filter");
+        btnClearFilter.setBackground(Color.WHITE);
+        btnClearFilter.setFocusable(false);
+        btnClearFilter.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+        pnlMainTransactionLog.add(btnClearFilter);
+        btnClearFilter.setBounds(1048,155,149,39);
+        btnClearFilter.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        cmbMonth.setSelectedIndex(0);
+                        cmbDay.setSelectedIndex(0);
+                        generateTransactionTable(DATA, 1);
+                    }
+                }
+        );
+
+
+        tblTransactionLog = new JTable();
+        JScrollPane spTransactionLog = new JScrollPane(tblTransactionLog);
+        pnlMainTransactionLog.add(spTransactionLog);
+        spTransactionLog.setBounds(44,213,1310,653);
+
+        generateTransactionTable(DATA, 1);
+
+    }
+
+    private static void generateTransactionTable(Data data, int filterMode){
+        generateTransactionTable(data, filterMode, "0");
+    }
+
+    private static void generateTransactionTable(Data data, int filterMode, String month){
+        generateTransactionTable(data, filterMode, month, "0");
+    }
+
+    private static void generateTransactionTable(Data data, int filterMode, String month, String day){
+
+        String[] colsLog = {"ID","Date of Purchase", "Staff-in-Charge", "Item/s Ordered" , "Total Price", "Discount %",
+                    "Payment", "Change"};
+        tblTransactionLogModel = new DefaultTableModel(colsLog, 0);
+        for (Log o: data.getTransactionLog()){
+            switch (filterMode){
+                case 1: { // no filter
+                    String dateOfPurchase = o.getMonthOfPurchase() + "/" + o.getDayOfPurchase() + "/" + o.getYearOfPurchase();
+                    Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(), "₱"+twoDecimalFormat.format(o.getTotal()),
+                            "₱"+o.getDiscount(), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
+                    tblTransactionLogModel.addRow(newRow);
+                    break;
+                } case 2: { // month filter
+                    if (o.getMonthOfPurchase().equals(month)){
+                        String dateOfPurchase = o.getMonthOfPurchase() + "/" + o.getDayOfPurchase() + "/" + o.getYearOfPurchase();
+                        Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(), "₱"+twoDecimalFormat.format(o.getTotal()),
+                                "₱"+o.getDiscount(), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
+                        tblTransactionLogModel.addRow(newRow);
+                    }
+                    break;
+                } case 3: { // day filter
+                    if (o.getDayOfPurchase().equals(day)){
+                        String dateOfPurchase = o.getMonthOfPurchase() + "/" + o.getDayOfPurchase() + "/" + o.getYearOfPurchase();
+                        Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(), "₱"+twoDecimalFormat.format(o.getTotal()),
+                                "₱"+o.getDiscount(), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
+                        tblTransactionLogModel.addRow(newRow);
+                    }
+                    break;
+                } case 4: { // both filter
+                    if (o.getDayOfPurchase().equals(day) && o.getMonthOfPurchase().equals(month)){
+                        String dateOfPurchase = o.getMonthOfPurchase() + "/" + o.getDayOfPurchase() + "/" + o.getYearOfPurchase();
+                        Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(), "₱"+twoDecimalFormat.format(o.getTotal()),
+                                "₱"+o.getDiscount(), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
+                        tblTransactionLogModel.addRow(newRow);
+                    }
+                    break;
+                }
+            }
+        }
+
+        tblTransactionLog.setModel(tblTransactionLogModel);
+        tblTransactionLog.setGridColor(color_border_lightgray);
+        tblTransactionLog.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        tblTransactionLog.setRowHeight(40);
+        tblTransactionLog.setDefaultEditor(Object.class, null); // editable = false
+        tblTransactionLog.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblTransactionLog.setFocusable(false);
+
+        // Modify Column
+        TableColumnModel tableColumnModel = tblTransactionLog.getColumnModel();
+//        tableColumnModel.removeColumn(tableColumnModel.getColumn(0)); // hides code
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        tblTransactionLog.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tblTransactionLog.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tblTransactionLog.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tblTransactionLog.getColumnModel().getColumn(3).setPreferredWidth(400);
+        tblTransactionLog.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+        tblTransactionLog.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
+        tblTransactionLog.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);
+        tblTransactionLog.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);
+
+    }
+
+    public void clearTransactionSelection(){
+        tblTransactionLog.getSelectionModel().clearSelection();
+        tblTransactionLog.getColumnModel().getSelectionModel().clearSelection();
     }
 
     private void createSystemSettingsGUI(){

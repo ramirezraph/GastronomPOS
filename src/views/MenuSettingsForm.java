@@ -263,6 +263,8 @@ public class MenuSettingsForm extends JDialog {
                         data.deleteProduct(lblProductCode.getText());
                         createProductTable(data, 1);
 
+                        MainForm.refreshStatsData(data);
+
                         txtProductName.setText("");
                         txtProductPrice.setText("");
                         cmbProductCategory.setSelectedIndex(0);
@@ -332,8 +334,6 @@ public class MenuSettingsForm extends JDialog {
                                 } catch (IOException ex){
                                     ex.printStackTrace();
                                 }
-                            } else {
-                                System.out.println("You must select one image to be the reference.");
                             }
                         } catch (Exception ex){
                             System.out.println(ex);
@@ -487,8 +487,11 @@ public class MenuSettingsForm extends JDialog {
                         data.addProduct(newProduct);
                         createProductTable(data, 1);
 
+                        MainForm.refreshStatsData(data);
 
                         // RESET
+
+                        MainForm.refreshStatsData(data);
 
                         imageFile = null;
 

@@ -236,6 +236,8 @@ public class AccountSettingsForm extends JDialog {
                                 Account newAccount = new Account(name,"Staff", username, password, contact);
                                 data.addAccount(newAccount);
 
+                                MainForm.refreshStatsData(data);
+
                                 txtCreateName.setText("");
                                 txtCreateContact.setText("");
                                 txtCreateUsername.setText("");
@@ -665,6 +667,8 @@ public class AccountSettingsForm extends JDialog {
 
                         data.deleteAccount(txtUsername.getText());
                         createAccountTable(data);
+
+                        MainForm.refreshStatsData(data);
 
                         txtName.setText("");
                         txtContactNo.setText("");
