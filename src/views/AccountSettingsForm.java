@@ -32,11 +32,7 @@ public class AccountSettingsForm extends JDialog {
     private JPanel pnlAccountInfo;
     private DefaultTableModel tblAccountsModel;
 
-    public AccountSettingsForm(){
-        this("",new Data());
-    }
-
-    public AccountSettingsForm(String USER_NAME,Data data){
+    public AccountSettingsForm(Data data){
         setSize(1500, 800);
         setLayout(null);
         setLocationRelativeTo(null);

@@ -54,11 +54,7 @@ public class MenuSettingsForm extends JDialog {
 
     private File imageFile = null;
 
-    public MenuSettingsForm(){
-        this("",new Data());
-    }
-
-    public MenuSettingsForm(String USER_NAME, Data data){
+    public MenuSettingsForm(Data data){
 
         setSize(1500, 800);
         setLayout(null);

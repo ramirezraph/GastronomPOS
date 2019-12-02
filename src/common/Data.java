@@ -24,10 +24,16 @@ public class Data {
 
         // Accounts
         accounts = new ArrayList<>();
-        Account adminAccount = new Account("Administrator", "Administrator", "admin", "123", "09454087170", "Sample");
-        accounts.add(adminAccount);
-        Account myAccount = new Account("Raph Ramirez", "Staff", "ramirez", "111", "09454087170", "Sample");
-        accounts.add(myAccount);
+        accounts.add(new Account("Administrator", "Administrator", "admin", "123",
+                "09452587170", "12/01/2019"));
+        accounts.add(new Account("Raphael Ramirez", "Staff", "ramirez", "raph", "09454087172", "12/01/2019"));
+        accounts.add(new Account("Arvin Vibal", "Staff", "arvin", "vibal", "09278532212", "12/01/2019"));
+        accounts.add(new Account("John Doe", "Staff", "john", "doe", "09232552280", "12/02/2019"));
+        accounts.add(new Account("Harry Potter", "Staff", "harry", "potter123", "09357867798", "12/02/2019"));
+        accounts.add(new Account("James Carter", "Staff", "james123", "yoyo112", "09676678721", "12/02/2019"));
+        accounts.add(new Account("Harold Sta. Maria", "Staff", "harold443", "bartolay", "09876782258", "12/02/2019"));
+        accounts.add(new Account("Bill Gates", "Staff", "bill", "gates", "09787767871", "12/01/2019"));
+
 
         // Products
         products = new ArrayList<>();
@@ -379,10 +385,10 @@ public class Data {
         return false;
     }
 
-    public String getAccountName(String typedUsername){
+    public Account getAccount(String typedUsername){
         for (Account acc: accounts){
             if (acc.getUsername().equals(typedUsername)){
-                return acc.getName();
+                return acc;
             }
         }
         return null;

@@ -39,8 +39,11 @@ public class MainForm extends JFrame {
     private JPanel pnlSystemSettings;
 
     public static Data DATA;
-    private String USER_NAME;
-    public static JLabel lblUserName;
+
+    private static JLabel lblUserName;
+    private static JButton btnCurrentUser;
+    private static JButton btnCurrentUserPanel;
+    private final JPanel pnlAccount;
 
     private String CALCULATOR_TEXT;
 
@@ -76,11 +79,11 @@ public class MainForm extends JFrame {
     public static JLabel lblProductName2ndPlace;
     public static JLabel lblProductName3rdPlace;
 
-    public MainForm(){
-        this("No Name", new Data());
-    }
+    private final JLabel btnSystemSettings;
+    private JLabel btnDown;
+    private JButton btnResetTransactionLog;
 
-    public MainForm(String USER_NAME, Data data) {
+    public MainForm(Account account, Data data) {
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,7 +93,6 @@ public class MainForm extends JFrame {
         setUndecorated(true);
         setResizable(false);
 
-        this.USER_NAME = USER_NAME;
         DATA = data;
 
         JPanel pnlNavbar = new JPanel();
@@ -130,8 +132,6 @@ public class MainForm extends JFrame {
         lblUserName.setIcon(new ImageIcon(".\\src\\resources\\man-user_32.png"));
         pnlNavbar.add(lblUserName);
         lblUserName.setBounds(1568,35,200,33);
-
-        lblUserName.setText(USER_NAME);
 
         JLabel btnLogout = new JLabel(" Logout");
         btnLogout.setForeground(color_white);
@@ -232,6 +232,11 @@ public class MainForm extends JFrame {
                 pnlSystemSettings.setVisible(false);
                 pnlSystemSettings.setEnabled(false);
 
+                btnCurrentUser.setEnabled(true);
+                btnCurrentUser.setVisible(true);
+                pnlAccount.setEnabled(false);
+                pnlAccount.setVisible(false);
+
                 refreshStatsData(data);
 
             }
@@ -293,6 +298,11 @@ public class MainForm extends JFrame {
                 pnlSystemSettings.setVisible(false);
                 pnlSystemSettings.setEnabled(false);
 
+                btnCurrentUser.setEnabled(true);
+                btnCurrentUser.setVisible(true);
+                pnlAccount.setEnabled(false);
+                pnlAccount.setVisible(false);
+
                 generateMenu(data, "Main");
 
             }
@@ -346,10 +356,17 @@ public class MainForm extends JFrame {
 
                 pnlSystemSettings.setVisible(false);
                 pnlSystemSettings.setEnabled(false);
+
+                btnCurrentUser.setEnabled(true);
+                btnCurrentUser.setVisible(true);
+                pnlAccount.setEnabled(false);
+                pnlAccount.setVisible(false);
+
+                generateTransactionTable(data, 1);
             }
         });
 
-        JLabel btnSystemSettings = new JLabel(" System Settings");
+        btnSystemSettings = new JLabel(" System Settings");
         btnSystemSettings.setHorizontalAlignment(SwingConstants.LEFT);
         btnSystemSettings.setBorder(BorderFactory.createEmptyBorder(5, 50, 5, 5));
         btnSystemSettings.setIcon(new ImageIcon(".\\src\\resources\\settings_32.png"));
@@ -397,8 +414,105 @@ public class MainForm extends JFrame {
 
                 pnlSystemSettings.setVisible(true);
                 pnlSystemSettings.setEnabled(true);
+
+                btnCurrentUser.setEnabled(true);
+                btnCurrentUser.setVisible(true);
+                pnlAccount.setEnabled(false);
+                pnlAccount.setVisible(false);
             }
         });
+
+        pnlAccount = new JPanel();
+        pnlAccount.setLayout(null);
+        pnlAccount.setBackground(color_darkgray);
+        pnlAccount.setEnabled(false);
+        pnlAccount.setVisible(false);
+        pnlLeft.add(pnlAccount);
+        pnlAccount.setBounds(0, 791,356,186);
+
+        btnCurrentUserPanel = new JButton();
+        btnCurrentUserPanel.setBackground(color_darkgray);
+        btnCurrentUserPanel.setForeground(Color.WHITE);
+        btnCurrentUserPanel.setBorder(BorderFactory.createLineBorder(color_title_gray, 1));
+        btnCurrentUserPanel.setIcon(new ImageIcon(".\\src\\resources\\online_15.png"));
+        btnCurrentUserPanel.setIconTextGap(12);
+        btnCurrentUserPanel.setFont(new Font("Segoe UI", Font.PLAIN, 25));
+        btnCurrentUserPanel.setFocusable(false);
+        pnlAccount.add(btnCurrentUserPanel);
+        btnCurrentUserPanel.setBounds(0,0,353,50);
+        btnCurrentUserPanel.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        btnCurrentUser.setEnabled(true);
+                        btnCurrentUser.setVisible(true);
+                        pnlAccount.setEnabled(false);
+                        pnlAccount.setVisible(false);
+                    }
+                }
+        );
+
+        JLabel btnAccount = new JLabel();
+        btnAccount.setIcon(new ImageIcon(".\\src\\resources\\btnMyAccount.png"));
+        pnlAccount.add(btnAccount);
+        btnAccount.setBounds(30, 95,294,45);
+        btnAccount.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+
+                        for(Account o: data.getAccountList()){
+                            if (btnCurrentUser.getText().equals(o.getUsername())){
+
+                                btnCurrentUser.setEnabled(true);
+                                btnCurrentUser.setVisible(true);
+                                pnlAccount.setEnabled(false);
+                                pnlAccount.setVisible(false);
+
+                                DialogMyAccount dialogMyAccount = new DialogMyAccount(o);
+                                dialogMyAccount.setVisible(true);
+
+                                return;
+                            }
+                        }
+
+                        DialogOk dialogOk = new DialogOk("Error", "There is something wrong with your account.");
+                        dialogOk.setVisible(true);
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        btnAccount.setIcon(new ImageIcon(".\\src\\resources\\btnMyAccountHl.png"));
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        btnAccount.setIcon(new ImageIcon(".\\src\\resources\\btnMyAccount.png"));
+                    }
+                }
+        );
+
+        btnCurrentUser = new JButton();
+        btnCurrentUser.setBackground(color_darkgray);
+        btnCurrentUser.setForeground(Color.WHITE);
+        btnCurrentUser.setBorder(BorderFactory.createEmptyBorder());
+        btnCurrentUser.setIcon(new ImageIcon(".\\src\\resources\\online_15.png"));
+        btnCurrentUser.setIconTextGap(12);
+        btnCurrentUser.setFont(new Font("Segoe UI", Font.PLAIN, 25));
+        btnCurrentUser.setFocusable(false);
+        pnlLeft.add(btnCurrentUser);
+        btnCurrentUser.setBounds(0,927,353,50);
+        btnCurrentUser.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        btnCurrentUser.setEnabled(false);
+                        btnCurrentUser.setVisible(false);
+                        pnlAccount.setEnabled(true);
+                        pnlAccount.setVisible(true);
+                    }
+                }
+        );
 
         createDashboardGUI();
         createPointOfSaleGUI();
@@ -418,6 +532,20 @@ public class MainForm extends JFrame {
         pnlSystemSettings.setVisible(false);
         pnlSystemSettings.setEnabled(false);
 
+        refreshAccountInfo(account);
+
+        if (!account.getLevel().equals("Administrator")){
+            btnSystemSettings.setEnabled(false);
+            btnSystemSettings.setVisible(false);
+
+            btnDown.setEnabled(false);
+            btnDown.setVisible(false);
+
+            btnResetTransactionLog.setEnabled(false);
+            btnResetTransactionLog.setVisible(false);
+
+        }
+
     }
 
     private void createDashboardGUI(){
@@ -434,6 +562,7 @@ public class MainForm extends JFrame {
 
         // TOP CONTENT /////////////////////////////////////////////////////////
 
+        pnlTopContent.setBackground(Color.WHITE);
         pnlTopContent.setLayout(null);
         pnlTopContent.setEnabled(true);
         pnlTopContent.setVisible(true);
@@ -519,7 +648,7 @@ public class MainForm extends JFrame {
         pnlTopContent.add(pnlBestSelling);
         pnlBestSelling.setBounds(231,449,1105,454);
 
-        JLabel btnDown = new JLabel();
+        btnDown = new JLabel();
         btnDown.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\btnDown.png").getImage()
                 .getScaledInstance(120, 120,Image.SCALE_SMOOTH)));
         pnlTopContent.add(btnDown);
@@ -553,6 +682,7 @@ public class MainForm extends JFrame {
 
         // BOTTOM CONTENT /////////////////////////////////////////////////////////
 
+        pnlBottomContent.setBackground(Color.WHITE);
         pnlBottomContent.setLayout(null);
         pnlBottomContent.setEnabled(false);
         pnlBottomContent.setVisible(false);
@@ -733,11 +863,10 @@ public class MainForm extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
 
-                        DialogYesNo dialogYesNo = new DialogYesNo("Confirm", "Are you sure you want to reset sales " +
-                                "data?");
-                        dialogYesNo.setVisible(true);
+                        DialogAdminConfirm dialogAdminConfirm = new DialogAdminConfirm(DATA);
+                        dialogAdminConfirm.setVisible(true);
 
-                        if (dialogYesNo.getYesNo()){
+                        if (dialogAdminConfirm.isAccountValid()){
                             DATA.resetSalesList();
                             generateSalesTable(DATA, "");
 
@@ -789,6 +918,12 @@ public class MainForm extends JFrame {
 
         generateSalesTable(DATA, "");
 
+    }
+
+    public static void refreshAccountInfo(Account account){
+        lblUserName.setText(account.getName());
+        btnCurrentUser.setText(account.getUsername());
+        btnCurrentUserPanel.setText(account.getUsername());
     }
 
     public static void refreshStatsData(Data data){
@@ -1892,7 +2027,7 @@ public class MainForm extends JFrame {
         pnlMainTransactionLog.add(btnExportLog);
         btnExportLog.setBounds(469,38,317,58);
 
-        JButton btnResetTransactionLog = new JButton("RESET LOG");
+        btnResetTransactionLog = new JButton("RESET LOG");
         btnResetTransactionLog.setBackground(color_darkgray);
         btnResetTransactionLog.setForeground(Color.WHITE);
         btnResetTransactionLog.setFont(new Font("Segoe UI", Font.PLAIN, 20));
@@ -1904,11 +2039,10 @@ public class MainForm extends JFrame {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        DialogYesNo dialogYesNo = new DialogYesNo("Confirm","Are you sure you want to delete all " +
-                                "logs?");
-                        dialogYesNo.setVisible(true);
+                        DialogAdminConfirm dialogAdminConfirm = new DialogAdminConfirm(DATA);
+                        dialogAdminConfirm.setVisible(true);
 
-                        if (dialogYesNo.getYesNo()){
+                        if (dialogAdminConfirm.isAccountValid()){
                             DATA.deleteAllTransaction();
                         }
                         generateTransactionTable(DATA, 1);
@@ -2200,7 +2334,7 @@ public class MainForm extends JFrame {
                                 BorderFactory.createEmptyBorder(5, 100, 5, 5)));
                         btnAccountSettings.setBackground(Color.WHITE);
 
-                        AccountSettingsForm accountSettingsForm = new AccountSettingsForm(USER_NAME,DATA);
+                        AccountSettingsForm accountSettingsForm = new AccountSettingsForm(DATA);
                         accountSettingsForm.setVisible(true);
                     }
                 }
@@ -2248,7 +2382,7 @@ public class MainForm extends JFrame {
                                 BorderFactory.createEmptyBorder(5, 100, 5, 5)));
                         btnMenuSettings.setBackground(Color.WHITE);
 
-                        MenuSettingsForm menuSettingsForm = new MenuSettingsForm(USER_NAME, DATA);
+                        MenuSettingsForm menuSettingsForm = new MenuSettingsForm(DATA);
                         menuSettingsForm.setVisible(true);
                     }
                 }
@@ -2352,5 +2486,6 @@ public class MainForm extends JFrame {
                     }
                 }
         );
+
     }
 }

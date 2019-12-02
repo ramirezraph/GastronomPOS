@@ -139,7 +139,7 @@ public class LoginForm extends JFrame {
 
                 if (data.isAccountValid(username, password)){
                     dispose();
-                    MainForm mainForm = new MainForm(data.getAccountName(username), data);
+                    MainForm mainForm = new MainForm(data.getAccount(username), data);
                     mainForm.setVisible(true);
                 } else {
                     DialogOk dialogOk = new DialogOk("Login Failed.", "Invalid username or password.");

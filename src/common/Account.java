@@ -1,5 +1,7 @@
 package common;
 
+import views.DialogOk;
+
 public class Account {
 
     private String name;
@@ -30,6 +32,26 @@ public class Account {
     public void editInformation(String name, String contactNumber){
         this.name = name;
         this.contactNumber = contactNumber;
+    }
+
+    public void editPassword(String oldpassword, String newpassword, String confirmPassword){
+        if (!oldpassword.equals(this.password)){
+            DialogOk dialogOk = new DialogOk("Edit Failed","Old password is incorrect.");
+            dialogOk.setVisible(true);
+            return;
+        }
+
+        if (newpassword.equals(confirmPassword)){
+            // success
+            this.password = newpassword;
+
+            DialogOk dialogOk = new DialogOk("Edit Success","Account information has been updated.");
+            dialogOk.setVisible(true);
+        } else {
+            DialogOk dialogOk = new DialogOk("Edit Failed","New Password & Confirm Password does not match.");
+            dialogOk.setVisible(true);
+        }
+
     }
 
     public String getName() {
