@@ -37,13 +37,66 @@ public class Data {
 
         // Products
         products = new ArrayList<>();
-        products.add(new Product("HGWER","Hawaiian Breakfast", "Main", 150, "Available", new ImageIcon(".\\src\\resources\\menu\\hawaiianbreakfast.png")));
-        products.add(new Product("ASGDF","Pork Schnitzel", "Main", 150, "Available", new ImageIcon(".\\src\\resources\\menu\\porkschnitzel.png")));
-        products.add(new Product("KSDWS","Trout Amandine", "Main", 120, "Available", new ImageIcon(".\\src\\resources\\menu\\troutamandine.png")));
-        products.add(new Product("UFGDF","Seared Diver Scallop", "Main", 139, "Available", new ImageIcon(".\\src\\resources\\menu\\seareddiverscallops.png")));
-        products.add(new Product("KDGDF","Steak Frites", "Main", 130, "Available"));
-        products.add(new Product("PYUGH","Roasted Duck Breast", "Main", 150, "Available"));
-        products.add(new Product("QWEGD","Roasted Beef Breast", "Others", 150, "Available"));
+
+        // MAIN
+        products.add(new Product("HGWER","Hawaiian Breakfast", "Main", 67.50, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\hawaiianbreakfast.png")));
+        products.add(new Product("KLKMG","Bacon and Egg Breakfast", "Main", 50.99, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\baconandeggbreakfast.png")));
+        products.add(new Product("LKPIH","Ham and Cheese Breakfast", "Main", 50.99, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\hamandcheesebreakfast.png")));
+        products.add(new Product("ASGDF","Pork Schnitzel", "Main", 99, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\porkschnitzel.png")));
+        products.add(new Product("KSDWS","Trout Amandine", "Main", 100, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\troutamandine.png")));
+        products.add(new Product("UFGDF","Seared Diver Scallop", "Main", 140, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\seareddiverscallops.png")));
+        products.add(new Product("KDGDF","Steak Frites", "Main", 130, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\steakfrites.png")));
+        products.add(new Product("PYUGH","Roasted Duck Breast", "Main", 119, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\roastedduckbreast.png")));
+        products.add(new Product("QWEGD","Roasted Beef Breast", "Main", 119, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\roastedbeefbreast.png")));
+        products.add(new Product("JFASD","Beef Stew Dinner", "Main", 80, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\beefstewdinner.png")));
+
+        // DESSERT
+        products.add(new Product("OIUJK","Mocha Mud Pie", "Dessert", 50.50, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\mochamudpie.png")));
+        products.add(new Product("UIPJM","Chocolate Caramel Crunch Cake", "Dessert", 50.50, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\chocolatecrunchcake.jpg")));
+        products.add(new Product("DKJUO","Rockslide Brownie Bars", "Dessert", 53.50, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\rockslidebrownie.png")));
+        products.add(new Product("YSDHF","Praline Cheesecake", "Dessert", 55.50, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\pralinecheesecake.png")));
+        products.add(new Product("QJGDF","Warm Apple Crisp", "Dessert", 65.50, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\warmapplecrisp.png")));
+
+        // DRINKS
+        products.add(new Product("IOSVG","Cosmopolitan", "Drinks", 80.00, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\cosmopolitan.png")));
+        products.add(new Product("AWNSD","Mai Tai", "Drinks", 80.00, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\maitai.png")));
+        products.add(new Product("TYZVN","Champagne", "Drinks", 80.00, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\champagne.png")));
+        products.add(new Product("UISCN","Gin Tonic", "Drinks", 80.00, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\gintonic.png")));
+        products.add(new Product("XMFGG","Blue Lagoon", "Drinks", 80.00, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\bluelagoon.png")));
+
+        // OTHERS
+        products.add(new Product("LKIMJ","Fries", "Others", 50.00, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\fries.png")));
+        products.add(new Product("XGVSD","Greek Salad", "Others", 80.00, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\greeksalad.png")));
+        products.add(new Product("JDFRF","Meaty Spaghetti", "Others", 60.00, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\meatyspaghetti.png")));
+        products.add(new Product("YSFGF","Madfish House Salad", "Others", 60.00, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\madfishhousesalad.png")));
+        products.add(new Product("UYRGH","Fried Calamari", "Others", 45.00, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\friedcalamari.png")));
+        products.add(new Product("QDPKF","Garlic Bread", "Others", 45.00, "Available"
+                , new ImageIcon(".\\src\\resources\\menu\\garlicbread.png")));
 
         // Orders
         orders = new ArrayList<>();
