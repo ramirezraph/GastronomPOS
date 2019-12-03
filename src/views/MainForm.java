@@ -83,6 +83,8 @@ public class MainForm extends JFrame {
     private JLabel btnDown;
     private JButton btnResetTransactionLog;
 
+    private static JLabel lblBusinessAddress;
+
     public MainForm(Account account, Data data) {
         setLayout(null);
         setLocationRelativeTo(null);
@@ -107,7 +109,7 @@ public class MainForm extends JFrame {
         pnlNavbar.add(imgNavTitle);
         imgNavTitle.setBounds(62,18,215,70);
 
-        JLabel lblBusinessAddress = new JLabel("Sample St., Sabang, Baliuag, Bulacan.");
+        lblBusinessAddress = new JLabel("Sample St., Sabang, Baliuag, Bulacan");
         lblBusinessAddress.setForeground(color_white);
         lblBusinessAddress.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         pnlNavbar.add(lblBusinessAddress);
@@ -546,6 +548,10 @@ public class MainForm extends JFrame {
 
         }
 
+    }
+
+    public static void updateAddress(String address){
+        lblBusinessAddress.setText(address);
     }
 
     private void createDashboardGUI(){
@@ -2407,28 +2413,29 @@ public class MainForm extends JFrame {
         txtBusinessName.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(color_border_lightgray, 2),
                 BorderFactory.createEmptyBorder(5, 50, 5, 5)));
+        txtBusinessName.setEditable(false);
         pnlNameAddress.add(txtBusinessName);
         txtBusinessName.setBounds(300, 32, 644,64);
-        txtBusinessName.addFocusListener(
-                new FocusAdapter() {
-                    @Override
-                    public void focusGained(FocusEvent e) {
-                        txtBusinessName.setForeground(new Color(4, 197, 178));
-                        txtBusinessName.setBorder(BorderFactory.createCompoundBorder(
-                                BorderFactory.createLineBorder(new Color(4, 197, 178), 2),
-                                BorderFactory.createEmptyBorder(5, 50, 5, 5)));
-                    }
-
-                    @Override
-                    public void focusLost(FocusEvent e) {
-                        txtBusinessName.setForeground(color_title_gray);
-                        txtBusinessName.setBorder(BorderFactory.createCompoundBorder(
-                                BorderFactory.createLineBorder(color_border_lightgray, 2),
-                                BorderFactory.createEmptyBorder(5, 50, 5, 5)));
-
-                    }
-                }
-        );
+//        txtBusinessName.addFocusListener(
+//                new FocusAdapter() {
+//                    @Override
+//                    public void focusGained(FocusEvent e) {
+//                        txtBusinessName.setForeground(new Color(4, 197, 178));
+//                        txtBusinessName.setBorder(BorderFactory.createCompoundBorder(
+//                                BorderFactory.createLineBorder(new Color(4, 197, 178), 2),
+//                                BorderFactory.createEmptyBorder(5, 50, 5, 5)));
+//                    }
+//
+//                    @Override
+//                    public void focusLost(FocusEvent e) {
+//                        txtBusinessName.setForeground(color_title_gray);
+//                        txtBusinessName.setBorder(BorderFactory.createCompoundBorder(
+//                                BorderFactory.createLineBorder(color_border_lightgray, 2),
+//                                BorderFactory.createEmptyBorder(5, 50, 5, 5)));
+//
+//                    }
+//                }
+//        );
 
         JLabel lblAddress = new JLabel("Address");
         lblAddress.setFont(new Font("Segoe UI", Font.BOLD, 25));
@@ -2436,7 +2443,7 @@ public class MainForm extends JFrame {
         pnlNameAddress.add(lblAddress);
         lblAddress.setBounds(79, 121, 314,53);
 
-        JTextField txtAddress = new JTextField("Sample St., Sabang, Baliuag, Bulacan");
+        JTextField txtAddress = new JTextField(lblBusinessAddress.getText());
         txtAddress.setFont(new Font("Segoe UI", Font.BOLD, 25));
         txtAddress.setForeground(color_title_gray);
         txtAddress.setBorder(BorderFactory.createCompoundBorder(
@@ -2483,6 +2490,15 @@ public class MainForm extends JFrame {
                     @Override
                     public void mouseExited(MouseEvent e) {
                         btnApplyNameAddressChange.setBackground(color_blue);
+                    }
+                }
+        );
+        btnApplyNameAddressChange.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String newAddress = txtAddress.getText().trim();
+                        updateAddress(newAddress);
                     }
                 }
         );

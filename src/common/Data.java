@@ -37,9 +37,10 @@ public class Data {
 
         // Products
         products = new ArrayList<>();
-        products.add(new Product("ASGDF","Pork Schnitzel", "Main", 150, "Available"));
-        products.add(new Product("KSDWS","Trout Amandine", "Main", 120, "Available"));
-        products.add(new Product("UFGDF","Seared Diver Scallop", "Main", 139, "Available"));
+        products.add(new Product("HGWER","Hawaiian Breakfast", "Main", 150, "Available", new ImageIcon(".\\src\\resources\\menu\\hawaiianbreakfast.png")));
+        products.add(new Product("ASGDF","Pork Schnitzel", "Main", 150, "Available", new ImageIcon(".\\src\\resources\\menu\\porkschnitzel.png")));
+        products.add(new Product("KSDWS","Trout Amandine", "Main", 120, "Available", new ImageIcon(".\\src\\resources\\menu\\troutamandine.png")));
+        products.add(new Product("UFGDF","Seared Diver Scallop", "Main", 139, "Available", new ImageIcon(".\\src\\resources\\menu\\seareddiverscallops.png")));
         products.add(new Product("KDGDF","Steak Frites", "Main", 130, "Available"));
         products.add(new Product("PYUGH","Roasted Duck Breast", "Main", 150, "Available"));
         products.add(new Product("QWEGD","Roasted Beef Breast", "Others", 150, "Available"));
