@@ -414,7 +414,12 @@ public class AccountSettingsForm extends JDialog {
                             return;
                         }
 
-                        data.resetPassword(txtUsername.getText());
+                        DialogAdminConfirm dialogAdminConfirm = new DialogAdminConfirm(data);
+                        dialogAdminConfirm.setVisible(true);
+
+                        if (dialogAdminConfirm.isAccountValid()){
+                            data.resetPassword(txtUsername.getText());
+                        }
                     }
                 }
         );

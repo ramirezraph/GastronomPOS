@@ -174,6 +174,7 @@ public class ButtonColumn extends AbstractCellEditor
         renderButton.setForeground(Color.WHITE);
         renderButton.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         renderButton.setBorder(BorderFactory.createEmptyBorder());
+        renderButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         return renderButton;
     }

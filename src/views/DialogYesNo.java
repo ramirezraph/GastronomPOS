@@ -13,6 +13,8 @@ public class DialogYesNo extends JDialog {
     private final Color color_lightgray = new Color(90,90,90);
     private final Color color_jungle = new Color(72,151,164);
     private final Color color_red = new Color(228,52,52);
+    private final JButton btnNo;
+    private final JButton btnYes;
 
     private boolean isYes = false;
 
@@ -49,12 +51,12 @@ public class DialogYesNo extends JDialog {
         add(lblDialogMessage);
         lblDialogMessage.setBounds(58, 80, getWidth(), 35);
 
-        JButton btnYes = new JButton("Yes");
+        btnYes = new JButton("Yes");
         btnYes.setBackground(color_jungle);
         btnYes.setForeground(Color.white);
         btnYes.setFont(SegoeUI20);
         btnYes.setBorder(null);
-        btnYes.setFocusable(false);
+        btnYes.setCursor(new Cursor(Cursor.HAND_CURSOR));
         add(btnYes);
         btnYes.setBounds(273, 163, 161, 51);
         btnYes.addActionListener(new ActionListener() {
@@ -65,12 +67,13 @@ public class DialogYesNo extends JDialog {
             }
         });
 
-        JButton btnNo = new JButton("No");
+        btnNo = new JButton("No");
         btnNo.setBackground(color_jungle);
         btnNo.setForeground(Color.white);
         btnNo.setFont(SegoeUI20);
         btnNo.setBorder(null);
         btnNo.setFocusable(false);
+        btnNo.setCursor(new Cursor(Cursor.HAND_CURSOR));
         add(btnNo);
         btnNo.setBounds(446, 163, 161, 51);
         btnNo.addActionListener(new ActionListener() {
@@ -80,6 +83,8 @@ public class DialogYesNo extends JDialog {
                 dispose();
             }
         });
+
+        getRootPane().setDefaultButton(btnYes);
     }
 
     public boolean getYesNo(){

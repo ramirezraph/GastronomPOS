@@ -52,6 +52,7 @@ public class DialogOk extends JDialog {
         btnOk.setFont(SegoeUI20);
         btnOk.setBorder(null);
         btnOk.setFocusable(false);
+        btnOk.setCursor(new Cursor(Cursor.HAND_CURSOR));
         add(btnOk);
         btnOk.setBounds(363, 150, 228, 51);
         btnOk.addActionListener(new ActionListener() {
@@ -60,6 +61,8 @@ public class DialogOk extends JDialog {
                 dispose();
             }
         });
+
+        getRootPane().setDefaultButton(btnOk);
 
     }
 }

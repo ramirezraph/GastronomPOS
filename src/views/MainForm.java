@@ -139,6 +139,7 @@ public class MainForm extends JFrame {
         btnLogout.setForeground(color_white);
         btnLogout.setFont(new Font("Segoe UI", Font.PLAIN, 19));
         btnLogout.setIcon(new ImageIcon(".\\src\\resources\\logout_32.png"));
+        btnLogout.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlNavbar.add(btnLogout);
         btnLogout.setBounds(1770,35,200,33);
         btnLogout.addMouseListener(new MouseAdapter() {
@@ -198,6 +199,7 @@ public class MainForm extends JFrame {
         btnDashboard.setBackground(color_darkgray);
         btnDashboard.setOpaque(true);
         btnDashboard.setFocusable(false);
+        btnDashboard.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlLeft.add(btnDashboard);
         btnDashboard.setBounds(0,20, 354, 82);
         btnDashboard.addMouseListener(new MouseAdapter() {
@@ -264,6 +266,7 @@ public class MainForm extends JFrame {
         btnPointOfSale.setBackground(color_darkgray);
         btnPointOfSale.setOpaque(true);
         btnPointOfSale.setFocusable(false);
+        btnPointOfSale.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlLeft.add(btnPointOfSale);
         btnPointOfSale.setBounds(0,162, 354, 82);
         btnPointOfSale.addMouseListener(new MouseAdapter() {
@@ -323,6 +326,7 @@ public class MainForm extends JFrame {
         btnTransactionLog.setBackground(color_darkgray);
         btnTransactionLog.setOpaque(true);
         btnTransactionLog.setFocusable(false);
+        btnTransactionLog.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlLeft.add(btnTransactionLog);
         btnTransactionLog.setBounds(0,244, 354, 82);
         btnTransactionLog.addMouseListener(new MouseAdapter() {
@@ -381,6 +385,7 @@ public class MainForm extends JFrame {
         btnSystemSettings.setBackground(color_darkgray);
         btnSystemSettings.setOpaque(true);
         btnSystemSettings.setFocusable(false);
+        btnSystemSettings.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlLeft.add(btnSystemSettings);
         btnSystemSettings.setBounds(0,326, 354, 82);
         btnSystemSettings.addMouseListener(new MouseAdapter() {
@@ -444,6 +449,7 @@ public class MainForm extends JFrame {
         btnCurrentUserPanel.setIconTextGap(12);
         btnCurrentUserPanel.setFont(new Font("Segoe UI", Font.PLAIN, 25));
         btnCurrentUserPanel.setFocusable(false);
+        btnCurrentUserPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlAccount.add(btnCurrentUserPanel);
         btnCurrentUserPanel.setBounds(0,0,353,50);
         btnCurrentUserPanel.addActionListener(
@@ -460,6 +466,7 @@ public class MainForm extends JFrame {
 
         JLabel btnAccount = new JLabel();
         btnAccount.setIcon(new ImageIcon(".\\src\\resources\\btnMyAccount.png"));
+        btnAccount.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlAccount.add(btnAccount);
         btnAccount.setBounds(30, 95,294,45);
         btnAccount.addMouseListener(
@@ -506,6 +513,7 @@ public class MainForm extends JFrame {
         btnCurrentUser.setIconTextGap(12);
         btnCurrentUser.setFont(new Font("Segoe UI", Font.PLAIN, 25));
         btnCurrentUser.setFocusable(false);
+        btnCurrentUser.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlLeft.add(btnCurrentUser);
         btnCurrentUser.setBounds(0,927,353,50);
         btnCurrentUser.addActionListener(
@@ -660,6 +668,7 @@ public class MainForm extends JFrame {
         btnDown = new JLabel();
         btnDown.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\btnDown.png").getImage()
                 .getScaledInstance(120, 120,Image.SCALE_SMOOTH)));
+        btnDown.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlTopContent.add(btnDown);
         btnDown.setBounds(56,764,120,120);
         btnDown.addMouseListener(
@@ -701,6 +710,7 @@ public class MainForm extends JFrame {
         JLabel btnUp = new JLabel();
         btnUp.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\btnUp.png").getImage()
                 .getScaledInstance(120, 120,Image.SCALE_SMOOTH)));
+        btnUp.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlBottomContent.add(btnUp);
         btnUp.setBounds(56,60,120,120);
         btnUp.addMouseListener(
@@ -847,6 +857,7 @@ public class MainForm extends JFrame {
         btnSearch.setForeground(color_darkergray);
         btnSearch.setFont(new Font("Segoe UI", Font.PLAIN, 17));
         btnSearch.setBorder(BorderFactory.createLineBorder(color_border_lightgray, 2));
+        btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlBottomContent.add(btnSearch);
         btnSearch.setBounds(818,346,135,39);
         btnSearch.addActionListener(
@@ -865,6 +876,7 @@ public class MainForm extends JFrame {
         btnResetSales.setForeground(Color.WHITE);
         btnResetSales.setFont(new Font("Segoe UI", Font.PLAIN, 17));
         btnResetSales.setBorder(BorderFactory.createEmptyBorder());
+        btnResetSales.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlBottomContent.add(btnResetSales);
         btnResetSales.setBounds(1148,346,223,39);
         btnResetSales.addActionListener(
@@ -904,6 +916,7 @@ public class MainForm extends JFrame {
         btnViewTransactionLog.setFont(new Font("Segoe UI", Font.PLAIN, 21));
         btnViewTransactionLog.setFocusable(false);
         btnViewTransactionLog.setBorder(BorderFactory.createEmptyBorder());
+        btnViewTransactionLog.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlBottomContent.add(btnViewTransactionLog);
         btnViewTransactionLog.setBounds(175,900,444,58);
         btnViewTransactionLog.addActionListener(
@@ -1004,12 +1017,36 @@ public class MainForm extends JFrame {
         pnlCenter.add(lblMenu);
         lblMenu.setBounds(112, 41, 102, 46);
 
+        // Indicators
+
+        JPanel pnlIndicatorMain = new JPanel();
+        pnlIndicatorMain.setBackground(color_jungle);
+        pnlCenter.add(pnlIndicatorMain);
+        pnlIndicatorMain.setBounds(112,160, 206, 9);
+
+        JPanel pnlIndicatorDessert = new JPanel();
+        pnlIndicatorDessert.setBackground(Color.WHITE);
+        pnlCenter.add(pnlIndicatorDessert);
+        pnlIndicatorDessert.setBounds(321,160, 206, 9);
+
+        JPanel pnlIndicatorDrinks = new JPanel();
+        pnlIndicatorDrinks.setBackground(Color.WHITE);
+        pnlCenter.add(pnlIndicatorDrinks);
+        pnlIndicatorDrinks.setBounds(530,160, 206, 9);
+
+        JPanel pnlIndicatorOthers = new JPanel();
+        pnlIndicatorOthers.setBackground(Color.WHITE);
+        pnlCenter.add(pnlIndicatorOthers);
+        pnlIndicatorOthers.setBounds(739,160, 206, 9);
+
+
         JButton btnMainMenu = new JButton("Main");
         btnMainMenu.setForeground(color_white);
         btnMainMenu.setBackground(color_darkergray);
         btnMainMenu.setFont(new Font("Segoe UI", Font.PLAIN, 19));
         btnMainMenu.setFocusable(false);
         btnMainMenu.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        btnMainMenu.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlCenter.add(btnMainMenu);
         btnMainMenu.setBounds(112, 104, 206,57);
         btnMainMenu.addActionListener(
@@ -1017,6 +1054,11 @@ public class MainForm extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         generateMenu(DATA, "Main");
+
+                        pnlIndicatorMain.setBackground(color_jungle);
+                        pnlIndicatorDessert.setBackground(Color.WHITE);
+                        pnlIndicatorDrinks.setBackground(Color.WHITE);
+                        pnlIndicatorOthers.setBackground(Color.WHITE);
                     }
                 }
         );
@@ -1027,6 +1069,7 @@ public class MainForm extends JFrame {
         btnDessertMenu.setFont(new Font("Segoe UI", Font.PLAIN, 19));
         btnDessertMenu.setFocusable(false);
         btnDessertMenu.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        btnDessertMenu.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlCenter.add(btnDessertMenu);
         btnDessertMenu.setBounds(320, 104, 206,57);
         btnDessertMenu.addActionListener(
@@ -1034,6 +1077,11 @@ public class MainForm extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         generateMenu(DATA, "Dessert");
+
+                        pnlIndicatorMain.setBackground(Color.WHITE);
+                        pnlIndicatorDessert.setBackground(color_jungle);
+                        pnlIndicatorDrinks.setBackground(Color.WHITE);
+                        pnlIndicatorOthers.setBackground(Color.WHITE);
                     }
                 }
         );
@@ -1044,6 +1092,7 @@ public class MainForm extends JFrame {
         btnDrinksMenu.setFont(new Font("Segoe UI", Font.PLAIN, 19));
         btnDrinksMenu.setFocusable(false);
         btnDrinksMenu.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        btnDrinksMenu.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlCenter.add(btnDrinksMenu);
         btnDrinksMenu.setBounds(529, 104, 206,57);
         btnDrinksMenu.addActionListener(
@@ -1051,6 +1100,11 @@ public class MainForm extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         generateMenu(DATA, "Drinks");
+
+                        pnlIndicatorMain.setBackground(Color.WHITE);
+                        pnlIndicatorDessert.setBackground(Color.WHITE);
+                        pnlIndicatorDrinks.setBackground(color_jungle);
+                        pnlIndicatorOthers.setBackground(Color.WHITE);
                     }
                 }
         );
@@ -1061,6 +1115,7 @@ public class MainForm extends JFrame {
         btnOthersMenu.setFont(new Font("Segoe UI", Font.PLAIN, 19));
         btnOthersMenu.setFocusable(false);
         btnOthersMenu.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        btnOthersMenu.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlCenter.add(btnOthersMenu);
         btnOthersMenu.setBounds(738, 104, 206,57);
         btnOthersMenu.addActionListener(
@@ -1068,6 +1123,11 @@ public class MainForm extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         generateMenu(DATA, "Others");
+
+                        pnlIndicatorMain.setBackground(Color.WHITE);
+                        pnlIndicatorDessert.setBackground(Color.WHITE);
+                        pnlIndicatorDrinks.setBackground(Color.WHITE);
+                        pnlIndicatorOthers.setBackground(color_jungle);
                     }
                 }
         );
@@ -1124,6 +1184,7 @@ public class MainForm extends JFrame {
         btnReset.setFont(new Font("Segoe UI", Font.PLAIN, 18));
         btnReset.setBorder(BorderFactory.createEmptyBorder());
         btnReset.setFocusable(false);
+        btnReset.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlRight.add(btnReset);
         btnReset.setBounds(406,13,129,35);
         btnReset.addActionListener(
@@ -1182,6 +1243,7 @@ public class MainForm extends JFrame {
         btnQty.setIcon(new ImageIcon(".\\src\\resources\\btnQty.png"));
         btnQty.setForeground(Color.white);
         btnQty.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnQty.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlRight.add(btnQty);
         btnQty.setBounds(12, 495, 195, 45);
         btnQty.addMouseListener(
@@ -1230,6 +1292,7 @@ public class MainForm extends JFrame {
         btnDeleteItemFromList.setIcon(new ImageIcon(".\\src\\resources\\btnDelete.png"));
         btnDeleteItemFromList.setForeground(Color.white);
         btnDeleteItemFromList.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnDeleteItemFromList.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlRight.add(btnDeleteItemFromList);
         btnDeleteItemFromList.setBounds(12, 552, 195, 45);
         btnDeleteItemFromList.addMouseListener(
@@ -1291,6 +1354,7 @@ public class MainForm extends JFrame {
         JLabel btnDiscount = new JLabel();
         btnDiscount.setIcon(new ImageIcon(new ImageIcon(".\\src\\resources\\discount_128.png").getImage()
                 .getScaledInstance(50, 50,Image.SCALE_DEFAULT)));
+        btnDiscount.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlRight.add(btnDiscount);
         btnDiscount.setBounds(428, 545, 50,50);
         btnDiscount.addMouseListener(
@@ -1782,6 +1846,7 @@ public class MainForm extends JFrame {
         // End Calculator
 
         JLabel btnGenerateReceipt = new JLabel(new ImageIcon(".\\src\\resources\\btnGenerateReceipt.png"));
+        btnGenerateReceipt.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlRight.add(btnGenerateReceipt);
         btnGenerateReceipt.setBounds(11,920,196,45);
         btnGenerateReceipt.addMouseListener(
@@ -1966,7 +2031,7 @@ public class MainForm extends JFrame {
         tblOrderList.setSelectionForeground(color_white);
         tblOrderList.setModel(tblOrderListModel);
         tblOrderList.setGridColor(color_border_lightgray);
-        tblOrderList.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+        tblOrderList.setFont(new Font("Segoe UI", Font.PLAIN, 18));
         tblOrderList.setRowHeight(40);
         tblOrderList.setGridColor(Color.WHITE);
         tblOrderList.setBorder(BorderFactory.createEmptyBorder());
@@ -2033,6 +2098,7 @@ public class MainForm extends JFrame {
         btnExportLog.setIconTextGap(10);
         btnExportLog.setFocusable(false);
         btnExportLog.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        btnExportLog.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlMainTransactionLog.add(btnExportLog);
         btnExportLog.setBounds(469,38,317,58);
 
@@ -2042,6 +2108,7 @@ public class MainForm extends JFrame {
         btnResetTransactionLog.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         btnResetTransactionLog.setFocusable(false);
         btnResetTransactionLog.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        btnResetTransactionLog.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlMainTransactionLog.add(btnResetTransactionLog);
         btnResetTransactionLog.setBounds(806,38,226,58);
         btnResetTransactionLog.addActionListener(
@@ -2104,6 +2171,7 @@ public class MainForm extends JFrame {
         btnApplyFilter.setBackground(Color.WHITE);
         btnApplyFilter.setFocusable(false);
         btnApplyFilter.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+        btnApplyFilter.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlMainTransactionLog.add(btnApplyFilter);
         btnApplyFilter.setBounds(881,155,149,39);
         btnApplyFilter.addActionListener(
@@ -2163,6 +2231,7 @@ public class MainForm extends JFrame {
         btnClearFilter.setBackground(Color.WHITE);
         btnClearFilter.setFocusable(false);
         btnClearFilter.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+        btnClearFilter.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlMainTransactionLog.add(btnClearFilter);
         btnClearFilter.setBounds(1048,155,149,39);
         btnClearFilter.addActionListener(
@@ -2312,6 +2381,7 @@ public class MainForm extends JFrame {
         btnAccountSettings.setBackground(Color.white);
         btnAccountSettings.setOpaque(true);
         btnAccountSettings.setFocusable(false);
+        btnAccountSettings.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlInsideSystemSettings.add(btnAccountSettings);
         btnAccountSettings.setBounds(51, 177, 1160, 112);
         btnAccountSettings.addMouseListener(
@@ -2360,6 +2430,7 @@ public class MainForm extends JFrame {
         btnMenuSettings.setBackground(Color.white);
         btnMenuSettings.setOpaque(true);
         btnMenuSettings.setFocusable(false);
+        btnMenuSettings.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlInsideSystemSettings.add(btnMenuSettings);
         btnMenuSettings.setBounds(51, 309, 1160, 112);
         btnMenuSettings.addMouseListener(
@@ -2481,6 +2552,7 @@ public class MainForm extends JFrame {
         btnApplyNameAddressChange.setFont(new Font("Segoe UI", Font.PLAIN, 19));
         btnApplyNameAddressChange.setFocusable(false);
         btnApplyNameAddressChange.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        btnApplyNameAddressChange.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlNameAddress.add(btnApplyNameAddressChange);
         btnApplyNameAddressChange.setBounds(655, 210, 289,62);
         btnApplyNameAddressChange.addMouseListener(

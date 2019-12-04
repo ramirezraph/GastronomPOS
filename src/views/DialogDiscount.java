@@ -61,6 +61,7 @@ public class DialogDiscount extends JDialog {
         btnApplyDiscount.setForeground(Color.WHITE);
         btnApplyDiscount.setFocusable(false);
         btnApplyDiscount.setBorder(BorderFactory.createEmptyBorder());
+        btnApplyDiscount.setCursor(new Cursor(Cursor.HAND_CURSOR));
         add(btnApplyDiscount);
         btnApplyDiscount.setBounds(197,163,237,51);
         btnApplyDiscount.addActionListener(
@@ -78,6 +79,7 @@ public class DialogDiscount extends JDialog {
         btnCancel.setForeground(Color.WHITE);
         btnCancel.setFocusable(false);
         btnCancel.setBorder(BorderFactory.createEmptyBorder());
+        btnCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         add(btnCancel);
         btnCancel.setBounds(446,163,161,51);
         btnCancel.addActionListener(
@@ -88,6 +90,9 @@ public class DialogDiscount extends JDialog {
                     }
                 }
         );
+
+        getRootPane().setDefaultButton(btnApplyDiscount);
+
     }
 
     public int getDiscountPercentage(){

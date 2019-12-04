@@ -76,6 +76,7 @@ public class DialogAdminConfirm extends JDialog {
         btnConfirm.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         btnConfirm.setBorder(null);
         btnConfirm.setFocusable(false);
+        btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
         add(btnConfirm);
         btnConfirm.setBounds(65, 339, 235, 51);
         btnConfirm.addActionListener(new ActionListener() {
@@ -124,6 +125,7 @@ public class DialogAdminConfirm extends JDialog {
         btnCancel.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         btnCancel.setBorder(null);
         btnCancel.setFocusable(false);
+        btnCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         add(btnCancel);
         btnCancel.setBounds(314, 339, 192, 51);
         btnCancel.addActionListener(new ActionListener() {
@@ -132,6 +134,8 @@ public class DialogAdminConfirm extends JDialog {
                 dispose();
             }
         });
+
+        getRootPane().setDefaultButton(btnConfirm);
 
     }
 

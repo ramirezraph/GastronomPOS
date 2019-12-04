@@ -88,6 +88,7 @@ public class DialogQuantity extends JDialog {
         btnMinus.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.GRAY, 1),
                 BorderFactory.createEmptyBorder(0, 10, 12, 10)));
+        btnMinus.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlContainer.add(btnMinus);
         btnMinus.setBounds(350,159,75,65);
         btnMinus.addActionListener(
@@ -122,6 +123,7 @@ public class DialogQuantity extends JDialog {
         btnPlus.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.GRAY, 1),
                 BorderFactory.createEmptyBorder(0, 10, 12, 10)));
+        btnPlus.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlContainer.add(btnPlus);
         btnPlus.setBounds(603,159,75,65);
         btnPlus.addActionListener(
@@ -139,6 +141,7 @@ public class DialogQuantity extends JDialog {
         btnOrder.setBackground(new Color(62,151,164));
         btnOrder.setFont(new Font("Segoe UI", Font.PLAIN, 30));
         btnOrder.setBorder(BorderFactory.createEmptyBorder());
+        btnOrder.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnOrder.setFocusable(false);
         pnlContainer.add(btnOrder);
         btnOrder.setBounds(63,264,382,76);
@@ -164,6 +167,7 @@ public class DialogQuantity extends JDialog {
         btnCancelOrder.setFont(new Font("Segoe UI", Font.PLAIN, 30));
         btnCancelOrder.setBorder(BorderFactory.createEmptyBorder());
         btnCancelOrder.setFocusable(false);
+        btnCancelOrder.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlContainer.add(btnCancelOrder);
         btnCancelOrder.setBounds(454,264,247,76);
         btnCancelOrder.addActionListener(
@@ -174,6 +178,9 @@ public class DialogQuantity extends JDialog {
                     }
                 }
         );
+
+        getRootPane().setDefaultButton(btnOrder);
+
 
     }
 }
