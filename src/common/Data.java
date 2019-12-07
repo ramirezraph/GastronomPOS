@@ -306,11 +306,21 @@ public class Data {
     public void getBalance(){
         // Update Total Amount
         double total = getOrderTotal();
-        MainForm.lblTotalAmount.setText("₱" + twoDecimalFormat.format(total));
+        if (total == 0){
+            MainForm.lblTotalAmount.setText("₱00.00");
+
+        } else {
+            MainForm.lblTotalAmount.setText("₱" + twoDecimalFormat.format(total));
+        }
         // Update Balance
         double discount = Double.parseDouble(MainForm.lblDiscountAmount.getText().substring(1));
         double balance = total - discount;
-        MainForm.lblBalanceAmount.setText("₱" + twoDecimalFormat.format(balance));
+
+        if (balance == 0){
+            MainForm.lblBalanceAmount.setText("₱00.00");
+        } else {
+            MainForm.lblBalanceAmount.setText("₱" + twoDecimalFormat.format(balance));
+        }
 
         MainForm.lblChangeAmount.setText("");
     }
@@ -458,6 +468,11 @@ public class Data {
     public void addProduct(Product product){
         try {
             for (Product o: products){
+                if (product.getCode().equals(o.getCode())){
+                    DialogOk dialogOk = new DialogOk("Add Product Failed", "Generated product code duplicate, please try again.");
+                    dialogOk.setVisible(true);
+                    return;
+                }
                 if (product.getName().equals(o.getName())){
                     DialogOk dialogOk = new DialogOk("Add Product Failed", "Product already exists.");
                     dialogOk.setVisible(true);

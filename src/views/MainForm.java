@@ -1997,7 +1997,6 @@ public class MainForm extends JFrame {
                         2).toString().substring(1));
 
 
-
                 DialogQuantity dialogQuantity = new DialogQuantity(data, productCode, imagePath, productName, productPrice);
                 dialogQuantity.setVisible(true);
             }

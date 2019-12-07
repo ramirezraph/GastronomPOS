@@ -666,15 +666,20 @@ public class AccountSettingsForm extends JDialog {
                             return;
                         }
 
-                        data.deleteAccount(txtUsername.getText());
-                        createAccountTable(data);
+                        DialogAdminConfirm dialogAdminConfirm = new DialogAdminConfirm(data);
+                        dialogAdminConfirm.setVisible(true);
 
-                        MainForm.refreshStatsData(data);
+                        if (dialogAdminConfirm.isAccountValid()){
+                            data.deleteAccount(txtUsername.getText());
+                            createAccountTable(data);
 
-                        txtName.setText("");
-                        txtContactNo.setText("");
-                        txtUsername.setText("");
-                        txtLastLogin.setText("");
+                            MainForm.refreshStatsData(data);
+
+                            txtName.setText("");
+                            txtContactNo.setText("");
+                            txtUsername.setText("");
+                            txtLastLogin.setText("");
+                        }
 
                     }
                 }

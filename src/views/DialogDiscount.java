@@ -99,6 +99,8 @@ public class DialogDiscount extends JDialog {
         try {
             return Integer.parseInt(txtPercentage.getText());
         } catch (NumberFormatException ex){
+            DialogOk dialogOk = new DialogOk("Invalid Discount", "Please put a valid discount.");
+            dialogOk.setVisible(true);
             return 0;
         }
     }
