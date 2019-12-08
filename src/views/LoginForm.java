@@ -35,6 +35,7 @@ public class LoginForm extends JFrame {
         setLayout(null);
         setResizable(false);
         setUndecorated(true);
+        setTitle("Gastronom");
 
         accounts = data.getAccountList();
 

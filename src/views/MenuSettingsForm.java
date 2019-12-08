@@ -5,9 +5,7 @@ import common.Product;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MenuSettingsForm extends JDialog {
@@ -256,16 +255,21 @@ public class MenuSettingsForm extends JDialog {
                             return;
                         }
 
-                        data.deleteProduct(lblProductCode.getText());
-                        createProductTable(data, 1);
+                        DialogAdminConfirm dialogAdminConfirm = new DialogAdminConfirm(data);
+                        dialogAdminConfirm.setVisible(true);
 
-                        MainForm.refreshStatsData(data);
+                        if (dialogAdminConfirm.isAccountValid()){
+                            data.deleteProduct(lblProductCode.getText());
+                            createProductTable(data, 1);
 
-                        txtProductName.setText("");
-                        txtProductPrice.setText("");
-                        cmbProductCategory.setSelectedIndex(0);
-                        cmbProductAvailability.setSelectedIndex(0);
-                        imgHolder.setIcon(null);
+                            MainForm.refreshStatsData(data);
+
+                            txtProductName.setText("");
+                            txtProductPrice.setText("");
+                            cmbProductCategory.setSelectedIndex(0);
+                            cmbProductAvailability.setSelectedIndex(0);
+                            imgHolder.setIcon(null);
+                        }
 
                     }
                 }
@@ -867,14 +871,14 @@ public class MenuSettingsForm extends JDialog {
         for (Product prod: products){
             switch (filterMode){
                 case 1: { // No Filter
-                    Object[] newRow = {prod.getName(), prod.getCategory(), twoDecimalFormat.format(prod.getPrice()),
+                    Object[] newRow = {prod.getName(), prod.getCategory(), "₱"+twoDecimalFormat.format(prod.getPrice()),
                             prod.getAvailability(), prod.getImage(), prod.getCode()};
                     tblProductModel.addRow(newRow);
                     break;
                 }
                 case 2: { // Filter Name Only
                     if (prod.getName().toLowerCase().contains(name)){
-                        Object[] newRow = {prod.getName(), prod.getCategory(), twoDecimalFormat.format(prod.getPrice()),
+                        Object[] newRow = {prod.getName(), prod.getCategory(), "₱"+twoDecimalFormat.format(prod.getPrice()),
                                 prod.getAvailability(), prod.getImage(), prod.getCode()};
                         tblProductModel.addRow(newRow);
                     }
@@ -882,7 +886,7 @@ public class MenuSettingsForm extends JDialog {
                 }
                 case 3:{ // Filter Category Only
                     if (prod.getCategory().equals(category)){
-                        Object[] newRow = {prod.getName(), prod.getCategory(), twoDecimalFormat.format(prod.getPrice()),
+                        Object[] newRow = {prod.getName(), prod.getCategory(), "₱"+twoDecimalFormat.format(prod.getPrice()),
                                 prod.getAvailability(), prod.getImage(), prod.getCode()};
                         tblProductModel.addRow(newRow);
                     }
@@ -890,7 +894,7 @@ public class MenuSettingsForm extends JDialog {
                 }
                 case 4: { // Filter Both
                     if (prod.getName().toLowerCase().contains(name) && prod.getCategory().equals(category)){
-                        Object[] newRow = {prod.getName(), prod.getCategory(), twoDecimalFormat.format(prod.getPrice()),
+                        Object[] newRow = {prod.getName(), prod.getCategory(), "₱"+twoDecimalFormat.format(prod.getPrice()),
                                 prod.getAvailability(), prod.getImage(), prod.getCode()};
                         tblProductModel.addRow(newRow);
                     }
@@ -904,6 +908,13 @@ public class MenuSettingsForm extends JDialog {
         tblProducts.setDefaultEditor(Object.class, null); // editable = false
         tblProducts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblProducts.setFocusable(false);
+
+        // Sort
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tblProducts.getModel());
+        tblProducts.setRowSorter(sorter);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new RowSorter.SortKey(3, SortOrder.DESCENDING));
+        sorter.setSortKeys(sortKeys);
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);

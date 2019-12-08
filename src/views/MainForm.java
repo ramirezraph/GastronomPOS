@@ -4,9 +4,7 @@ import common.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -17,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainForm extends JFrame {
 
@@ -66,7 +65,7 @@ public class MainForm extends JFrame {
 
     private static JTable tblSales;
     private static DefaultTableModel tblSalesModel;
-    private static JLabel lblTotalEarning;
+    private static JLabel lblTotalRevenue;
     private static JLabel lblNumberOfItem;
     private static JLabel lblNumberOfEmployee;
 
@@ -84,6 +83,8 @@ public class MainForm extends JFrame {
     private JButton btnResetTransactionLog;
 
     private static JLabel lblBusinessAddress;
+    private JLabel btnGenerateReceipt;
+    private JButton btnProcessOrder;
 
     public MainForm(Account account, Data data) {
         setLayout(null);
@@ -94,6 +95,7 @@ public class MainForm extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setUndecorated(true);
         setResizable(false);
+        setTitle("Gastronom");
 
         DATA = data;
 
@@ -560,6 +562,8 @@ public class MainForm extends JFrame {
 
         }
 
+        getRootPane().setDefaultButton(btnProcessOrder);
+
     }
 
     public static void updateAddress(String address){
@@ -808,12 +812,12 @@ public class MainForm extends JFrame {
         pnlBottomContent.add(pnlEarnings);
         pnlEarnings.setBounds(1037,111,382,194);
 
-        lblTotalEarning = new JLabel();
-        lblTotalEarning.setHorizontalAlignment(JLabel.CENTER);
-        lblTotalEarning.setForeground(new Color(177,142,46));
-        lblTotalEarning.setFont(new Font("Segoe UI", Font.BOLD, 57));
-        pnlEarnings.add(lblTotalEarning);
-        lblTotalEarning.setBounds(0,20, 382,91);
+        lblTotalRevenue = new JLabel();
+        lblTotalRevenue.setHorizontalAlignment(JLabel.CENTER);
+        lblTotalRevenue.setForeground(new Color(177,142,46));
+        lblTotalRevenue.setFont(new Font("Segoe UI", Font.BOLD, 57));
+        pnlEarnings.add(lblTotalRevenue);
+        lblTotalRevenue.setBounds(0,20, 382,91);
 
         JPanel pnlTextEarnings = new JPanel();
         pnlTextEarnings.setBackground(color_darkgray);
@@ -821,26 +825,26 @@ public class MainForm extends JFrame {
         pnlEarnings.add(pnlTextEarnings);
         pnlTextEarnings.setBounds(0, 126,382,68);
 
-        JLabel lblEarn = new JLabel("Total Earnings");
-        lblEarn.setHorizontalAlignment(JLabel.CENTER);
-        lblEarn.setForeground(color_white);
-        lblEarn.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        pnlTextEarnings.add(lblEarn);
-        lblEarn.setBounds(0, 19, 382,30);
+        JLabel lblRev = new JLabel("Total Revenue");
+        lblRev.setHorizontalAlignment(JLabel.CENTER);
+        lblRev.setForeground(color_white);
+        lblRev.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        pnlTextEarnings.add(lblRev);
+        lblRev.setBounds(0, 19, 382,30);
 
         // Sales
 
-        JLabel lblSales = new JLabel("Sales");
+        JLabel lblSales = new JLabel("Sales Report");
         lblSales.setForeground(color_darkgray);
         lblSales.setFont(new Font("Segoe UI", Font.PLAIN, 40));
         pnlBottomContent.add(lblSales);
-        lblSales.setBounds(186, 334, 100,53);
+        lblSales.setBounds(186, 334, 250,53);
 
         JLabel lblSearchProduct = new JLabel("Search Product");
         lblSearchProduct.setForeground(color_darkergray);
         lblSearchProduct.setFont(new Font("Segoe UI", Font.PLAIN, 21));
         pnlBottomContent.add(lblSearchProduct);
-        lblSearchProduct.setBounds(354, 351, 144,28);
+        lblSearchProduct.setBounds(490, 351, 144,28);
 
         JTextField txtSearchProduct = new JTextField();
         txtSearchProduct.setForeground(color_darkergray);
@@ -849,7 +853,7 @@ public class MainForm extends JFrame {
                 BorderFactory.createLineBorder(color_darkergray, 1),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         pnlBottomContent.add(txtSearchProduct);
-        txtSearchProduct.setBounds(519, 346, 284,39);
+        txtSearchProduct.setBounds(642, 346, 284,39);
 
         JButton btnSearch = new JButton("Search");
         btnSearch.setFocusable(false);
@@ -859,7 +863,7 @@ public class MainForm extends JFrame {
         btnSearch.setBorder(BorderFactory.createLineBorder(color_border_lightgray, 2));
         btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlBottomContent.add(btnSearch);
-        btnSearch.setBounds(818,346,135,39);
+        btnSearch.setBounds(931,346,135,39);
         btnSearch.addActionListener(
                 new ActionListener() {
                     @Override
@@ -951,7 +955,7 @@ public class MainForm extends JFrame {
     public static void refreshStatsData(Data data){
         lblNumberOfItem.setText(String.valueOf(data.getProductList().size()));
         lblNumberOfEmployee.setText(String.valueOf(data.getAccountList().size()));
-        lblTotalEarning.setText(String.valueOf("₱"+twoDecimalFormat.format(data.getTotalEarningsByLogs())));
+        lblTotalRevenue.setText("₱" + twoDecimalFormat.format(data.getTotalRevenue()));
     }
 
     private static void generateSalesTable(Data data, String search){
@@ -966,9 +970,9 @@ public class MainForm extends JFrame {
                 Object[] newRow = {o.getCode(), o.getName(), "₱"+twoDecimalFormat.format(o.getPrice()),
                         noDecimalFormat.format(o.getNumberOfOrder()),
                         "₱"+twoDecimalFormat.format(o.getTotalEarnings()),
-                        (twoDecimalFormat.format((o.getTotalEarnings() / data.getTotalEarningsBySales() * 100)) + "%")};
+                        (twoDecimalFormat.format(data.getItemSalesPercentage(o.getNumberOfOrder())) + "%")};
                 tblSalesModel.addRow(newRow);
-                o.setPercentage((o.getTotalEarnings() / data.getTotalEarningsBySales() * 100));
+                o.setPercentage(data.getItemSalesPercentage(o.getNumberOfOrder()));
             }
         }
         tblSales.setModel(tblSalesModel);
@@ -978,6 +982,13 @@ public class MainForm extends JFrame {
         tblSales.setDefaultEditor(Object.class, null); // editable = false
         tblSales.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblSales.setFocusable(false);
+
+        // Sort
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tblSales.getModel());
+        tblSales.setRowSorter(sorter);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new RowSorter.SortKey(3, SortOrder.DESCENDING));
+        sorter.setSortKeys(sortKeys);
 
         // Modify Column
         TableColumnModel tableColumnModel = tblSales.getColumnModel();
@@ -1178,7 +1189,7 @@ public class MainForm extends JFrame {
         pnlRight.add(lblOrderList);
         lblOrderList.setBounds(20,14,128,33);
 
-        JButton btnReset = new JButton("Reset");
+        JButton btnReset = new JButton();
         btnReset.setForeground(Color.WHITE);
         btnReset.setBackground(color_darkgray);
         btnReset.setFont(new Font("Segoe UI", Font.PLAIN, 18));
@@ -1187,31 +1198,32 @@ public class MainForm extends JFrame {
         btnReset.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlRight.add(btnReset);
         btnReset.setBounds(406,13,129,35);
-        btnReset.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
+        Action btnResetAction = new AbstractAction("Reset (F5)") {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                DialogYesNo dialogYesNo = new DialogYesNo("Confirm Reset", "Click 'Yes' to continue.");
+                dialogYesNo.setVisible(true);
 
-                        DialogYesNo dialogYesNo = new DialogYesNo("Confirm Reset", "Click 'Yes' to continue.");
-                        dialogYesNo.setVisible(true);
+                if (dialogYesNo.getYesNo()){
+                    // Remove ALL item from Order List
+                    DATA.getOrderList().removeIf(o -> true);
+                    generateOrderList(DATA);
 
-                        if (dialogYesNo.getYesNo()){
-                            // Remove ALL item from Order List
-                            DATA.getOrderList().removeIf(o -> true);
-                            generateOrderList(DATA);
+                    CALCULATOR_TEXT = "";
 
-                            CALCULATOR_TEXT = "";
-
-                            lblTotalAmount.setText("₱00.00");
-                            lblBalanceAmount.setText("₱00.00");
-                            txtPayment.setText("");
-                            lblChangeAmount.setText("");
-                            lblDiscountAmount.setText("₱00.00");
-                        }
-
-                    }
+                    lblTotalAmount.setText("₱00.00");
+                    lblBalanceAmount.setText("₱00.00");
+                    txtPayment.setText("");
+                    lblChangeAmount.setText("");
+                    lblDiscountAmount.setText("₱00.00");
                 }
-        );
+            }
+        };
+        String key = "Reset";
+        btnReset.setAction(btnResetAction);
+        btnReset.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0), key);
+        btnReset.getActionMap().put(key, btnResetAction);
 
         JPanel pnlOrderList = new JPanel();
         pnlOrderList.setLayout(null);
@@ -1457,18 +1469,19 @@ public class MainForm extends JFrame {
         btn1.setFocusable(false);
         pnlRight.add(btn1);
         btn1.setBounds(219,618, 84 , 90);
-        btn1.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        CALCULATOR_TEXT += "1";
-                        txtPayment.setText(CALCULATOR_TEXT);
+        Action btn1Action = new AbstractAction("1") {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                CALCULATOR_TEXT += "1";
+                txtPayment.setText(CALCULATOR_TEXT);
 
-                        lblChangeAmount.setText("");
-
-                    }
-                }
-        );
+                lblChangeAmount.setText("");
+            }
+        };
+        btn1.setAction(btn1Action);
+        btn1.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_1, 0), "One");
+        btn1.getActionMap().put("One", btn1Action);
 
         JButton btn2 = new JButton("2");
         btn2.setForeground(color_darkergray);
@@ -1478,18 +1491,19 @@ public class MainForm extends JFrame {
         btn2.setFocusable(false);
         pnlRight.add(btn2);
         btn2.setBounds(302,618, 84 , 90);
-        btn2.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        CALCULATOR_TEXT += "2";
-                        txtPayment.setText(CALCULATOR_TEXT);
+        Action btn2Action = new AbstractAction("2") {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                CALCULATOR_TEXT += "2";
+                txtPayment.setText(CALCULATOR_TEXT);
 
-                        lblChangeAmount.setText("");
-
-                    }
-                }
-        );
+                lblChangeAmount.setText("");
+            }
+        };
+        btn2.setAction(btn2Action);
+        btn2.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_2, 0), "Two");
+        btn2.getActionMap().put("Two", btn2Action);
 
         JButton btn3 = new JButton("3");
         btn3.setForeground(color_darkergray);
@@ -1499,18 +1513,19 @@ public class MainForm extends JFrame {
         btn3.setFocusable(false);
         pnlRight.add(btn3);
         btn3.setBounds(385,618, 84 , 90);
-        btn3.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        CALCULATOR_TEXT += "3";
-                        txtPayment.setText(CALCULATOR_TEXT);
+        Action btn3Action = new AbstractAction("3") {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                CALCULATOR_TEXT += "3";
+                txtPayment.setText(CALCULATOR_TEXT);
 
-                        lblChangeAmount.setText("");
-
-                    }
-                }
-        );
+                lblChangeAmount.setText("");
+            }
+        };
+        btn3.setAction(btn3Action);
+        btn3.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_3, 0), "Three");
+        btn3.getActionMap().put("Three", btn3Action);
 
         JButton btn4 = new JButton("4");
         btn4.setForeground(color_darkergray);
@@ -1520,18 +1535,19 @@ public class MainForm extends JFrame {
         btn4.setFocusable(false);
         pnlRight.add(btn4);
         btn4.setBounds(219,708, 84 , 90);
-        btn4.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        CALCULATOR_TEXT += "4";
-                        txtPayment.setText(CALCULATOR_TEXT);
+        Action btn4Action = new AbstractAction("4") {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                CALCULATOR_TEXT += "4";
+                txtPayment.setText(CALCULATOR_TEXT);
 
-                        lblChangeAmount.setText("");
-
-                    }
-                }
-        );
+                lblChangeAmount.setText("");
+            }
+        };
+        btn4.setAction(btn4Action);
+        btn4.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_4, 0), "Four");
+        btn4.getActionMap().put("Four", btn4Action);
 
         JButton btn5 = new JButton("5");
         btn5.setForeground(color_darkergray);
@@ -1541,18 +1557,19 @@ public class MainForm extends JFrame {
         btn5.setFocusable(false);
         pnlRight.add(btn5);
         btn5.setBounds(302,708, 84 , 90);
-        btn5.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        CALCULATOR_TEXT += "5";
-                        txtPayment.setText(CALCULATOR_TEXT);
+        Action btn5Action = new AbstractAction("5") {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                CALCULATOR_TEXT += "5";
+                txtPayment.setText(CALCULATOR_TEXT);
 
-                        lblChangeAmount.setText("");
-
-                    }
-                }
-        );
+                lblChangeAmount.setText("");
+            }
+        };
+        btn5.setAction(btn5Action);
+        btn5.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_5, 0), "Five");
+        btn5.getActionMap().put("Five", btn5Action);
 
         JButton btn6 = new JButton("6");
         btn6.setForeground(color_darkergray);
@@ -1562,18 +1579,19 @@ public class MainForm extends JFrame {
         btn6.setFocusable(false);
         pnlRight.add(btn6);
         btn6.setBounds(385,708, 84 , 90);
-        btn6.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        CALCULATOR_TEXT += "6";
-                        txtPayment.setText(CALCULATOR_TEXT);
+        Action btn6Action = new AbstractAction("6") {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                CALCULATOR_TEXT += "6";
+                txtPayment.setText(CALCULATOR_TEXT);
 
-                        lblChangeAmount.setText("");
-
-                    }
-                }
-        );
+                lblChangeAmount.setText("");
+            }
+        };
+        btn6.setAction(btn6Action);
+        btn6.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_6, 0), "Six");
+        btn6.getActionMap().put("Six", btn6Action);
 
         JButton btn7 = new JButton("7");
         btn7.setForeground(color_darkergray);
@@ -1583,18 +1601,19 @@ public class MainForm extends JFrame {
         btn7.setFocusable(false);
         pnlRight.add(btn7);
         btn7.setBounds(219,798, 84 , 90);
-        btn7.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        CALCULATOR_TEXT += "7";
-                        txtPayment.setText(CALCULATOR_TEXT);
+        Action btn7Action = new AbstractAction("7") {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                CALCULATOR_TEXT += "7";
+                txtPayment.setText(CALCULATOR_TEXT);
 
-                        lblChangeAmount.setText("");
-
-                    }
-                }
-        );
+                lblChangeAmount.setText("");
+            }
+        };
+        btn7.setAction(btn7Action);
+        btn7.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_7, 0), "Seven");
+        btn7.getActionMap().put("Seven", btn7Action);
 
         JButton btn8 = new JButton("8");
         btn8.setForeground(color_darkergray);
@@ -1604,18 +1623,20 @@ public class MainForm extends JFrame {
         btn8.setFocusable(false);
         pnlRight.add(btn8);
         btn8.setBounds(302,798, 84 , 90);
-        btn8.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        CALCULATOR_TEXT += "8";
-                        txtPayment.setText(CALCULATOR_TEXT);
+        Action btn8Action = new AbstractAction("8") {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                CALCULATOR_TEXT += "8";
+                txtPayment.setText(CALCULATOR_TEXT);
 
-                        lblChangeAmount.setText("");
+                lblChangeAmount.setText("");
+            }
+        };
+        btn8.setAction(btn8Action);
+        btn8.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_8, 0), "Eight");
+        btn8.getActionMap().put("Eight", btn8Action);
 
-                    }
-                }
-        );
 
         JButton btn9 = new JButton("9");
         btn9.setForeground(color_darkergray);
@@ -1625,18 +1646,20 @@ public class MainForm extends JFrame {
         btn9.setFocusable(false);
         pnlRight.add(btn9);
         btn9.setBounds(385,798, 84 , 90);
-        btn9.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        CALCULATOR_TEXT += "9";
-                        txtPayment.setText(CALCULATOR_TEXT);
+        Action btn9Action = new AbstractAction("9") {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                CALCULATOR_TEXT += "9";
+                txtPayment.setText(CALCULATOR_TEXT);
 
-                        lblChangeAmount.setText("");
+                lblChangeAmount.setText("");
+            }
+        };
+        btn9.setAction(btn9Action);
+        btn9.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_0, 0), "Nine");
+        btn9.getActionMap().put("Nine", btn9Action);
 
-                    }
-                }
-        );
 
         JButton btn0 = new JButton("0");
         btn0.setForeground(color_darkergray);
@@ -1646,18 +1669,19 @@ public class MainForm extends JFrame {
         btn0.setFocusable(false);
         pnlRight.add(btn0);
         btn0.setBounds(302,888, 84 , 90);
-        btn0.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        CALCULATOR_TEXT += "0";
-                        txtPayment.setText(CALCULATOR_TEXT);
+        Action btn0Action = new AbstractAction("0") {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                CALCULATOR_TEXT += "0";
+                txtPayment.setText(CALCULATOR_TEXT);
 
-                        lblChangeAmount.setText("");
-
-                    }
-                }
-        );
+                lblChangeAmount.setText("");
+            }
+        };
+        btn0.setAction(btn0Action);
+        btn0.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_0, 0), "Zero");
+        btn0.getActionMap().put("Zero", btn0Action);
 
         JButton btn50 = new JButton("₱50");
         btn50.setForeground(color_darkergray);
@@ -1753,7 +1777,6 @@ public class MainForm extends JFrame {
                         txtPayment.setText(CALCULATOR_TEXT);
 
                         lblChangeAmount.setText("");
-
                     }
                 }
         );
@@ -1766,18 +1789,19 @@ public class MainForm extends JFrame {
         btnDot.setFocusable(false);
         pnlRight.add(btnDot);
         btnDot.setBounds(385,888, 84 , 90);
-        btnDot.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        CALCULATOR_TEXT += ".";
-                        txtPayment.setText(CALCULATOR_TEXT);
+        Action btnDotAction = new AbstractAction(".") {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                CALCULATOR_TEXT += ".";
+                txtPayment.setText(CALCULATOR_TEXT);
 
-                        lblChangeAmount.setText("");
-
-                    }
-                }
-        );
+                lblChangeAmount.setText("");
+            }
+        };
+        btnDot.setAction(btnDotAction);
+        btnDot.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, 0), "Period");
+        btnDot.getActionMap().put("Period", btnDotAction);
 
         JButton btnX = new JButton("X");
         btnX.setForeground(color_darkergray);
@@ -1787,21 +1811,23 @@ public class MainForm extends JFrame {
         btnX.setFocusable(false);
         pnlRight.add(btnX);
         btnX.setBounds(468,888, 84 , 90);
-        btnX.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (CALCULATOR_TEXT.length() > 0){
-                            int length = CALCULATOR_TEXT.length();
-                            CALCULATOR_TEXT = CALCULATOR_TEXT.substring(0,(length-1));
-                            txtPayment.setText(CALCULATOR_TEXT);
+        Action btnXAction = new AbstractAction("X") {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                if (CALCULATOR_TEXT.length() > 0){
+                    int length = CALCULATOR_TEXT.length();
+                    CALCULATOR_TEXT = CALCULATOR_TEXT.substring(0,(length-1));
+                    txtPayment.setText(CALCULATOR_TEXT);
 
-                            lblChangeAmount.setText("");
-
-                        }
-                    }
+                    lblChangeAmount.setText("");
                 }
-        );
+            }
+        };
+        btnX.setAction(btnXAction);
+        btnX.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), "Backspace");
+        btnX.getActionMap().put("Backspace", btnXAction);
+
 
         JButton btnEqualCal = new JButton("=");
         btnEqualCal.setForeground(color_darkergray);
@@ -1811,49 +1837,52 @@ public class MainForm extends JFrame {
         btnEqualCal.setFocusable(false);
         pnlRight.add(btnEqualCal);
         btnEqualCal.setBounds(219,888, 84 , 90);
-        btnEqualCal.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-
-                        if (txtPayment.getText().isEmpty()){
-                            DialogOk dialogOk = new DialogOk("Transaction Error","Incomplete transaction.");
-                            dialogOk.setVisible(true);
-                            return;
-                        }
-
-                        double balance = Double.parseDouble(lblBalanceAmount.getText().substring(1));
-                        double payment = Double.parseDouble(txtPayment.getText());
-
-                        if (balance <= 0){
-                            DialogOk dialogOk = new DialogOk("Transaction Error","Incomplete transaction.");
-                            dialogOk.setVisible(true);
-                            txtPayment.setText("");
-                            return;
-                        }
-
-                        double change = payment - balance;
-                        if (change < 0){
-                            DialogOk dialogOk = new DialogOk("Payment Error","Insufficient payment.");
-                            dialogOk.setVisible(true);
-                        } else {
-                            lblChangeAmount.setText("₱" + twoDecimalFormat.format(change));
-                        }
-                    }
+        Action btnEqualAction = new AbstractAction("=") {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                if (txtPayment.getText().isEmpty()){
+                    DialogOk dialogOk = new DialogOk("Transaction Error","Incomplete transaction.");
+                    dialogOk.setVisible(true);
+                    return;
                 }
-        );
+
+                double balance = Double.parseDouble(lblBalanceAmount.getText().substring(1));
+                double payment = Double.parseDouble(txtPayment.getText());
+
+                if (balance <= 0){
+                    DialogOk dialogOk = new DialogOk("Transaction Error","Incomplete transaction.");
+                    dialogOk.setVisible(true);
+                    txtPayment.setText("");
+                    return;
+                }
+
+                double change = payment - balance;
+                if (change < 0){
+                    DialogOk dialogOk = new DialogOk("Payment Error","Insufficient payment.");
+                    dialogOk.setVisible(true);
+                } else {
+                    lblChangeAmount.setText("₱" + twoDecimalFormat.format(change));
+                }
+            }
+        };
+        btnEqualCal.setAction(btnEqualAction);
+        btnEqualCal.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS, 0), "Equal");
+        btnEqualCal.getActionMap().put("Equal", btnEqualAction);
 
         // End Calculator
 
-        JLabel btnGenerateReceipt = new JLabel(new ImageIcon(".\\src\\resources\\btnGenerateReceipt.png"));
-        btnGenerateReceipt.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        pnlRight.add(btnGenerateReceipt);
-        btnGenerateReceipt.setBounds(11,920,196,45);
-        btnGenerateReceipt.addMouseListener(
-                new MouseAdapter() {
+        btnProcessOrder = new JButton("Process Order");
+        btnProcessOrder.setForeground(Color.WHITE);
+        btnProcessOrder.setBackground(new Color(80,199,116));
+        btnProcessOrder.setFont(new Font("Segoe UI", Font.PLAIN, 19));
+        btnProcessOrder.setBorder(BorderFactory.createEmptyBorder());
+        pnlRight.add(btnProcessOrder);
+        btnProcessOrder.setBounds(11,920,196,45);
+        btnProcessOrder.addActionListener(
+                new ActionListener() {
                     @Override
-                    public void mouseClicked(MouseEvent e) {
-
+                    public void actionPerformed(ActionEvent e) {
                         try {
                             double change = Double.parseDouble(lblChangeAmount.getText().substring(1));
                         } catch (StringIndexOutOfBoundsException ex){ // no change amount
@@ -1866,12 +1895,6 @@ public class MainForm extends JFrame {
                         dialogYesNo.setVisible(true);
 
                         if (dialogYesNo.getYesNo()){
-                            // generate receipt
-
-                            // add to transaction history
-//                            Log log = new Log("120120191", "12", "1", "2019",
-//                                    "2:07 PM", "Administrator", "Burger 2x Squid 1x Pineapply 1x", 532.50,
-//                                    "30.50 - 2%", 600, 97.50);
 
                             String date = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/uuuu"));
                             LocalDate DATE = LocalDate.now();
@@ -1909,17 +1932,6 @@ public class MainForm extends JFrame {
 
                             btnReset.doClick();
                         }
-
-                    }
-
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                        btnGenerateReceipt.setIcon(new ImageIcon(".\\src\\resources\\btnGenerateReceiptHl.png"));
-                    }
-
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                        btnGenerateReceipt.setIcon(new ImageIcon(".\\src\\resources\\btnGenerateReceipt.png"));
                     }
                 }
         );

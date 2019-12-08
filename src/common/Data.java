@@ -217,7 +217,15 @@ public class Data {
 
     }
 
-    public double getTotalEarningsByLogs(){
+    public double getItemSalesPercentage(double itemQuantity){
+        double totalQuantity = 0;
+        for (Sales o: sales){
+            totalQuantity += o.getNumberOfOrder();
+        }
+        return (itemQuantity / totalQuantity) * 100;
+    }
+
+    public double getTotalRevenue(){
         double total = 0;
         for (Log o: transactionlog){
             total += o.getTotal();

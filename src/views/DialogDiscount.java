@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class DialogDiscount extends JDialog {
 
@@ -48,6 +50,14 @@ public class DialogDiscount extends JDialog {
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)));
         add(txtPercentage);
         txtPercentage.setBounds(292,92,176,35);
+        txtPercentage.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        txtPercentage.setText("");
+                    }
+                }
+        );
 
         JLabel lblPercent = new JLabel("%");
         lblPercent.setFont(new Font("Segoe UI", Font.BOLD, 23));
@@ -97,6 +107,11 @@ public class DialogDiscount extends JDialog {
 
     public int getDiscountPercentage(){
         try {
+
+            if (Integer.parseInt(txtPercentage.getText()) < 0){
+                throw new NumberFormatException();
+            }
+
             return Integer.parseInt(txtPercentage.getText());
         } catch (NumberFormatException ex){
             DialogOk dialogOk = new DialogOk("Invalid Discount", "Please put a valid discount.");
