@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 public class Data {
 
@@ -18,6 +19,8 @@ public class Data {
     private ArrayList<Order> orders;
     private ArrayList<Sales> sales;
     private ArrayList<TransactionLog> transactionlog;
+
+    private ArrayList<LoginAttempt> lockedAccounts;
 
 
     public Data() {
@@ -34,6 +37,8 @@ public class Data {
         accounts.add(new Account("Harold Sta. Maria", "Staff", "harold443", "bartolay", "09876782258", "12/02/2019"));
         accounts.add(new Account("Bill Gates", "Staff", "bill", "gates", "09787767871", "12/01/2019"));
 
+        // Locked Accounts
+        lockedAccounts = new ArrayList<>();
 
         // Products
         products = new ArrayList<>();
@@ -113,16 +118,58 @@ public class Data {
         transactionlog = new ArrayList<>();
 //        transactionlog.add(new TransactionLog("12120191", "12", "1", "2019",
 //                "2:07 PM", "Administrator", "Burger 2x Squid 1x Pineapply 1x", 532.50,
-//                "30.50 - 2%", 600, 97.50));
+//                "30.50", 600, 97.50));
 //        transactionlog.add(new TransactionLog("12120192", "11", "27", "2019",
 //                "2:07 PM", "Administrator", "Burger 2x Squid 1x Pineapply 1x", 532.50,
-//                "30.50 - 2%", 600, 97.50));
+//                "30.50", 600, 97.50));
 //        transactionlog.add(new TransactionLog("12120193", "11", "28", "2019",
 //                "2:07 PM", "Administrator", "Burger 2x Squid 1x Pineapply 1x", 532.50,
-//                "30.50 - 2%", 600, 97.50));
+//                "30.50", 600, 97.50));
 //        transactionlog.add(new TransactionLog("12120194", "10", "5", "2019",
 //                "2:07 PM", "Administrator", "Burger 2x Squid 1x Pineapply 1x", 532.50,
-//                "30.50 - 2%", 600, 97.50));
+//                "30.50", 600, 97.50));
+    }
+
+    public ArrayList<LoginAttempt> getAccountLockList(){
+        return lockedAccounts;
+    }
+
+    public void registerAccount(String username){
+        for (Account o: accounts){
+            if (o.getUsername().equals(username)){
+                for (LoginAttempt a: lockedAccounts){
+                    if (a.getUsername().equals(username)){
+                        // already exists
+                        int numberOfAttemps = a.getNumberOfAttempt();
+                        numberOfAttemps++;
+                        a.setNumberOfAttempt(numberOfAttemps);
+
+                        if (numberOfAttemps >= 3){
+                            a.setStatus("Locked");
+                            DialogOk dialogOk = new DialogOk("Account", "The account has been locked. Please refer to the admin.");
+                            dialogOk.setVisible(true);
+                            return;
+                        }
+
+                        return;
+                    }
+                }
+                // create new
+                lockedAccounts.add(new LoginAttempt(username));
+                return;
+            }
+        }
+
+        // account does not exists. ignore
+    }
+
+    public void removeFromLockedAccountList(String username){
+        lockedAccounts.removeIf(new Predicate<LoginAttempt>() {
+            @Override
+            public boolean test(LoginAttempt loginAttempt) {
+                return loginAttempt.getUsername().equals(username);
+            }
+        });
     }
 
     public void FindBestSelling(){

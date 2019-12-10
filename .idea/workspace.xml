@@ -2,8 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c40b2ec-469d-4ff8-ae7e-04d63551f801" name="Default Changelist" comment="Update">
-      <change beforePath="$PROJECT_DIR$/src/views/MainForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/MainForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/MenuSettingsForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/MenuSettingsForm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/common/LoginAttempt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/common/Data.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/common/Data.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/LoginForm$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/LoginForm$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/LoginForm$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/LoginForm$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/LoginForm$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/LoginForm$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/LoginForm$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/LoginForm$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/LoginForm$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/LoginForm$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GastronomPOS/views/LoginForm.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GastronomPOS/views/LoginForm.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/AccountSettingsForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/AccountSettingsForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/LoginForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/LoginForm.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,26 +33,35 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/MainForm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="2333" column="26" lean-forward="true" selection-start-line="2333" selection-start-column="26" selection-end-line="2333" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/views/MenuSettingsForm.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="433">
-              <caret line="923" lean-forward="true" selection-start-line="923" selection-end-line="923" />
+            <state relative-caret-position="33920">
+              <caret line="2127" column="25" lean-forward="true" selection-start-line="2127" selection-start-column="25" selection-end-line="2127" selection-end-column="25" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/common/Account.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="384">
+              <caret line="24" column="35" lean-forward="true" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/MenuSettingsForm.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="561">
+              <caret line="922" column="5" lean-forward="true" selection-start-line="922" selection-start-column="5" selection-end-line="922" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/AccountSettingsForm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
+            <state relative-caret-position="391">
+              <caret line="455" column="10" lean-forward="true" selection-start-line="455" selection-start-column="10" selection-end-line="455" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -50,8 +69,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/common/Data.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="353">
-              <caret line="188" column="39" selection-start-line="188" selection-start-column="39" selection-end-line="188" selection-end-column="39" />
+            <state relative-caret-position="-1231">
+              <caret line="39" column="26" lean-forward="true" selection-start-line="39" selection-start-column="26" selection-end-line="39" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/LoginForm.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="194" column="43" lean-forward="true" selection-start-line="194" selection-start-column="43" selection-end-line="194" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/common/LoginAttempt.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="368">
+              <caret line="23" column="33" lean-forward="true" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -68,8 +105,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/ExportTransactionLog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1088">
-              <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
+            <state relative-caret-position="464">
+              <caret line="37" column="32" lean-forward="true" selection-start-line="37" selection-start-column="32" selection-end-line="37" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -94,7 +131,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>btnDelete</find>
       <find>pnlDash</find>
       <find>button</find>
       <find>btnLogin</find>
@@ -120,10 +156,11 @@
       <find>getTran</find>
       <find>Table</find>
       <find>generate</find>
-      <find>ExportT</find>
       <find>tbl</find>
       <find>btnApplyFilter</find>
       <find>sort</find>
+      <find>ExportT</find>
+      <find>btnResetPas</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -154,7 +191,6 @@
         <option value="$PROJECT_DIR$/src/views/DialogEditOrderQuantity.java" />
         <option value="$PROJECT_DIR$/src/views/DialogAdminConfirm.java" />
         <option value="$PROJECT_DIR$/src/views/DialogDiscount.java" />
-        <option value="$PROJECT_DIR$/src/views/LoginForm.java" />
         <option value="$PROJECT_DIR$/src/common/GenerateFastReport.java" />
         <option value="$PROJECT_DIR$/src/common/DynamicReport.java" />
         <option value="$PROJECT_DIR$/src/common/BaseDjReportTest.java" />
@@ -162,11 +198,14 @@
         <option value="$PROJECT_DIR$/src/common/PrintForm.java" />
         <option value="$PROJECT_DIR$/src/views/PrintForm.java" />
         <option value="$PROJECT_DIR$/src/common/Printer.java" />
-        <option value="$PROJECT_DIR$/src/views/ExportTransactionLog.java" />
-        <option value="$PROJECT_DIR$/src/common/Data.java" />
-        <option value="$PROJECT_DIR$/src/views/AccountSettingsForm.java" />
-        <option value="$PROJECT_DIR$/src/views/MainForm.java" />
         <option value="$PROJECT_DIR$/src/views/MenuSettingsForm.java" />
+        <option value="$PROJECT_DIR$/src/views/MainForm.java" />
+        <option value="$PROJECT_DIR$/src/views/ExportTransactionLog.java" />
+        <option value="$PROJECT_DIR$/src/common/LockedAccount.java" />
+        <option value="$PROJECT_DIR$/src/common/LoginAttempt.java" />
+        <option value="$PROJECT_DIR$/src/common/Data.java" />
+        <option value="$PROJECT_DIR$/src/views/LoginForm.java" />
+        <option value="$PROJECT_DIR$/src/views/AccountSettingsForm.java" />
       </list>
     </option>
   </component>
@@ -431,20 +470,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Update" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Java/jdk-11.0.3/lib/src.zip!/java.desktop/javax/swing/JTabbedPane.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="787" column="16" selection-start-line="787" selection-start-column="16" selection-end-line="787" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-11.0.3/lib/src.zip!/java.base/java/io/File.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-858">
-          <caret line="147" column="13" selection-start-line="147" selection-start-column="13" selection-end-line="147" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk-11.0.3/lib/src.zip!/java.base/java/lang/Math.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20">
@@ -573,7 +598,6 @@
     <entry file="file://$PROJECT_DIR$/src/views/DialogOk.java" />
     <entry file="file://$PROJECT_DIR$/src/views/DialogQuantity.java" />
     <entry file="file://$PROJECT_DIR$/src/views/DialogEditOrderQuantity.java" />
-    <entry file="file://$PROJECT_DIR$/src/common/Account.java" />
     <entry file="file://$PROJECT_DIR$/src/common/Product.java" />
     <entry file="file://$PROJECT_DIR$/src/views/DialogAdminConfirm.java" />
     <entry file="jar://C:/Program Files/Java/jdk-11.0.3/lib/src.zip!/java.desktop/javax/swing/JComponent.java">
@@ -591,7 +615,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/DialogDiscount.java" />
-    <entry file="file://$PROJECT_DIR$/src/views/LoginForm.java" />
     <entry file="file://$PROJECT_DIR$/GastronomPOS.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
@@ -651,31 +674,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/ExportTransactionLog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1088">
-          <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/common/TransactionLog.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="32">
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/Data.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="188" column="39" selection-start-line="188" selection-start-column="39" selection-end-line="188" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/AccountSettingsForm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -686,17 +688,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/MainForm.java">
+    <entry file="file://$PROJECT_DIR$/src/views/ExportTransactionLog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="2333" column="26" lean-forward="true" selection-start-line="2333" selection-start-column="26" selection-end-line="2333" selection-end-column="26" />
+        <state relative-caret-position="464">
+          <caret line="37" column="32" lean-forward="true" selection-start-line="37" selection-start-column="32" selection-end-line="37" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/MenuSettingsForm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="923" lean-forward="true" selection-start-line="923" selection-end-line="923" />
+        <state relative-caret-position="561">
+          <caret line="922" column="5" lean-forward="true" selection-start-line="922" selection-start-column="5" selection-end-line="922" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/LockedAccount.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/Account.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="24" column="35" lean-forward="true" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/MainForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="33920">
+          <caret line="2127" column="25" lean-forward="true" selection-start-line="2127" selection-start-column="25" selection-end-line="2127" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/LoginAttempt.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="23" column="33" lean-forward="true" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/Data.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1231">
+          <caret line="39" column="26" lean-forward="true" selection-start-line="39" selection-start-column="26" selection-end-line="39" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/LoginForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="194" column="43" lean-forward="true" selection-start-line="194" selection-start-column="43" selection-end-line="194" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/AccountSettingsForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="455" column="10" lean-forward="true" selection-start-line="455" selection-start-column="10" selection-end-line="455" selection-end-column="10" />
         </state>
       </provider>
     </entry>

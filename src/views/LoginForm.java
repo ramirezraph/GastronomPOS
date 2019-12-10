@@ -2,6 +2,7 @@ package views;
 
 import common.Account;
 import common.Data;
+import common.LoginAttempt;
 
 import javax.swing.*;
 import java.awt.*;
@@ -172,13 +173,27 @@ public class LoginForm extends JFrame {
             return;
         }
 
+        for (LoginAttempt o: data.getAccountLockList()){
+            if (o.getUsername().equals(username)){
+                if (o.getStatus().equals("Locked")){
+                    DialogOk dialogOk = new DialogOk("Account", "The account has been locked. Please refer to the admin.");
+                    dialogOk.setVisible(true);
+                    return;
+                }
+            }
+        }
+
         if (data.isAccountValid(username, password)){
             dispose();
+            data.removeFromLockedAccountList(username);
             MainForm mainForm = new MainForm(data.getAccount(username), data);
             mainForm.setVisible(true);
         } else {
             DialogOk dialogOk = new DialogOk("Login Failed.", "Invalid username or password.");
             dialogOk.setVisible(true);
+
+            data.registerAccount(username);
+
             txtPassword.setText("");
         }
     }

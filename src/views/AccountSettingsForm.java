@@ -423,6 +423,38 @@ public class AccountSettingsForm extends JDialog {
                 }
         );
 
+        JButton btnUnlockAccount = new JButton("Unlock Account");
+        btnUnlockAccount.setFocusable(false);
+        btnUnlockAccount.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+        btnUnlockAccount.setBackground(Color.WHITE);
+        btnUnlockAccount.setBorder(BorderFactory.createLineBorder(color_border_lightgray, 2));
+        pnlAccountInfo.add(btnUnlockAccount);
+        btnUnlockAccount.setBounds(40,498,374,48);
+        btnUnlockAccount.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        int selectedRowIndex = tblAccounts.getSelectedRow();
+
+                        if (selectedRowIndex < 0){
+                            DialogOk dialogOk = new DialogOk("Unlock Account Error", "Please select an account.");
+                            dialogOk.setVisible(true);
+                            return;
+                        }
+
+                        DialogAdminConfirm dialogAdminConfirm = new DialogAdminConfirm(data);
+                        dialogAdminConfirm.setVisible(true);
+
+                        if (dialogAdminConfirm.isAccountValid()){
+                            data.removeFromLockedAccountList(txtUsername.getText());
+                            DialogOk dialogOk = new DialogOk("Success", "The account: " + txtUsername.getText()
+                                    + " is now unlocked.");
+                            dialogOk.setVisible(true);
+                        }
+                    }
+                }
+        );
+
         JLabel btnCreateAccount = new JLabel();
         btnCreateAccount.setIcon(new ImageIcon(".\\src\\resources\\btnCreateAccount.png"));
         pnlMain.add(btnCreateAccount);
