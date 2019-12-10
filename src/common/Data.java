@@ -137,6 +137,11 @@ public class Data {
     public void registerAccount(String username){
         for (Account o: accounts){
             if (o.getUsername().equals(username)){
+
+                if (o.getLevel().equals("Administrator")){
+                    return;
+                }
+
                 for (LoginAttempt a: lockedAccounts){
                     if (a.getUsername().equals(username)){
                         // already exists

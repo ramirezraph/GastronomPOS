@@ -25,14 +25,14 @@ public class Printer {
         }
     }
 
-    public static void printComponentToFile(Component comp, boolean fill) throws PrinterException {
+    public static void printComponentToFile(JComponent comp, boolean fill) throws PrinterException {
         Paper paper = new Paper();
         paper.setSize(8.3 * 72, 11.7 * 72);
-        paper.setImageableArea(18, 18, 559, 783);
+        paper.setImageableArea(0, 30, 559, 783);
 
         PageFormat pf = new PageFormat();
         pf.setPaper(paper);
-        pf.setOrientation(PageFormat.LANDSCAPE);
+        pf.setOrientation(PageFormat.PORTRAIT);
 
         BufferedImage img = new BufferedImage(
                 (int) Math.round(pf.getWidth()),
@@ -50,7 +50,7 @@ public class Printer {
         }
 
         try {
-            ImageIO.write(img, "png", new File("Page-" + (fill ? "Filled" : "") + ".png"));
+            ImageIO.write(img, "png", new File("Receipt-" + (fill ? "Filled" : "") + ".png"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }

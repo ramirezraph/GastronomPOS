@@ -12,11 +12,16 @@ import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class MainForm extends JFrame {
 
@@ -31,6 +36,7 @@ public class MainForm extends JFrame {
 
     private static final Color color_border_lightgray = new Color(200,200,200);
     private final Color color_title_gray = new Color(90,90,90);
+    private final JLabel lblDateTime;
 
     // Components
     private JPanel pnlPointOfSale;
@@ -86,6 +92,13 @@ public class MainForm extends JFrame {
     private static JLabel lblBusinessAddress;
     private JLabel btnGenerateReceipt;
     private JButton btnProcessOrder;
+    private JPanel pnlIndicatorMain;
+    private JPanel pnlIndicatorDessert;
+    private JPanel pnlIndicatorDrinks;
+    private JPanel pnlIndicatorOthers;
+
+    private JComboBox<String> cmbDay;
+    private JComboBox<String> cmbMonth;
 
     public MainForm(Account account, Data data) {
         setLayout(null);
@@ -118,7 +131,7 @@ public class MainForm extends JFrame {
         pnlNavbar.add(lblBusinessAddress);
         lblBusinessAddress.setBounds(300,45,336,28);
 
-        JLabel lblDateTime = new JLabel("  November 15, 2019 - 9:54 AM");
+        lblDateTime = new JLabel("  November 15, 2019 - 9:54 AM");
         lblDateTime.setIcon(new ImageIcon(".\\src\\resources\\calendar_32.png"));
         lblDateTime.setForeground(color_white);
         lblDateTime.setFont(new Font("Segoe UI", Font.PLAIN, 19));
@@ -314,6 +327,11 @@ public class MainForm extends JFrame {
                 btnCurrentUser.setVisible(true);
                 pnlAccount.setEnabled(false);
                 pnlAccount.setVisible(false);
+
+                pnlIndicatorMain.setBackground(color_jungle);
+                pnlIndicatorDessert.setBackground(Color.WHITE);
+                pnlIndicatorDrinks.setBackground(Color.WHITE);
+                pnlIndicatorOthers.setBackground(Color.WHITE);
 
                 generateMenu(data, "Main");
 
@@ -562,6 +580,8 @@ public class MainForm extends JFrame {
             btnResetTransactionLog.setVisible(false);
 
         }
+
+        UpdateDateTime();
 
         getRootPane().setDefaultButton(btnProcessOrder);
 
@@ -1031,22 +1051,22 @@ public class MainForm extends JFrame {
 
         // Indicators
 
-        JPanel pnlIndicatorMain = new JPanel();
+        pnlIndicatorMain = new JPanel();
         pnlIndicatorMain.setBackground(color_jungle);
         pnlCenter.add(pnlIndicatorMain);
         pnlIndicatorMain.setBounds(112,160, 206, 9);
 
-        JPanel pnlIndicatorDessert = new JPanel();
+        pnlIndicatorDessert = new JPanel();
         pnlIndicatorDessert.setBackground(Color.WHITE);
         pnlCenter.add(pnlIndicatorDessert);
         pnlIndicatorDessert.setBounds(321,160, 206, 9);
 
-        JPanel pnlIndicatorDrinks = new JPanel();
+        pnlIndicatorDrinks = new JPanel();
         pnlIndicatorDrinks.setBackground(Color.WHITE);
         pnlCenter.add(pnlIndicatorDrinks);
         pnlIndicatorDrinks.setBounds(530,160, 206, 9);
 
-        JPanel pnlIndicatorOthers = new JPanel();
+        pnlIndicatorOthers = new JPanel();
         pnlIndicatorOthers.setBackground(Color.WHITE);
         pnlCenter.add(pnlIndicatorOthers);
         pnlIndicatorOthers.setBounds(739,160, 206, 9);
@@ -1892,19 +1912,23 @@ public class MainForm extends JFrame {
                             return;
                         }
 
-                        DialogYesNo dialogYesNo = new DialogYesNo("Confirm","Please click 'Yes' to continue.");
-                        dialogYesNo.setVisible(true);
+                        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/uuuu"));
+                        LocalDate DATE = LocalDate.now();
 
-                        if (dialogYesNo.getYesNo()){
+                        String month = String.valueOf(DATE.getMonthValue());
+                        String day = String.valueOf(DATE.getDayOfMonth());
+                        String year = String.valueOf(DATE.getYear());
+                        String time = LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm"));
+                        String staffincharge = lblUserName.getText();
 
-                            String date = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/uuuu"));
-                            LocalDate DATE = LocalDate.now();
+                        String id = month + day + year + (DATA.getTransactionLog().size()+1);
 
-                            String month = String.valueOf(DATE.getMonthValue());
-                            String day = String.valueOf(DATE.getDayOfMonth());
-                            String year = String.valueOf(DATE.getYear());
-                            String time = LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm"));
-                            String staffincharge = lblUserName.getText();
+                        ReceiptDialog receiptDialog = new ReceiptDialog(DATA, lblBusinessAddress.getText(),
+                                staffincharge, date, id, lblTotalAmount.getText(), lblDiscountAmount.getText(),
+                                lblBalanceAmount.getText());
+                        receiptDialog.setVisible(true);
+
+                        if (receiptDialog.isConfirm()){
                             StringBuilder itemordered = new StringBuilder();
                             for(Order order: DATA.getOrderList()){
                                 itemordered.append(order.getName()).append(" ").append(order.getQuantity()).append("x").append(" ");
@@ -1913,8 +1937,6 @@ public class MainForm extends JFrame {
                             String discount = lblDiscountAmount.getText().substring(1);
                             double payment = Double.parseDouble(txtPayment.getText());
                             double change = Double.parseDouble(lblChangeAmount.getText().substring(1));
-
-                            String id = month + day + year + (DATA.getTransactionLog().size()+1);
 
                             TransactionLog transactionLog = new TransactionLog(id,month,day,year,time,staffincharge,itemordered.toString(),total,discount,payment
                                     ,change);
@@ -2129,14 +2151,26 @@ public class MainForm extends JFrame {
 
                         DefaultTableModel defaultTableModel = tblTransactionLogModel;
 
+                        String exportdate = "";
+                        if (cmbMonth.getSelectedIndex() == 0){
+                            DialogOk dialogOk = new DialogOk("Error", "Please select a month.");
+                            dialogOk.setVisible(true);
+                            return;
+                        } else {
+                            exportdate = cmbMonth.getSelectedItem().toString();
+                            if (cmbDay.getSelectedIndex() != 0){
+                                exportdate += " " + cmbDay.getSelectedItem();
+                            }
+                        }
+
                         ExportTransactionLog exportTransactionLog = new ExportTransactionLog(defaultTableModel,
-                                lblBusinessAddress.getText() ,"December 11, 2019");
+                                lblBusinessAddress.getText() , exportdate);
                         try {
                             Printer.printComponent(exportTransactionLog, true);
                         } catch (PrinterException ex) {
-                            ex.printStackTrace();
+                            DialogOk dialogOk = new DialogOk("Error", "An error occured.");
+                            dialogOk.setVisible(true);
                         }
-//                        generateTransactionTable(DATA, 1);
                     }
                 }
         );
@@ -2181,7 +2215,7 @@ public class MainForm extends JFrame {
                 "August",
                 "September",
                 "October", "November", "December"};
-        JComboBox<String> cmbMonth = new JComboBox<>(months);
+        cmbMonth = new JComboBox<>(months);
         cmbMonth.setFont(new Font("Segoe UI", Font.PLAIN, 21));
         cmbMonth.setBackground(Color.WHITE);
         cmbMonth.setForeground(color_darkgray);
@@ -2189,6 +2223,18 @@ public class MainForm extends JFrame {
         ((JLabel)cmbMonth.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         pnlMainTransactionLog.add(cmbMonth);
         cmbMonth.setBounds(213,155,284,39);
+        cmbMonth.addItemListener(
+                new ItemListener() {
+                    @Override
+                    public void itemStateChanged(ItemEvent e) {
+                        if (cmbMonth.getSelectedIndex() == 0){
+                            cmbDay.setEnabled(false);
+                        } else {
+                            cmbDay.setEnabled(true);
+                        }
+                    }
+                }
+        );
 
         JLabel lblDay = new JLabel("Day:");
         lblDay.setFont(new Font("Segoe UI", Font.PLAIN, 21));
@@ -2197,11 +2243,12 @@ public class MainForm extends JFrame {
 
         final String[] days = {"- select -","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17",
                 "18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
-        JComboBox<String> cmbDay = new JComboBox<>(days);
+        cmbDay = new JComboBox<>(days);
         cmbDay.setFont(new Font("Segoe UI", Font.PLAIN, 21));
         cmbDay.setBackground(Color.WHITE);
         cmbDay.setForeground(color_darkgray);
         cmbDay.setFocusable(false);
+        cmbDay.setEnabled(false);
         ((JLabel)cmbDay.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         pnlMainTransactionLog.add(cmbDay);
         cmbDay.setBounds(575,155,284,39);
@@ -2655,4 +2702,30 @@ public class MainForm extends JFrame {
         );
 
     }
+
+
+    public void UpdateDateTime(){
+
+        ScheduledExecutorService e= Executors.newSingleThreadScheduledExecutor();
+        e.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                // do stuff
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        // of course, you could improve this by moving dateformat variable elsewhere
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(" MMMM dd, yyyy - hh:mm a");
+                        String date = simpleDateFormat.format(new Date());
+
+                        lblDateTime.setText(date);
+                    }
+
+                });
+            }
+        }, 0, 1, TimeUnit.SECONDS);
+
+    }
+
+
 }
