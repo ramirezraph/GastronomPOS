@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 public class AccountSettingsForm extends JDialog {
 
@@ -690,9 +689,10 @@ public class AccountSettingsForm extends JDialog {
     public void createAccountTable(Data data){
         String[] colAccounts = {"Name", "Contact #", "Username", "Last Login"};
         tblAccountsModel = new DefaultTableModel(colAccounts, 0);
-        ArrayList<Account> accounts = data.getAccountList();
-        for (Account acc: accounts){
-            Object[] newRow = {acc.getName(), acc.getContactNumber(), acc.getUsername(), acc.getLastLogin()};
+
+        for (int i = data.getAccountList().size() - 1; i >= 0; i--){
+            Object[] newRow = {data.getAccountList().get(i).getName(), data.getAccountList().get(i).getContactNumber(), data.getAccountList().get(i).getUsername(),
+                    data.getAccountList().get(i).getLastLogin()};
             tblAccountsModel.addRow(newRow);
         }
         tblAccounts.setModel(tblAccountsModel);

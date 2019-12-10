@@ -17,7 +17,7 @@ public class Data {
     private ArrayList<Product> products;
     private ArrayList<Order> orders;
     private ArrayList<Sales> sales;
-    private ArrayList<Log> transactionlog;
+    private ArrayList<TransactionLog> transactionlog;
 
 
     public Data() {
@@ -111,16 +111,16 @@ public class Data {
 
         // Logs
         transactionlog = new ArrayList<>();
-//        transactionlog.add(new Log("12120191", "12", "1", "2019",
+//        transactionlog.add(new TransactionLog("12120191", "12", "1", "2019",
 //                "2:07 PM", "Administrator", "Burger 2x Squid 1x Pineapply 1x", 532.50,
 //                "30.50 - 2%", 600, 97.50));
-//        transactionlog.add(new Log("12120192", "11", "27", "2019",
+//        transactionlog.add(new TransactionLog("12120192", "11", "27", "2019",
 //                "2:07 PM", "Administrator", "Burger 2x Squid 1x Pineapply 1x", 532.50,
 //                "30.50 - 2%", 600, 97.50));
-//        transactionlog.add(new Log("12120193", "11", "28", "2019",
+//        transactionlog.add(new TransactionLog("12120193", "11", "28", "2019",
 //                "2:07 PM", "Administrator", "Burger 2x Squid 1x Pineapply 1x", 532.50,
 //                "30.50 - 2%", 600, 97.50));
-//        transactionlog.add(new Log("12120194", "10", "5", "2019",
+//        transactionlog.add(new TransactionLog("12120194", "10", "5", "2019",
 //                "2:07 PM", "Administrator", "Burger 2x Squid 1x Pineapply 1x", 532.50,
 //                "30.50 - 2%", 600, 97.50));
     }
@@ -178,17 +178,17 @@ public class Data {
 
     // TRANSACTION LOG
 
-    public ArrayList<Log> getTransactionLog(){
+    public ArrayList<TransactionLog> getTransactionLog(){
         return transactionlog;
     }
 
-    public void saveTransaction(Log log){
-        transactionlog.add(log);
+    public void saveTransaction(TransactionLog transactionLog){
+        transactionlog.add(transactionLog);
     }
 
     public void deleteAllTransaction(){
         try {
-//            for (Log log: transactionlog){
+//            for (TransactionLog log: transactionlog){
 //                transactionlog.remove(log);
 //            }
 
@@ -227,7 +227,7 @@ public class Data {
 
     public double getTotalRevenue(){
         double total = 0;
-        for (Log o: transactionlog){
+        for (TransactionLog o: transactionlog){
             total += o.getTotal();
         }
         return total;

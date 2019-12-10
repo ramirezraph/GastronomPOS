@@ -1,6 +1,6 @@
 package common;
 
-public class Log {
+public class TransactionLog {
     private String id;
     private String monthOfPurchase;
     private String dayOfPurchase;
@@ -13,8 +13,8 @@ public class Log {
     private double payment;
     private double change;
 
-    public Log(String id, String monthOfPurchase, String dayOfPurchase, String yearOfPurchase, String timeOfPurchase,
-               String staffInCharge, String item, double total, String discount, double payment, double change) {
+    public TransactionLog(String id, String monthOfPurchase, String dayOfPurchase, String yearOfPurchase, String timeOfPurchase,
+                          String staffInCharge, String item, double total, String discount, double payment, double change) {
         this.id = id;
         this.monthOfPurchase = monthOfPurchase;
         this.dayOfPurchase = dayOfPurchase;

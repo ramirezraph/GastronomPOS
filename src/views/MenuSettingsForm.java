@@ -867,40 +867,40 @@ public class MenuSettingsForm extends JDialog {
     public void createProductTable(Data data, int filterMode, String name, String category){
         String[] colsProducts = {"Name", "Category", "Price", "Status", "Image", "Code"};
         tblProductModel = new DefaultTableModel(colsProducts, 0);
-        ArrayList<Product> products = data.getProductList();
-        for (Product prod: products){
+        for (int i = data.getProductList().size() - 1; i >= 0; i--){
             switch (filterMode){
                 case 1: { // No Filter
-                    Object[] newRow = {prod.getName(), prod.getCategory(), "₱"+twoDecimalFormat.format(prod.getPrice()),
-                            prod.getAvailability(), prod.getImage(), prod.getCode()};
+                    Object[] newRow = {data.getProductList().get(i).getName(), data.getProductList().get(i).getCategory(), "₱"+twoDecimalFormat.format(data.getProductList().get(i).getPrice()),
+                            data.getProductList().get(i).getAvailability(), data.getProductList().get(i).getImage(), data.getProductList().get(i).getCode()};
                     tblProductModel.addRow(newRow);
                     break;
                 }
                 case 2: { // Filter Name Only
-                    if (prod.getName().toLowerCase().contains(name)){
-                        Object[] newRow = {prod.getName(), prod.getCategory(), "₱"+twoDecimalFormat.format(prod.getPrice()),
-                                prod.getAvailability(), prod.getImage(), prod.getCode()};
+                    if (data.getProductList().get(i).getName().toLowerCase().contains(name)){
+                        Object[] newRow = {data.getProductList().get(i).getName(), data.getProductList().get(i).getCategory(), "₱"+twoDecimalFormat.format(data.getProductList().get(i).getPrice()),
+                                data.getProductList().get(i).getAvailability(), data.getProductList().get(i).getImage(), data.getProductList().get(i).getCode()};
                         tblProductModel.addRow(newRow);
                     }
                     break;
                 }
                 case 3:{ // Filter Category Only
-                    if (prod.getCategory().equals(category)){
-                        Object[] newRow = {prod.getName(), prod.getCategory(), "₱"+twoDecimalFormat.format(prod.getPrice()),
-                                prod.getAvailability(), prod.getImage(), prod.getCode()};
+                    if (data.getProductList().get(i).getCategory().equals(category)){
+                        Object[] newRow = {data.getProductList().get(i).getName(), data.getProductList().get(i).getCategory(), "₱"+twoDecimalFormat.format(data.getProductList().get(i).getPrice()),
+                                data.getProductList().get(i).getAvailability(), data.getProductList().get(i).getImage(), data.getProductList().get(i).getCode()};
                         tblProductModel.addRow(newRow);
                     }
                     break;
                 }
                 case 4: { // Filter Both
-                    if (prod.getName().toLowerCase().contains(name) && prod.getCategory().equals(category)){
-                        Object[] newRow = {prod.getName(), prod.getCategory(), "₱"+twoDecimalFormat.format(prod.getPrice()),
-                                prod.getAvailability(), prod.getImage(), prod.getCode()};
+                    if (data.getProductList().get(i).getName().toLowerCase().contains(name) && data.getProductList().get(i).getCategory().equals(category)){
+                        Object[] newRow = {data.getProductList().get(i).getName(), data.getProductList().get(i).getCategory(), "₱"+twoDecimalFormat.format(data.getProductList().get(i).getPrice()),
+                                data.getProductList().get(i).getAvailability(), data.getProductList().get(i).getImage(), data.getProductList().get(i).getCode()};
                         tblProductModel.addRow(newRow);
                     }
                 }
             }
         }
+
         tblProducts.setModel(tblProductModel);
         tblProducts.setGridColor(color_border_lightgray);
         tblProducts.setFont(new Font("Segoe UI", Font.PLAIN, 17));

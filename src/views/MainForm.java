@@ -8,6 +8,7 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -1915,10 +1916,10 @@ public class MainForm extends JFrame {
 
                             String id = month + day + year + (DATA.getTransactionLog().size()+1);
 
-                            Log log = new Log(id,month,day,year,time,staffincharge,itemordered.toString(),total,discount,payment
+                            TransactionLog transactionLog = new TransactionLog(id,month,day,year,time,staffincharge,itemordered.toString(),total,discount,payment
                                     ,change);
 
-                            DATA.saveTransaction(log);
+                            DATA.saveTransaction(transactionLog);
 
                             generateTransactionTable(DATA, 1);
 
@@ -2112,6 +2113,23 @@ public class MainForm extends JFrame {
         btnExportLog.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlMainTransactionLog.add(btnExportLog);
         btnExportLog.setBounds(469,38,317,58);
+        btnExportLog.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        DefaultTableModel defaultTableModel = tblTransactionLogModel;
+
+                        ExportTransactionLog exportTransactionLog = new ExportTransactionLog(defaultTableModel,
+                                lblBusinessAddress.getText() ,"December 11, 2019");
+                        try {
+                            Printer.printComponent(exportTransactionLog, true);
+                        } catch (PrinterException ex) {
+                            ex.printStackTrace();
+                        }
+//                        generateTransactionTable(DATA, 1);
+                    }
+                }
+        );
 
         btnResetTransactionLog = new JButton("RESET LOG");
         btnResetTransactionLog.setBackground(color_darkgray);
@@ -2279,41 +2297,78 @@ public class MainForm extends JFrame {
         String[] colsLog = {"ID","Date of Purchase", "Staff-in-Charge", "Item/s Ordered" , "Discount", "Total Price",
                 "Payment", "Change"};
         tblTransactionLogModel = new DefaultTableModel(colsLog, 0);
-        for (Log o: data.getTransactionLog()){
+
+        for (int i = data.getTransactionLog().size() - 1; i >= 0; i--){ // Iterate in Reverse order
             switch (filterMode){
                 case 1: { // no filter
-                    String dateOfPurchase = o.getMonthOfPurchase() + "/" + o.getDayOfPurchase() + "/" + o.getYearOfPurchase();
-                    Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(),"₱"+o.getDiscount(),
-                            "₱"+twoDecimalFormat.format(o.getTotal()), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
+                    String dateOfPurchase = data.getTransactionLog().get(i).getMonthOfPurchase() + "/" + data.getTransactionLog().get(i).getDayOfPurchase() + "/" + data.getTransactionLog().get(i).getYearOfPurchase();
+                    Object[] newRow = {data.getTransactionLog().get(i).getId(), dateOfPurchase, data.getTransactionLog().get(i).getStaffInCharge(), data.getTransactionLog().get(i).getItem(),"₱"+data.getTransactionLog().get(i).getDiscount(),
+                            "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getTotal()), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getPayment()), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getChange())};
                     tblTransactionLogModel.addRow(newRow);
                     break;
                 } case 2: { // month filter
-                    if (o.getMonthOfPurchase().equals(month)){
-                        String dateOfPurchase = o.getMonthOfPurchase() + "/" + o.getDayOfPurchase() + "/" + o.getYearOfPurchase();
-                        Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(), "₱"+twoDecimalFormat.format(o.getTotal()),
-                                "₱"+o.getDiscount(), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
+                    if (data.getTransactionLog().get(i).getMonthOfPurchase().equals(month)){
+                        String dateOfPurchase = data.getTransactionLog().get(i).getMonthOfPurchase() + "/" + data.getTransactionLog().get(i).getDayOfPurchase() + "/" + data.getTransactionLog().get(i).getYearOfPurchase();
+                        Object[] newRow = {data.getTransactionLog().get(i).getId(), dateOfPurchase, data.getTransactionLog().get(i).getStaffInCharge(), data.getTransactionLog().get(i).getItem(), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getTotal()),
+                                "₱"+data.getTransactionLog().get(i).getDiscount(), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getPayment()), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getChange())};
                         tblTransactionLogModel.addRow(newRow);
                     }
                     break;
                 } case 3: { // day filter
-                    if (o.getDayOfPurchase().equals(day)){
-                        String dateOfPurchase = o.getMonthOfPurchase() + "/" + o.getDayOfPurchase() + "/" + o.getYearOfPurchase();
-                        Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(), "₱"+twoDecimalFormat.format(o.getTotal()),
-                                "₱"+o.getDiscount(), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
+                    if (data.getTransactionLog().get(i).getDayOfPurchase().equals(day)){
+                        String dateOfPurchase = data.getTransactionLog().get(i).getMonthOfPurchase() + "/" + data.getTransactionLog().get(i).getDayOfPurchase() + "/" + data.getTransactionLog().get(i).getYearOfPurchase();
+                        Object[] newRow = {data.getTransactionLog().get(i).getId(), dateOfPurchase, data.getTransactionLog().get(i).getStaffInCharge(), data.getTransactionLog().get(i).getItem(), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getTotal()),
+                                "₱"+data.getTransactionLog().get(i).getDiscount(), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getPayment()), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getChange())};
                         tblTransactionLogModel.addRow(newRow);
                     }
                     break;
                 } case 4: { // both filter
-                    if (o.getDayOfPurchase().equals(day) && o.getMonthOfPurchase().equals(month)){
-                        String dateOfPurchase = o.getMonthOfPurchase() + "/" + o.getDayOfPurchase() + "/" + o.getYearOfPurchase();
-                        Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(), "₱"+twoDecimalFormat.format(o.getTotal()),
-                                "₱"+o.getDiscount(), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
+                    if (data.getTransactionLog().get(i).getDayOfPurchase().equals(day) && data.getTransactionLog().get(i).getMonthOfPurchase().equals(month)){
+                        String dateOfPurchase = data.getTransactionLog().get(i).getMonthOfPurchase() + "/" + data.getTransactionLog().get(i).getDayOfPurchase() + "/" + data.getTransactionLog().get(i).getYearOfPurchase();
+                        Object[] newRow = {data.getTransactionLog().get(i).getId(), dateOfPurchase, data.getTransactionLog().get(i).getStaffInCharge(), data.getTransactionLog().get(i).getItem(), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getTotal()),
+                                "₱"+data.getTransactionLog().get(i).getDiscount(), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getPayment()), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getChange())};
                         tblTransactionLogModel.addRow(newRow);
                     }
                     break;
                 }
             }
         }
+
+//        for (TransactionLog o: data.getTransactionLog()){
+//            switch (filterMode){
+//                case 1: { // no filter
+//                    String dateOfPurchase = o.getMonthOfPurchase() + "/" + o.getDayOfPurchase() + "/" + o.getYearOfPurchase();
+//                    Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(),"₱"+o.getDiscount(),
+//                            "₱"+twoDecimalFormat.format(o.getTotal()), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
+//                    tblTransactionLogModel.addRow(newRow);
+//                    break;
+//                } case 2: { // month filter
+//                    if (o.getMonthOfPurchase().equals(month)){
+//                        String dateOfPurchase = o.getMonthOfPurchase() + "/" + o.getDayOfPurchase() + "/" + o.getYearOfPurchase();
+//                        Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(), "₱"+twoDecimalFormat.format(o.getTotal()),
+//                                "₱"+o.getDiscount(), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
+//                        tblTransactionLogModel.addRow(newRow);
+//                    }
+//                    break;
+//                } case 3: { // day filter
+//                    if (o.getDayOfPurchase().equals(day)){
+//                        String dateOfPurchase = o.getMonthOfPurchase() + "/" + o.getDayOfPurchase() + "/" + o.getYearOfPurchase();
+//                        Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(), "₱"+twoDecimalFormat.format(o.getTotal()),
+//                                "₱"+o.getDiscount(), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
+//                        tblTransactionLogModel.addRow(newRow);
+//                    }
+//                    break;
+//                } case 4: { // both filter
+//                    if (o.getDayOfPurchase().equals(day) && o.getMonthOfPurchase().equals(month)){
+//                        String dateOfPurchase = o.getMonthOfPurchase() + "/" + o.getDayOfPurchase() + "/" + o.getYearOfPurchase();
+//                        Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(), "₱"+twoDecimalFormat.format(o.getTotal()),
+//                                "₱"+o.getDiscount(), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
+//                        tblTransactionLogModel.addRow(newRow);
+//                    }
+//                    break;
+//                }
+//            }
+//        }
 
         tblTransactionLog.setModel(tblTransactionLogModel);
         tblTransactionLog.setGridColor(color_border_lightgray);
