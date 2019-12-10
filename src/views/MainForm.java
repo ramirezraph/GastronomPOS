@@ -1993,25 +1993,28 @@ public class MainForm extends JFrame {
         Action OrderEvent = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    clearOrderListSelection();
 
-                clearOrderListSelection();
+                    int rowIndex = Integer.valueOf(e.getActionCommand());
 
-                int rowIndex = Integer.valueOf(e.getActionCommand());
-
-                String imagePath = "";
-                String productCode = ((DefaultTableModel)tblMenu.getModel()).getValueAt(rowIndex, 4).toString();
-                for (Product o: data.getProductList()){
-                    if (o.getCode().equals(productCode)){
-                        imagePath = o.getImage().toString();
+                    String imagePath = "";
+                    String productCode = ((DefaultTableModel)tblMenu.getModel()).getValueAt(rowIndex, 4).toString();
+                    for (Product o: data.getProductList()){
+                        if (o.getCode().equals(productCode)){
+                            imagePath = o.getImage().toString();
+                        }
                     }
+                    String productName = ((DefaultTableModel)tblMenu.getModel()).getValueAt(rowIndex, 1).toString();
+                    Double productPrice = Double.parseDouble(((DefaultTableModel)tblMenu.getModel()).getValueAt(rowIndex,
+                            2).toString().substring(1));
+
+
+                    DialogQuantity dialogQuantity = new DialogQuantity(data, productCode, imagePath, productName, productPrice);
+                    dialogQuantity.setVisible(true);
+                } catch (ArrayIndexOutOfBoundsException ex){
+                    System.out.println(ex);
                 }
-                String productName = ((DefaultTableModel)tblMenu.getModel()).getValueAt(rowIndex, 1).toString();
-                Double productPrice = Double.parseDouble(((DefaultTableModel)tblMenu.getModel()).getValueAt(rowIndex,
-                        2).toString().substring(1));
-
-
-                DialogQuantity dialogQuantity = new DialogQuantity(data, productCode, imagePath, productName, productPrice);
-                dialogQuantity.setVisible(true);
             }
         };
 
@@ -2117,6 +2120,13 @@ public class MainForm extends JFrame {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+
+                        if (tblTransactionLog.getRowCount() == 0){
+                            DialogOk dialogOk = new DialogOk("Error", "Transaction Log is empty.");
+                            dialogOk.setVisible(true);
+                            return;
+                        }
+
                         DefaultTableModel defaultTableModel = tblTransactionLogModel;
 
                         ExportTransactionLog exportTransactionLog = new ExportTransactionLog(defaultTableModel,
@@ -2309,24 +2319,24 @@ public class MainForm extends JFrame {
                 } case 2: { // month filter
                     if (data.getTransactionLog().get(i).getMonthOfPurchase().equals(month)){
                         String dateOfPurchase = data.getTransactionLog().get(i).getMonthOfPurchase() + "/" + data.getTransactionLog().get(i).getDayOfPurchase() + "/" + data.getTransactionLog().get(i).getYearOfPurchase();
-                        Object[] newRow = {data.getTransactionLog().get(i).getId(), dateOfPurchase, data.getTransactionLog().get(i).getStaffInCharge(), data.getTransactionLog().get(i).getItem(), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getTotal()),
-                                "₱"+data.getTransactionLog().get(i).getDiscount(), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getPayment()), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getChange())};
+                        Object[] newRow = {data.getTransactionLog().get(i).getId(), dateOfPurchase, data.getTransactionLog().get(i).getStaffInCharge(), data.getTransactionLog().get(i).getItem(),"₱"+data.getTransactionLog().get(i).getDiscount(),
+                                "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getTotal()), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getPayment()), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getChange())};
                         tblTransactionLogModel.addRow(newRow);
                     }
                     break;
                 } case 3: { // day filter
                     if (data.getTransactionLog().get(i).getDayOfPurchase().equals(day)){
                         String dateOfPurchase = data.getTransactionLog().get(i).getMonthOfPurchase() + "/" + data.getTransactionLog().get(i).getDayOfPurchase() + "/" + data.getTransactionLog().get(i).getYearOfPurchase();
-                        Object[] newRow = {data.getTransactionLog().get(i).getId(), dateOfPurchase, data.getTransactionLog().get(i).getStaffInCharge(), data.getTransactionLog().get(i).getItem(), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getTotal()),
-                                "₱"+data.getTransactionLog().get(i).getDiscount(), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getPayment()), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getChange())};
+                        Object[] newRow = {data.getTransactionLog().get(i).getId(), dateOfPurchase, data.getTransactionLog().get(i).getStaffInCharge(), data.getTransactionLog().get(i).getItem(),"₱"+data.getTransactionLog().get(i).getDiscount(),
+                                "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getTotal()), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getPayment()), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getChange())};
                         tblTransactionLogModel.addRow(newRow);
                     }
                     break;
                 } case 4: { // both filter
                     if (data.getTransactionLog().get(i).getDayOfPurchase().equals(day) && data.getTransactionLog().get(i).getMonthOfPurchase().equals(month)){
                         String dateOfPurchase = data.getTransactionLog().get(i).getMonthOfPurchase() + "/" + data.getTransactionLog().get(i).getDayOfPurchase() + "/" + data.getTransactionLog().get(i).getYearOfPurchase();
-                        Object[] newRow = {data.getTransactionLog().get(i).getId(), dateOfPurchase, data.getTransactionLog().get(i).getStaffInCharge(), data.getTransactionLog().get(i).getItem(), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getTotal()),
-                                "₱"+data.getTransactionLog().get(i).getDiscount(), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getPayment()), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getChange())};
+                        Object[] newRow = {data.getTransactionLog().get(i).getId(), dateOfPurchase, data.getTransactionLog().get(i).getStaffInCharge(), data.getTransactionLog().get(i).getItem(),"₱"+data.getTransactionLog().get(i).getDiscount(),
+                                "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getTotal()), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getPayment()), "₱"+twoDecimalFormat.format(data.getTransactionLog().get(i).getChange())};
                         tblTransactionLogModel.addRow(newRow);
                     }
                     break;

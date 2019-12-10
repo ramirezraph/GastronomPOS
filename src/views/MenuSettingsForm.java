@@ -5,7 +5,9 @@ import common.Product;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,8 +17,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class MenuSettingsForm extends JDialog {
@@ -833,7 +833,7 @@ public class MenuSettingsForm extends JDialog {
                         int selectedRowIndex = tblProducts.getSelectedRow();
                         txtProductName.setText(tableModel.getValueAt(selectedRowIndex, 0).toString());
                         cmbProductCategory.setSelectedItem(tableModel.getValueAt(selectedRowIndex, 1).toString());
-                        txtProductPrice.setText(tableModel.getValueAt(selectedRowIndex, 2).toString());
+                        txtProductPrice.setText(tableModel.getValueAt(selectedRowIndex, 2).toString().substring(1));
                         cmbProductAvailability.setSelectedItem((tableModel.getValueAt(selectedRowIndex, 3).toString()));
 
                         // resizing image
@@ -908,13 +908,6 @@ public class MenuSettingsForm extends JDialog {
         tblProducts.setDefaultEditor(Object.class, null); // editable = false
         tblProducts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblProducts.setFocusable(false);
-
-        // Sort
-        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tblProducts.getModel());
-        tblProducts.setRowSorter(sorter);
-        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
-        sortKeys.add(new RowSorter.SortKey(3, SortOrder.DESCENDING));
-        sorter.setSortKeys(sortKeys);
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
