@@ -2695,6 +2695,13 @@ public class MainForm extends JFrame {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+
+                        if (txtAddress.getText().isEmpty()){
+                            DialogOk dialogOk = new DialogOk("Error", "Address field should not be empty.");
+                            dialogOk.setVisible(true);
+                            return;
+                        }
+
                         String newAddress = txtAddress.getText().trim();
                         updateAddress(newAddress);
                     }
@@ -2702,7 +2709,6 @@ public class MainForm extends JFrame {
         );
 
     }
-
 
     public void UpdateDateTime(){
 

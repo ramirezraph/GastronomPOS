@@ -7,10 +7,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 public class AccountSettingsForm extends JDialog {
 
@@ -160,6 +157,15 @@ public class AccountSettingsForm extends JDialog {
                 BorderFactory.createEmptyBorder(5, 10, 5, 5)));
         pnlCreateAccount.add(txtCreateContact);
         txtCreateContact.setBounds(71, 197, 374, 39);
+        txtCreateContact.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char character = e.getKeyChar();
+                if (((character < '0') || (character > '9'))
+                        && (character != '\b')) {
+                    e.consume();
+                }
+            }
+        });
 
         JLabel lblCreateUsername = new JLabel("Username");
         lblCreateUsername.setFont(new Font("Segoe UI", Font.PLAIN, 20));
@@ -363,6 +369,15 @@ public class AccountSettingsForm extends JDialog {
                 BorderFactory.createEmptyBorder(5, 10, 5, 5)));
         pnlAccountInfo.add(txtContactNo);
         txtContactNo.setBounds(40, 197, 374, 39);
+        txtContactNo.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char character = e.getKeyChar();
+                if (((character < '0') || (character > '9'))
+                        && (character != '\b')) {
+                    e.consume();
+                }
+            }
+        });
 
         JLabel lblLastLogin = new JLabel("Last Login (MM/DD/YYYY)");
         lblLastLogin.setFont(new Font("Segoe UI", Font.PLAIN, 20));
