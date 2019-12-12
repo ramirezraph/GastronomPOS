@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -93,17 +94,19 @@ public class DialogEditOrderQuantity extends JDialog {
         btnMinus.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlContainer.add(btnMinus);
         btnMinus.setBounds(350,159,75,65);
-        btnMinus.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (QUANTITY != 1){
-                            QUANTITY--;
-                            txtQuantity.setText(String.valueOf(QUANTITY));
-                        }
-                    }
+        Action btnMinusAction = new AbstractAction("-") {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                if (QUANTITY != 1){
+                    QUANTITY--;
+                    txtQuantity.setText(String.valueOf(QUANTITY));
                 }
-        );
+            }
+        };
+        btnMinus.setAction(btnMinusAction);
+        btnMinus.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "Minus");
+        btnMinus.getActionMap().put("Minus", btnMinusAction);
 
         txtQuantity = new JTextField(String.valueOf(quantity));
         txtQuantity.setBackground(Color.WHITE);
@@ -128,15 +131,17 @@ public class DialogEditOrderQuantity extends JDialog {
         btnPlus.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnlContainer.add(btnPlus);
         btnPlus.setBounds(603,159,75,65);
-        btnPlus.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        QUANTITY++;
-                        txtQuantity.setText(String.valueOf(QUANTITY));
-                    }
-                }
-        );
+        Action btnPlusAction = new AbstractAction("+") {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                QUANTITY++;
+                txtQuantity.setText(String.valueOf(QUANTITY));
+            }
+        };
+        btnPlus.setAction(btnPlusAction);
+        btnPlus.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "Plus");
+        btnPlus.getActionMap().put("Plus", btnPlusAction);
 
         JButton btnSubmit = new JButton("Submit");
         btnSubmit.setForeground(Color.WHITE);

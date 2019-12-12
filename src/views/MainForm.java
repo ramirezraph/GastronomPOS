@@ -2390,43 +2390,7 @@ public class MainForm extends JFrame {
                 }
             }
         }
-
-//        for (TransactionLog o: data.getTransactionLog()){
-//            switch (filterMode){
-//                case 1: { // no filter
-//                    String dateOfPurchase = o.getMonthOfPurchase() + "/" + o.getDayOfPurchase() + "/" + o.getYearOfPurchase();
-//                    Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(),"₱"+o.getDiscount(),
-//                            "₱"+twoDecimalFormat.format(o.getTotal()), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
-//                    tblTransactionLogModel.addRow(newRow);
-//                    break;
-//                } case 2: { // month filter
-//                    if (o.getMonthOfPurchase().equals(month)){
-//                        String dateOfPurchase = o.getMonthOfPurchase() + "/" + o.getDayOfPurchase() + "/" + o.getYearOfPurchase();
-//                        Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(), "₱"+twoDecimalFormat.format(o.getTotal()),
-//                                "₱"+o.getDiscount(), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
-//                        tblTransactionLogModel.addRow(newRow);
-//                    }
-//                    break;
-//                } case 3: { // day filter
-//                    if (o.getDayOfPurchase().equals(day)){
-//                        String dateOfPurchase = o.getMonthOfPurchase() + "/" + o.getDayOfPurchase() + "/" + o.getYearOfPurchase();
-//                        Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(), "₱"+twoDecimalFormat.format(o.getTotal()),
-//                                "₱"+o.getDiscount(), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
-//                        tblTransactionLogModel.addRow(newRow);
-//                    }
-//                    break;
-//                } case 4: { // both filter
-//                    if (o.getDayOfPurchase().equals(day) && o.getMonthOfPurchase().equals(month)){
-//                        String dateOfPurchase = o.getMonthOfPurchase() + "/" + o.getDayOfPurchase() + "/" + o.getYearOfPurchase();
-//                        Object[] newRow = {o.getId(), dateOfPurchase, o.getStaffInCharge(), o.getItem(), "₱"+twoDecimalFormat.format(o.getTotal()),
-//                                "₱"+o.getDiscount(), "₱"+twoDecimalFormat.format(o.getPayment()), "₱"+twoDecimalFormat.format(o.getChange())};
-//                        tblTransactionLogModel.addRow(newRow);
-//                    }
-//                    break;
-//                }
-//            }
-//        }
-
+        tblTransactionLog.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tblTransactionLog.setModel(tblTransactionLogModel);
         tblTransactionLog.setGridColor(color_border_lightgray);
         tblTransactionLog.setFont(new Font("Segoe UI", Font.PLAIN, 15));
@@ -2444,11 +2408,21 @@ public class MainForm extends JFrame {
         tblTransactionLog.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
         tblTransactionLog.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
         tblTransactionLog.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-        tblTransactionLog.getColumnModel().getColumn(3).setPreferredWidth(400);
         tblTransactionLog.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
         tblTransactionLog.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
         tblTransactionLog.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);
         tblTransactionLog.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);
+
+        tblTransactionLog.getColumnModel().getColumn(0).setPreferredWidth(150);
+        tblTransactionLog.getColumnModel().getColumn(1).setPreferredWidth(150);
+        tblTransactionLog.getColumnModel().getColumn(2).setPreferredWidth(300);
+        tblTransactionLog.getColumnModel().getColumn(3).setPreferredWidth(710);
+        tblTransactionLog.getColumnModel().getColumn(4).setPreferredWidth(150);
+        tblTransactionLog.getColumnModel().getColumn(5).setPreferredWidth(150);
+        tblTransactionLog.getColumnModel().getColumn(6).setPreferredWidth(150);
+        tblTransactionLog.getColumnModel().getColumn(7).setPreferredWidth(150);
+
+
 
     }
 
