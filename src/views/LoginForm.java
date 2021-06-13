@@ -187,7 +187,14 @@ public class LoginForm extends JFrame {
             dispose();
             data.removeFromLockedAccountList(username);
             MainForm mainForm = new MainForm(data.getAccount(username), data);
+            mainForm.setLocation(GraphicsEnvironment
+                    .getLocalGraphicsEnvironment()
+                    .getScreenDevices()[0]
+                    .getDefaultConfiguration()
+                    .getBounds()
+                    .getLocation());
             mainForm.setVisible(true);
+
         } else {
             DialogOk dialogOk = new DialogOk("Login Failed.", "Invalid username or password.");
             dialogOk.setVisible(true);

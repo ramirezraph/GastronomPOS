@@ -17,11 +17,15 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+<<<<<<< Updated upstream
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+=======
+import java.util.List;
+>>>>>>> Stashed changes
 
 public class MainForm extends JFrame {
 
@@ -92,6 +96,7 @@ public class MainForm extends JFrame {
     private static JLabel lblBusinessAddress;
     private JLabel btnGenerateReceipt;
     private JButton btnProcessOrder;
+<<<<<<< Updated upstream
     private JPanel pnlIndicatorMain;
     private JPanel pnlIndicatorDessert;
     private JPanel pnlIndicatorDrinks;
@@ -99,6 +104,8 @@ public class MainForm extends JFrame {
 
     private JComboBox<String> cmbDay;
     private JComboBox<String> cmbMonth;
+=======
+>>>>>>> Stashed changes
 
     public MainForm(Account account, Data data) {
         setLayout(null);
@@ -581,8 +588,11 @@ public class MainForm extends JFrame {
 
         }
 
+<<<<<<< Updated upstream
         UpdateDateTime();
 
+=======
+>>>>>>> Stashed changes
         getRootPane().setDefaultButton(btnProcessOrder);
 
     }
@@ -1915,6 +1925,7 @@ public class MainForm extends JFrame {
                         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/uuuu"));
                         LocalDate DATE = LocalDate.now();
 
+<<<<<<< Updated upstream
                         String month = String.valueOf(DATE.getMonthValue());
                         String day = String.valueOf(DATE.getDayOfMonth());
                         String year = String.valueOf(DATE.getYear());
@@ -1922,6 +1933,9 @@ public class MainForm extends JFrame {
                         String staffincharge = lblUserName.getText();
 
                         String id = month + day + year + (DATA.getTransactionLog().size()+1);
+=======
+                        if (dialogYesNo.getYesNo()){
+>>>>>>> Stashed changes
 
                         ReceiptDialog receiptDialog = new ReceiptDialog(DATA, lblBusinessAddress.getText(),
                                 staffincharge, date, id, lblTotalAmount.getText(), lblDiscountAmount.getText(),

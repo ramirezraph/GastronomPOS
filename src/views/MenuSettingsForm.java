@@ -5,9 +5,7 @@ import common.Product;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +15,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
+<<<<<<< Updated upstream
+=======
+import java.util.ArrayList;
+import java.util.List;
+>>>>>>> Stashed changes
 import java.util.Random;
 
 public class MenuSettingsForm extends JDialog {
@@ -870,31 +873,54 @@ public class MenuSettingsForm extends JDialog {
         for (int i = data.getProductList().size() - 1; i >= 0; i--){
             switch (filterMode){
                 case 1: { // No Filter
+<<<<<<< Updated upstream
                     Object[] newRow = {data.getProductList().get(i).getName(), data.getProductList().get(i).getCategory(), "₱"+twoDecimalFormat.format(data.getProductList().get(i).getPrice()),
                             data.getProductList().get(i).getAvailability(), data.getProductList().get(i).getImage(), data.getProductList().get(i).getCode()};
+=======
+                    Object[] newRow = {prod.getName(), prod.getCategory(), "₱"+twoDecimalFormat.format(prod.getPrice()),
+                            prod.getAvailability(), prod.getImage(), prod.getCode()};
+>>>>>>> Stashed changes
                     tblProductModel.addRow(newRow);
                     break;
                 }
                 case 2: { // Filter Name Only
+<<<<<<< Updated upstream
                     if (data.getProductList().get(i).getName().toLowerCase().contains(name)){
                         Object[] newRow = {data.getProductList().get(i).getName(), data.getProductList().get(i).getCategory(), "₱"+twoDecimalFormat.format(data.getProductList().get(i).getPrice()),
                                 data.getProductList().get(i).getAvailability(), data.getProductList().get(i).getImage(), data.getProductList().get(i).getCode()};
+=======
+                    if (prod.getName().toLowerCase().contains(name)){
+                        Object[] newRow = {prod.getName(), prod.getCategory(), "₱"+twoDecimalFormat.format(prod.getPrice()),
+                                prod.getAvailability(), prod.getImage(), prod.getCode()};
+>>>>>>> Stashed changes
                         tblProductModel.addRow(newRow);
                     }
                     break;
                 }
                 case 3:{ // Filter Category Only
+<<<<<<< Updated upstream
                     if (data.getProductList().get(i).getCategory().equals(category)){
                         Object[] newRow = {data.getProductList().get(i).getName(), data.getProductList().get(i).getCategory(), "₱"+twoDecimalFormat.format(data.getProductList().get(i).getPrice()),
                                 data.getProductList().get(i).getAvailability(), data.getProductList().get(i).getImage(), data.getProductList().get(i).getCode()};
+=======
+                    if (prod.getCategory().equals(category)){
+                        Object[] newRow = {prod.getName(), prod.getCategory(), "₱"+twoDecimalFormat.format(prod.getPrice()),
+                                prod.getAvailability(), prod.getImage(), prod.getCode()};
+>>>>>>> Stashed changes
                         tblProductModel.addRow(newRow);
                     }
                     break;
                 }
                 case 4: { // Filter Both
+<<<<<<< Updated upstream
                     if (data.getProductList().get(i).getName().toLowerCase().contains(name) && data.getProductList().get(i).getCategory().equals(category)){
                         Object[] newRow = {data.getProductList().get(i).getName(), data.getProductList().get(i).getCategory(), "₱"+twoDecimalFormat.format(data.getProductList().get(i).getPrice()),
                                 data.getProductList().get(i).getAvailability(), data.getProductList().get(i).getImage(), data.getProductList().get(i).getCode()};
+=======
+                    if (prod.getName().toLowerCase().contains(name) && prod.getCategory().equals(category)){
+                        Object[] newRow = {prod.getName(), prod.getCategory(), "₱"+twoDecimalFormat.format(prod.getPrice()),
+                                prod.getAvailability(), prod.getImage(), prod.getCode()};
+>>>>>>> Stashed changes
                         tblProductModel.addRow(newRow);
                     }
                 }
@@ -908,6 +934,13 @@ public class MenuSettingsForm extends JDialog {
         tblProducts.setDefaultEditor(Object.class, null); // editable = false
         tblProducts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblProducts.setFocusable(false);
+
+        // Sort
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tblProducts.getModel());
+        tblProducts.setRowSorter(sorter);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new RowSorter.SortKey(3, SortOrder.DESCENDING));
+        sorter.setSortKeys(sortKeys);
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
